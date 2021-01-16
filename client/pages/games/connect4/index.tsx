@@ -2,6 +2,7 @@ import React from 'react'
 import Head from 'next/head'
 import styled from '@emotion/styled'
 import Chat from '../../../components/Chat'
+import Board from '../../../components/connect4/Board'
 
 import { useRouter } from 'next/router'
 import useConnect4 from '../../../hooks/useConnect4'
@@ -13,7 +14,7 @@ interface props{
 const Connect4 :React.FC<props> = () =>{
 
     const router = useRouter();
-    const { sendMessage, messages } = useConnect4(typeof router.query.gameId==='object' ? router.query.gameId[0] : router.query.gameId || '');
+    const { sendMessage, messages, board, chooseColumn, players } = useConnect4(typeof router.query.gameId==='object' ? router.query.gameId[0] : router.query.gameId || '');
 
 
     return(
@@ -23,6 +24,7 @@ const Connect4 :React.FC<props> = () =>{
             </Head>
             <Container>
                 <Chat messages={messages} sendMessage={sendMessage}/>
+                <Board board={board} chooseColumn={chooseColumn} players={players} />
             </Container>
         </div>
     )

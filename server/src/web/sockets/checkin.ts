@@ -1,4 +1,3 @@
-import { join } from 'path';
 import io from 'socket.io'
 import { domain } from '../../index'
 

@@ -1,4 +1,4 @@
-import calcScore from '../src/utils/calcScore'
+import calcScore from '../src/utils/calcScoreYatzy'
 describe('calcScore', ()=>{
     it('numbers', ()=>{
         expect(calcScore([1, 1, 1, 1, 1], 0)).toBe(5);

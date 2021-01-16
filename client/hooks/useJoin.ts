@@ -11,7 +11,7 @@ export default (gameType: string, gameId: string)=>{
     const handleSuccess = (data: {token: string, name: string, gameId: string}) =>{
         localStorage.setItem(`token-${data.gameId}`, data.token);
         localStorage.setItem(`name-${data.gameId}`, data.name);
-        router.push(`/games/yatzy?gameId=${data.gameId}`);
+        router.push(`/games/${gameType}?gameId=${data.gameId}`);
     }
 
     const  {data, mutate, isLoading, isError } = useMutation( (playerName)=>

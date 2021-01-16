@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Player } from '../../server/src/entities/Yatzy'
 import { io, Socket }  from 'socket.io-client'
-import { useRouter } from 'next/router'
 import ENDPOINT from '../ENDPOINT'
 
 export default (gameId: string)=>{
@@ -9,7 +8,7 @@ export default (gameId: string)=>{
     const [turn, setTurn] = useState(-1);
     const socketRef = useRef<Socket | undefined>();
     const [messages, setMessages] = useState<{author: string, content: string}[]>([]);
-    const [board, setBoard] = useState([]);
+    const [board, setBoard] = useState<string[][]>([]);
 
     useEffect(() => {
         if(!gameId) return;
@@ -20,9 +19,11 @@ export default (gameId: string)=>{
         });
         socketRef.current = socket;
         socket.emit('checkin', { gameId }, (data)=>{
+            console.log(data);
             if(!data) return;
             setPlayers(data.players);
             setTurn(data.turn);
+            setBoard(data.fields);
         });
 
         socket.on('new player', (data)=>{
@@ -31,13 +32,15 @@ export default (gameId: string)=>{
         socket.on('next turn', (data)=>{
             setTurn(data);
         });
-        socket.on('column selected', (data: {row: number, score: number, turn: number})=>{
-            console.log('column selected');
-            setPlayers(o=>{
-               o[data.turn].usedRows[data.row] = data.score;
-               o[data.turn].score += data.score;
-               return [...o];
-           })
+        socket.on('field selected', (data)=>{
+            console.log('column selected', data);
+            setBoard(o=>{
+                o[data.column][data.row] = data.id;
+                return [...o];
+                
+            })
+
+            
         });
         socket.on('chat message', (data: {author: string, content: string})=>{
             setMessages(o=>[...o, data]);
@@ -70,7 +73,7 @@ export default (gameId: string)=>{
         chooseColumn,
         messages,
         sendMessage,
-        board
+        board,
     }
 
 }

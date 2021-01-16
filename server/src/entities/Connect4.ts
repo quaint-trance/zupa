@@ -1,4 +1,6 @@
 import { v4 } from'uuid'
+import { eventType } from '../types/EventEmitter';
+import checkWinnerConnect4 from '../utils/checkWinnerConnect4';
 
 export interface Player{
     id: string;
@@ -10,7 +12,7 @@ export interface Connect4Data{
     players: any[];
     fields: string[][];
     turn: number;
-    eventStack:{name: string, data: any}[];
+    eventStack: eventType[];
 }
 
 export default class Connect4 implements Connect4Data{
@@ -18,7 +20,7 @@ export default class Connect4 implements Connect4Data{
     players: any[];
     fields: string[][];
     turn: number;
-    eventStack:{name: string, data: any}[];
+    eventStack: eventType[];
 
     constructor(data: Omit<Connect4Data, 'eventStack'>){
         this.id = data.id;
@@ -71,13 +73,14 @@ export default class Connect4 implements Connect4Data{
             name
         };
         this.players.push(newPlayer);
-        this.eventStack.push({name: 'new player', data: newPlayer});
+        this.eventStack.push({name: 'new player', payload: newPlayer});
         return newPlayer;
     }
 
     nextTurn(){
+        if(checkWinnerConnect4(this.fields)) this.eventStack.push({name:'win', payload: this.getCurrentPlayer()});
         this.turn = (this.turn+1)%this.players.length;
-        this.eventStack.push({name:'next turn', data: this.turn});
+        this.eventStack.push({name:'next turn', payload: this.turn});
     }
 
     chooseColumn(column: number){
@@ -91,7 +94,9 @@ export default class Connect4 implements Connect4Data{
             }
         }
         this.fields[column][index] = this.getCurrentPlayer().id;
-        this.eventStack.push({name: 'field selected', data: index});
+        const data = {column, row: index, id: this.getCurrentPlayer().id };
+        console.log('4', data)
+        this.eventStack.push({name: 'field selected', payload: data});
         this.nextTurn();
         return index;
     }
