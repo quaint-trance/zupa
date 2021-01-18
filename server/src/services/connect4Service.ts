@@ -11,6 +11,7 @@ export default class Connect4Service{
     }
 
     async hydrateFromToken(token: string):Promise<[null | Connect4, null | string]>{
+        if(!token) return [null, null];
         const payload = Token.hydrate(token)?.getPayload();
         if(!payload?.gameId || !payload?.playerId) return [null, null];
 

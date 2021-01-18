@@ -11,6 +11,7 @@ export default class YatzyService{
     }
 
     async hydrateYatzyFromToken(token: string):Promise<[null | Yatzy, null | string]>{
+        if(!token) return [null, null];
         const payload = Token.hydrate(token)?.getPayload();
         if(!payload?.gameId || !payload?.playerId) return [null, null];
 

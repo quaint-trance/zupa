@@ -24,7 +24,7 @@ export default (socketRef: React.MutableRefObject<Socket | undefined>, gameId: s
             socketRef.current.emit('command', {content, author: localStorage.getItem(`name-${gameId}`)}, (back: string)=>{
                 pushSystemInfo(back);
         });
-        else socketRef.current.emit('chat message', {content, author: localStorage.getItem(`name-${gameId}`)});
+        else socketRef.current.emit('chat message', {content, author: localStorage.getItem(`name-${gameId}`), gameId});
         
         setMessages(o=>[...o, {content, author: '$me$'}]);
     }
