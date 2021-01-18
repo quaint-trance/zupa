@@ -17,16 +17,14 @@ const Join:React.FC<props> = () =>{
 
     return(
         <div>
-            <Head>
-
-            </Head>
             <Container>
-                <h2>Join {router.query.gameId}</h2>
-                <input ref={inputRef} type="text"/>
-                <button onClick={()=>mutate(inputRef.current && inputRef.current.value)}>join</button>
-                {isLoading && <div>loading</div>}
-                {isError && <div>error</div>}
-                {!isError && !isLoading && <div>E</div>}
+                <section>
+                    <h2>Join connect4 game</h2>
+                    <input ref={inputRef} type="text" placeholder="Your Name"/>
+                    {isLoading && <div>loading</div>}
+                    {isError && <div>error</div>}
+                    {!isError && !isLoading && <div><button onClick={()=>mutate(inputRef.current?.value || '')}>join</button></div>}
+                </section>
             </Container>
         </div>
     )
@@ -36,12 +34,35 @@ const Container = styled.div`
     background-color: rgb(14, 14, 14);
     min-height: 100vh;
     color: white;
-    
-
-    & > h2{
-        margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    & > section{
+        border: 2px solid white;
+        border-radius: 20px;
+        padding: 30px;
+        
+        & > h2{
+            margin: 0 0 20px 0;
+        }
+        & > input{
+            width: 100%;
+        }
+        & > div{
+            width: 100%;
+            margin: 10px 0 0 0;
+            & > button{
+                width: 100%;
+                color: white;
+                background-color: rgba(255, 0, 0, 0);
+                font-size: 20px;
+                font-weight: 800;
+                padding: 5px;
+                border: 2px solid white;
+            }
+        }
     }
 `
-
 
 export default Join;
