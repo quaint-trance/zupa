@@ -33,7 +33,7 @@ export default class Connect4 implements Connect4Data{
     static create(){
         return new Connect4({
             id: v4(),
-            turn: 0,
+            turn: -1,
             players: [],
             fields: new Array(7).fill(0).map(()=> new Array(6))
         });
@@ -45,6 +45,18 @@ export default class Connect4 implements Connect4Data{
         });
     }
 
+    reset(){
+        this.turn = -1,
+        this.fields = new Array(7).fill(0).map(()=> new Array(6));
+        this.eventStack.push({name: 'reset', 'payload': {
+            id: this.id,
+            players: this.players,
+            fields: this.fields,
+            turn: this.turn,
+        }});
+        console.log(this.getAll());
+    }
+
     getId(){
         return this.id;
     }
@@ -54,6 +66,7 @@ export default class Connect4 implements Connect4Data{
     }
 
     getCurrentPlayer(){
+        if(this.turn < 0) return null;
         return this.players[this.turn];
     }
 
@@ -67,6 +80,11 @@ export default class Connect4 implements Connect4Data{
         }
     }
 
+    startGame(){
+        this.turn = 0;
+        this.eventStack.push({name: 'start'});
+    }
+
     joinPlayer(name: string){
         const newPlayer:Player = {
             id: v4(),
@@ -77,11 +95,17 @@ export default class Connect4 implements Connect4Data{
         return newPlayer;
     }
 
+    win(){
+        this.eventStack.push({name:'win', payload: this.getCurrentPlayer()});
+        this.turn = -5;
+    }
+
     nextTurn(){
-        if(checkWinnerConnect4(this.fields)) this.eventStack.push({name:'win', payload: this.getCurrentPlayer()});
+        if(checkWinnerConnect4(this.fields)) return this.win();
         this.turn = (this.turn+1)%this.players.length;
         this.eventStack.push({name:'next turn', payload: this.turn});
     }
+
 
     chooseColumn(column: number){
         if(!this.fields[column]) return null;

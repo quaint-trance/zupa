@@ -37,13 +37,31 @@ export default class Connect4Service{
         return {...player, token, gameId};
     }
 
+    async start(token: string){
+        const [ game, playerId ] = await this.hydrateFromToken(token);
+        if( !game || !playerId ) return null;
+        
+        const result = game.startGame();
+        this.gamesStore.save({...game, t: 'connect4'});
+        return true;
+    }
+
     async chooseColumn(token: string, row: number){
         const [ game, playerId ] = await this.hydrateFromToken(token);
         if( !game || !playerId ) return null;
-        if( game.getCurrentPlayer().id !== playerId ) return;
+        if( game.getCurrentPlayer()?.id !== playerId ) return;
         
         const result = game.chooseColumn(row);
         if( result === undefined ) return null;
+        this.gamesStore.save({...game.getAll(), t: 'connect4'});
+        return result;
+    }
+
+    async reset(token: string){
+        const [ game, playerId ] = await this.hydrateFromToken(token);
+        if( !game || !playerId ) return null;
+        
+        const result = game.reset();
         this.gamesStore.save({...game.getAll(), t: 'connect4'});
         return result;
     }

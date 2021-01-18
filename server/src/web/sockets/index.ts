@@ -1,7 +1,7 @@
 import io from 'socket.io'
 import checkin from './checkin'
 import { throwDice, chooseRow } from './yatzy'
-import { chatMessage } from './shared'
+import { chatMessage, command } from './shared'
 import { chooseColumn } from './connect4'
 
 export type socketWithAuth = io.Socket & {
@@ -18,4 +18,5 @@ export default (socket: socketWithAuth)=>{
     socket.on('choose row', (data)=> chooseRow(socket, data));
     socket.on('chat message', (data)=> chatMessage(socket, data));
     socket.on('choose column', (data)=> chooseColumn(socket, data));
+    socket.on('command', (data)=> command(socket, data));
 }

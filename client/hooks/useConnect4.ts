@@ -30,9 +30,19 @@ export default (gameId: string)=>{
 
         socket.on('new player', (data)=>{
             setPlayers(o => [...o, data]);
+            pushSystemInfo(`${data.name} joined`)
         });
         socket.on('next turn', (data)=>{
             setTurn(data);
+        });
+        socket.on('start', ()=>{
+            pushSystemInfo('start');
+        });
+        socket.on('reset', (data)=>{
+            if(!data) return;
+            setPlayers(data.players);
+            setTurn(data.turn);
+            setBoard(data.fields);
         });
         socket.on('field selected', (data)=>{
             console.log('column selected', data);
