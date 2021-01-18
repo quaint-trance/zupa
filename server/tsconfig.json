@@ -6,13 +6,17 @@
       "lib": ["es6"],                           
       "allowJs": true,                          
       "outDir": "build",                        
-      "rootDir": "./",                         
+      "rootDir": "./src",                         
       "strict": true,                           
       "noImplicitAny": true,                    
       "esModuleInterop": true,                  
       "resolveJsonModule": true,                
       "skipLibCheck": true,                     
       "forceConsistentCasingInFileNames": true,
-      "types": [ "node", "jest" ],
+      "types": [ "node", "jest" ]
     },
+    "exclude": [
+      "build",
+      "__tests__"
+    ]
 }

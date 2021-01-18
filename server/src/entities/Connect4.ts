@@ -95,7 +95,6 @@ export default class Connect4 implements Connect4Data{
         }
         this.fields[column][index] = this.getCurrentPlayer().id;
         const data = {column, row: index, id: this.getCurrentPlayer().id };
-        console.log('4', data)
         this.eventStack.push({name: 'field selected', payload: data});
         this.nextTurn();
         return index;

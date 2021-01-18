@@ -13,7 +13,7 @@ const Dice:React.FC<props> = ({score, onClick, selected}) =>{
         <Container onClick={onClick} style={{borderWidth: selected?'2px':'1px'}}>
         
             <Dot style={[2, 3, 4, 5, 6].includes(score) ? {} : {opacity: 0}}/>
-            <Dot style={[].includes(score) ? {} : {opacity: 0}}/>
+            <Dot style={[-3].includes(score) ? {} : {opacity: 0}}/>
             <Dot style={[4, 5, 6].includes(score) ? {} : {opacity: 0}}/>
             
             <Dot style={[6].includes(score) ? {} : {opacity: 0}}/>
@@ -21,7 +21,7 @@ const Dice:React.FC<props> = ({score, onClick, selected}) =>{
             <Dot style={[6].includes(score) ? {} : {opacity: 0}}/>
             
             <Dot style={[4, 5, 6].includes(score) ? {} : {opacity: 0}}/>
-            <Dot style={[].includes(score) ? {} : {opacity: 0}}/>
+            <Dot style={[-3].includes(score) ? {} : {opacity: 0}}/>
             <Dot style={[2, 3, 4, 5, 6].includes(score) ? {} : {opacity: 0}}/>            
         
         </Container>

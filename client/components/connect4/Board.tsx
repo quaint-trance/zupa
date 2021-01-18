@@ -1,7 +1,6 @@
-import { useRef, useEffect } from 'react'
 import styled from '@emotion/styled'
-import { RiSendPlaneFill } from 'react-icons/ri'
 import { Player } from '../../../server/src/entities/Yatzy'
+import Circle from './Circle'
 
 interface props{
     board: string[][];
@@ -20,10 +19,8 @@ const Board:React.FC<props> = ({ board, chooseColumn, players }) =>{
             {board.map((column, columnIndex)=>(
                 <div onClick={()=>handleClick(columnIndex)}>
                     {column.map((row)=>{
-                        if(row === '' || !row) return <div></div>;
-                        return <div style={{background: colors[players.findIndex(p=>p.id===row)]}}></div>
-                    }
-                    )}
+                        return <Circle row={ players.findIndex(p=>p.id===row)} />
+                    })}
                 </div>
             ))}
         </Container>
@@ -31,23 +28,40 @@ const Board:React.FC<props> = ({ board, chooseColumn, players }) =>{
 }
 
 const Container = styled.div`
-    height: 100vh;
-    padding: 20px 50px 20px 20px;
+    padding: 20px;
+    overflow: hidden;
 
     display: flex;
+
+    & image{
+        display: none !important;
+    }
     
     & > div{
         flex: 1;
-        border: black 1px solid;
         
         display: flex;
         flex-direction: column-reverse;
         
         & > div{
-            border: black 1px solid;
             flex: 1;
         }
+
+        &:hover{
+            background-color: rgba(255, 255, 255, 0.13);
+        }
+        
+        &+div{
+            border-left: #ffffff 3px solid;
+        }
+        &:first-of-type{
+            border-left: #ffffff 3px solid;
+        }
+        &:last-of-type{
+            border-right: #ffffff 3px solid;
+        }
     }
+
 `
 
 const colors = [

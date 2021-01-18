@@ -3,7 +3,6 @@ import server from './server';
 import domainFactory from './domainFactory'
 import {resolve} from 'path'
 import gamesStore from './infrastructure/gamesStore';
-import gamesStoreSQL from './infrastructure/gamesStoreSQL';
 import EventEmitter from './infrastructure/EventEmitter';
 
 dotenv.config({path: resolve(__dirname, "./.env")});

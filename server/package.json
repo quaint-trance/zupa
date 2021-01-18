@@ -1,11 +1,12 @@
 {
-  "name": "server",
+  "name": "zupa-server",
   "version": "1.0.0",
   "description": "",
   "main": "src/index.ts",
   "scripts": {
     "dev": "nodemon",
-    "test": "jest --verbose || true"
+    "test": "jest --verbose || true",
+    "build":"npx tsc"
   },
   "author": "",
   "license": "ISC",

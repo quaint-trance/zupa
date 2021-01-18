@@ -1,3 +1,4 @@
+//@ts-nocheck
 import EventEmitter from '../types/EventEmitter';
 import GamesStore, { Game } from '../types/GameStore'
 import { PrismaClient } from '@prisma/client'

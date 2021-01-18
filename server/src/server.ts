@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+//import { PrismaClient } from '@prisma/client'
 import cors from 'cors'
 import express from 'express'
 import { Server } from 'socket.io'
@@ -19,7 +19,7 @@ export default()=>{
     });
 
 
-    const prisma = new PrismaClient()
+    //const prisma = new PrismaClient()
     //prisma.yatzy.deleteMany({}).then(res=> console.log('deleted'));
 
 
