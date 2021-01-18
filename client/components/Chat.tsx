@@ -27,9 +27,9 @@ const Chat:React.FC<props> = ({messages, sendMessage}) =>{
         <Container>
                 <div ref={divRef}>
                     {messages.map(m=>
-                        <div key={m.content+m.author} style={m.author==='$me$'?{background: '#6ad48d', marginLeft: 'auto'}:{}}>
+                        <Message key={m.content+m.author} author={m.author}>
                             {m.content}
-                        </div>    
+                        </Message>    
                     )}
                 </div>
                 <form>
@@ -40,9 +40,37 @@ const Chat:React.FC<props> = ({messages, sendMessage}) =>{
     )
 }
 
+interface MessageProps{
+    author: '$me$' | '$system$' | string;
+}
+
+const Message = styled.div<MessageProps>`
+    margin: 3px 0;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 20px;
+    max-width: 65%;
+    overflow-wrap: break-word;
+    ${props=>{
+        if(props.author === '$system$') return `
+            background-color: #d46d6a;
+            align-self: center;
+            max-width: 100%;
+        `;
+        if(props.author === '$me$') return `
+            background-color: #6ad48d;
+            align-self: flex-end;
+        `;
+        return `
+            background-color: #eeeeee;
+            align-self: flex-start;
+        `;
+    }}
+`
+
 const Container = styled.div`
     height: 100vh;
-    padding: 20px 50px 20px 20px;
+    padding: 20px 20px 20px 20px;
     background-color: rgba(209, 104, 104, 0);
     display: grid;
     grid-template: 1fr 50px / 1fr;
@@ -51,6 +79,10 @@ const Container = styled.div`
             overflow-y: scroll;
             max-height: 100%;
             padding: 10px;
+            margin-bottom: 10px;
+
+            display: flex;
+            flex-direction: column;
             
             &::-webkit-scrollbar {
                 width: 5px;
@@ -63,14 +95,6 @@ const Container = styled.div`
                 border-radius: 60px;
             }
 
-            & > div{
-                background-color: rgb(235, 235, 235);
-                margin: 10px 0;
-                color: black;
-                padding: 5px 10px;
-                border-radius: 20px;
-                max-width: 65%;
-            }
         }
         & > form{
             background-color: rgba(236, 235, 235, 0);

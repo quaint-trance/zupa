@@ -37,7 +37,7 @@ const Container = styled.div`
     color: white;
     display: grid;
 
-    grid-template:  50px 1fr / .8fr 1fr .8fr;
+    grid-template:  50px 1fr / .6fr 1fr .8fr;
 `
 const Players = styled.div`
     grid-row: 1 / 2;

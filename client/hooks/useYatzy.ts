@@ -1,17 +1,16 @@
 import { useState, useEffect, useRef } from 'react'
 import { Player } from '../../server/src/entities/Yatzy'
 import { io, Socket }  from 'socket.io-client'
-import { useRouter } from 'next/router'
 import ENDPOINT from '../ENDPOINT'
+import useChat from './useChat'
 
 export default (gameId: string)=>{
     const [dice, setDice] = useState([1, 2, 3, 4, 5].map(e=>({score: e, throwRefresh: 0})));
     const [players, setPlayers] = useState<Player[]>([]);
     const [turn, setTurn] = useState(-1);
     const socketRef = useRef<Socket | undefined>();
-    const [messages, setMessages] = useState<{author: string, content: string}[]>([]);
 
-    const router = useRouter();
+    const { messages, sendMessage, pushSystemInfo } = useChat(socketRef, gameId);
 
     useEffect(() => {
         if(!gameId) return;
@@ -48,12 +47,10 @@ export default (gameId: string)=>{
                return [...o];
            })
         });
-        socket.on('chat message', (data: {author: string, content: string})=>{
-            setMessages(o=>[...o, data]);
-        });
+        
         socket.on('win', (data: {name: string})=>{
             console.log(data);
-            setMessages(o=>[...o, {content: `${data.name} wins`, author: '$server$'}])
+            pushSystemInfo(`${data.name} wins`);
         });
 
         return () => {
@@ -70,12 +67,6 @@ export default (gameId: string)=>{
     const chooseRow = (row: number) =>{
         if(!socketRef.current) return;
         socketRef.current.emit('choose row', row);
-    }
-
-    const sendMessage = (content: string) =>{
-        if(!socketRef.current) return;
-        socketRef.current.emit('chat message', {content, author: localStorage.getItem(`name-${gameId}`)});
-        setMessages(o=>[...o, {content, author: '$me$'}]);
     }
 
     return{
