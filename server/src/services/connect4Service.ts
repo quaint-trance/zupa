@@ -51,6 +51,15 @@ export default class Connect4Service{
         return true;
     }
 
+    async kickPlayer(token: string, id: string){
+        const [ game, playerId ] = await this.hydrateFromToken(token);
+        if( !game || !playerId ) return null;
+        
+        const result = game.kickPlayer(id, playerId);
+        this.gamesStore.save({...game.getAll(), t: 'connect4'});
+        return result;
+    }
+
     async chooseColumn(token: string, row: number){
         const [ game, playerId ] = await this.hydrateFromToken(token);
         if( !game || !playerId ) return null;

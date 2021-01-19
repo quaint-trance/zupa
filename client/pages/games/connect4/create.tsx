@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import styled from '@emotion/styled'
 import useCreate from '../../../hooks/useCreate'
+import { maxHeaderSize } from 'http'
 
 interface props{
 
@@ -11,13 +12,21 @@ const Create:React.FC<props> = () =>{
 
     const {isLoading, isError, mutate} = useCreate('connect4')
     
-    const [playerName, setPlayerName] = useState( localStorage?.getItem('name') || '');
+    const [playerName, setPlayerName] = useState( (window && localStorage?.getItem('name')) || '');
     const [columns, setColumns] = useState('7');
     const [rows, setRows] = useState('6');
     const [connectToWin, setConnectToWin] = useState('4');
+    const [error, setError] = useState('');
 
     const handleClick = (e) =>{
         e.preventDefault();
+
+        if(
+            parseInt(columns) > 30 || 
+            parseInt(rows) > 30 || 
+            Math.max(parseInt(columns), parseInt(rows)) < parseInt(connectToWin)
+        ) return setError('za dużo lmao');
+
         mutate({
             playerName,
             size:{
@@ -54,6 +63,7 @@ const Create:React.FC<props> = () =>{
                     {isLoading && <div>loading</div>}
                     {isError && <div>error</div>}
                     {!isError && !isLoading && <button onClick={handleClick}>create</button>}
+                    {error && <span>{error}</span>}
                 </form>
             </Container>
         </div>
@@ -119,6 +129,11 @@ const Container = styled.div`
             border: 2px solid white;
             grid-column: 1 / 4;
             cursor: pointer;
+        }
+
+        & > span:last-of-type{
+            text-align: center;
+            grid-column: 1 / 4;
         }
     }
 `

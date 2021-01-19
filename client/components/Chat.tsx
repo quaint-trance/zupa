@@ -2,6 +2,8 @@ import { useRef, useEffect } from 'react'
 import Head from 'next/head'
 import styled from '@emotion/styled'
 import { RiSendPlaneFill } from 'react-icons/ri'
+import ReactHtmlParser from 'react-html-parser'
+
 interface props{
     messages: {author: string, content: string}[],
     sendMessage: (content: string)=> any;
@@ -28,7 +30,7 @@ const Chat:React.FC<props> = ({messages, sendMessage}) =>{
                 <div ref={divRef}>
                     {messages.map(m=>
                         <Message key={m.content+m.author} author={m.author}>
-                            {m.content}
+                            {ReactHtmlParser(m.content)}
                         </Message>    
                     )}
                 </div>
@@ -49,21 +51,24 @@ const Message = styled.div<MessageProps>`
     color: black;
     padding: 10px 15px;
     border-radius: 20px;
-    max-width: 65%;
     overflow-wrap: break-word;
+    white-space: pre-wrap;
     ${props=>{
         if(props.author === '$system$') return `
-            background-color: #d46d6a;
-            align-self: center;
-            max-width: 100%;
+        background-color: #d46d6a;
+        align-self: center;
+        width: 100%;
+        text-align: center;
         `;
         if(props.author === '$me$') return `
             background-color: #6ad48d;
             align-self: flex-end;
+            max-width: 65%;
         `;
         return `
             background-color: #eeeeee;
             align-self: flex-start;
+            max-width: 65%;
         `;
     }}
 `

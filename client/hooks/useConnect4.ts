@@ -38,6 +38,13 @@ export default (gameId: string)=>{
         socket.on('start', ()=>{
             pushSystemInfo('start');
         });
+        socket.on('kick', ({kicked, by}:{kicked: string, by: string})=>{
+            //const kickedPlayer = players.find(p=> p.id == kicked);
+            //const byPlayer = players.find(p=> p.id == by);
+            console.log(players);
+            //setPlayers(o => [...o.filter(p=> p.id !== kicked)]);
+            //pushSystemInfo(`${kickedPlayer?.name} was kicked by ${byPlayer?.name}`);
+        });
         socket.on('reset', (data)=>{
             if(!data) return;
             setPlayers(data.players);

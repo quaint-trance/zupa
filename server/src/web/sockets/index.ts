@@ -18,5 +18,5 @@ export default (socket: socketWithAuth)=>{
     socket.on('choose row', (data)=> chooseRow(socket, data));
     socket.on('chat message', (data)=> chatMessage(socket, data));
     socket.on('choose column', (data)=> chooseColumn(socket, data));
-    socket.on('command', (data)=> command(socket, data));
+    socket.on('command', (data, callback)=> command(socket, data, callback));
 }

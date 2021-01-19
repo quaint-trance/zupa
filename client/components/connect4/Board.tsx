@@ -67,7 +67,7 @@ const Container = styled.div`
 const colors = [
     'coral',
     'lightblue',
-    'lightgreen'
+    'lightgreen',
 ]
 
 

@@ -10,7 +10,7 @@ export interface Player{
 
 export interface Connect4Data{
     id: string;
-    players: any[];
+    players: Player[];
     fields: string[][];
     turn: number;
     eventStack: eventType[];
@@ -107,6 +107,11 @@ export default class Connect4 implements Connect4Data{
         return newPlayer;
     }
 
+    kickPlayer(id: string, by: string){
+        this.players = this.players.filter(player => player.id !== id);
+        this.eventStack.push({name:'kick', payload: {kicked: id, by}});
+    }
+
     win(){
         this.eventStack.push({name:'win', payload: this.getCurrentPlayer()});
         this.turn = -5;
@@ -120,6 +125,8 @@ export default class Connect4 implements Connect4Data{
 
 
     chooseColumn(column: number){
+        const currentPlayer = this.getCurrentPlayer();
+        if(!currentPlayer) return;
         if(!this.fields[column]) return null;
         if(this.fields[column][this.fields[column].length-1]) return null;
         let index = 0;
@@ -129,8 +136,8 @@ export default class Connect4 implements Connect4Data{
                 break;
             }
         }
-        this.fields[column][index] = this.getCurrentPlayer().id;
-        const data = {column, row: index, id: this.getCurrentPlayer().id };
+        this.fields[column][index] = currentPlayer.id;
+        const data = {column, row: index, id: currentPlayer.id };
         this.eventStack.push({name: 'field selected', payload: data});
         this.nextTurn();
         return index;

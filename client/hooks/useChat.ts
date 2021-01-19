@@ -11,6 +11,8 @@ export default (socketRef: React.MutableRefObject<Socket | undefined>, gameId: s
             setMessages(o=>[...o, data]);
         });
 
+        pushSystemInfo('type <b>/help</b> for help')
+
     }, [socketRef.current]);
 
     const pushSystemInfo = (content: string) =>{
@@ -22,13 +24,23 @@ export default (socketRef: React.MutableRefObject<Socket | undefined>, gameId: s
 
         if(content[0]=='/'){
 
-            socketRef.current.emit('command', {content}, (back: string)=>{
-                pushSystemInfo(back);
+            if(content === '/help') return pushSystemInfo(helpMessage);
+            if(content === '/clear') return setMessages([]);
+            
+
+            socketRef.current.emit('command', {content}, (back: {name: string, payload: any})=>{
+                if(back.name === 'unknown') pushSystemInfo('unknown command, type <b>/help</b> for help');
+                else if(back.name === 'players'){
+                    pushSystemInfo(back.payload.map((p, i)=>(`<b>${p.name}\n</b>${p.id} \n\n`)))
+                }
+                else pushSystemInfo(back.name);
             });
         }
-        else socketRef.current.emit('chat message', {content, author: localStorage.getItem(`name-${gameId}`), gameId});
+        else{
+            setMessages(o=>[...o, {content, author: '$me$'}]);
+            socketRef.current.emit('chat message', {content, author: localStorage.getItem(`name-${gameId}`), gameId});
+        }
         
-        setMessages(o=>[...o, {content, author: '$me$'}]);
     }
 
     return{
@@ -37,3 +49,13 @@ export default (socketRef: React.MutableRefObject<Socket | undefined>, gameId: s
         sendMessage,
     }
 }
+
+
+
+const helpMessage = `<b>/new</b> create new game
+<b>/reset</b> create new game
+<b>/start</b> start game
+<b>/players</b> list players
+<b>/clear</b> clear chat
+<b>/help</b> show this message
+`
