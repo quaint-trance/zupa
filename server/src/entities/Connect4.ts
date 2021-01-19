@@ -6,6 +6,7 @@ import checkWinnerConnect4 from '../utils/checkWinnerConnect4';
 export interface Player{
     id: string;
     name: string;
+    score: number;
 }
 
 export interface Connect4Data{
@@ -75,6 +76,12 @@ export default class Connect4 implements Connect4Data{
         return this.players[this.turn];
     }
 
+    getScoreboard(){
+        return this.players
+            .map(p=>({score: p.score, name: p.name}))
+            .sort((a, b)=> a.score - b.score);
+    }
+
     getData(){
         return {
             id: this.id,
@@ -85,6 +92,7 @@ export default class Connect4 implements Connect4Data{
             connectToWin: this.connectToWin,
         };
     }
+
     getAll(){
         return {
             ...this.getData(),
@@ -100,7 +108,8 @@ export default class Connect4 implements Connect4Data{
     joinPlayer(name: string){
         const newPlayer:Player = {
             id: v4(),
-            name
+            name,
+            score: 0,
         };
         this.players.push(newPlayer);
         this.eventStack.push({name: 'new player', payload: newPlayer});
@@ -113,6 +122,9 @@ export default class Connect4 implements Connect4Data{
     }
 
     win(){
+        const currentPlayer = this.getCurrentPlayer();
+        if(!currentPlayer) return;
+        currentPlayer.score ++;
         this.eventStack.push({name:'win', payload: this.getCurrentPlayer()});
         this.turn = -5;
     }

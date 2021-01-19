@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import styled from '@emotion/styled'
 
@@ -16,12 +16,16 @@ const Join:React.FC<props> = () =>{
         'connect4',
         typeof router.query.gameId==='object' ? router.query.gameId[0] : router.query.gameId || '',
     );
-    
-    const [playerName, setPlayerName] = useState(localStorage?.getItem('name') || '');
+    const [playerName, setPlayerName] = useState('');
+
+    useEffect(()=>{
+        const temp = localStorage?.getItem('name');
+        if(temp) setPlayerName(temp);
+    }, []);
 
     const handleClick = (e)=>{
         e.preventDefault();
-        if(!playerName)
+        if(!playerName) return;
         mutate({
             playerName
         });

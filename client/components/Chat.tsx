@@ -28,8 +28,8 @@ const Chat:React.FC<props> = ({messages, sendMessage}) =>{
     return(
         <Container>
                 <div ref={divRef}>
-                    {messages.map(m=>
-                        <Message key={m.content+m.author} author={m.author}>
+                    {messages.map((m, i)=>
+                        <Message key={i+m.author} author={m.author}>
                             {ReactHtmlParser(m.content)}
                         </Message>    
                     )}

@@ -11,7 +11,7 @@ const Header:React.FC<props> = ({ players, turn }) =>{
     return(
         <Container>
            {players.map((player, playerIndex)=>
-                <Name turn={playerIndex===turn} color={colors[playerIndex]} >{player.name}</Name>
+                <Name turn={playerIndex===turn} color={colors[playerIndex]} key={playerIndex}  >{player.name}</Name>
             )}
         </Container>
     )

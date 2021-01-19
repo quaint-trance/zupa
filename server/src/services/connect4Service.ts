@@ -46,6 +46,7 @@ export default class Connect4Service{
         const [ game, playerId ] = await this.hydrateFromToken(token);
         if( !game || !playerId ) return null;
         
+        if( game.turn >= 0 ) return;
         const result = game.startGame();
         this.gamesStore.save({...game, t: 'connect4'});
         return true;
@@ -78,5 +79,13 @@ export default class Connect4Service{
         const result = game.reset();
         this.gamesStore.save({...game.getAll(), t: 'connect4'});
         return result;
+    }
+
+    async getScoreboard(gameId: string){
+        const gameData = await this.gamesStore.findById(gameId);
+        if(!gameData || gameData.t !== 'connect4') return null;
+        const game = Connect4.hydrate(gameData);
+
+        return game.getScoreboard();
     }
 };

@@ -31,7 +31,10 @@ export default (socketRef: React.MutableRefObject<Socket | undefined>, gameId: s
             socketRef.current.emit('command', {content}, (back: {name: string, payload: any})=>{
                 if(back.name === 'unknown') pushSystemInfo('unknown command, type <b>/help</b> for help');
                 else if(back.name === 'players'){
-                    pushSystemInfo(back.payload.map((p, i)=>(` <b> ${p.name} \n </b> ${p.id} \n \n `)))
+                    pushSystemInfo(back.payload.map((p, i)=>(`\n<b>${p.name}\n</b>${p.id}\n`)).join(''));
+                }
+                else if(back.name === 'scoreboard'){
+                    pushSystemInfo(back.payload.map((p, i)=>(`${i+1}. ${p.name} ${p.score}\n`)).join(''));
                 }
                 else pushSystemInfo(back.name);
             });
