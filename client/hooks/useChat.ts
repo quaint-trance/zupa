@@ -31,7 +31,7 @@ export default (socketRef: React.MutableRefObject<Socket | undefined>, gameId: s
             socketRef.current.emit('command', {content}, (back: {name: string, payload: any})=>{
                 if(back.name === 'unknown') pushSystemInfo('unknown command, type <b>/help</b> for help');
                 else if(back.name === 'players'){
-                    pushSystemInfo(back.payload.map((p, i)=>(`<b>${p.name}\n</b>${p.id} \n\n`)))
+                    pushSystemInfo(back.payload.map((p, i)=>(` <b> ${p.name} \n </b> ${p.id} \n \n `)))
                 }
                 else pushSystemInfo(back.name);
             });

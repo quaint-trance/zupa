@@ -24,14 +24,12 @@ export const command =  async(socket: socketWithAuth, data: {content: string}, c
         const game = await domain.gameStoreService.getGame(gameId);
         if(!game) throw new Error();
         if( game.t === 'connect4'){
-            console.log(data.content);
             if(data.content === '/start') domain.connect4Service.start(token);
             else if(data.content === '/reset') domain.connect4Service.reset(token);
             else if(data.content === '/new') domain.connect4Service.reset(token);
             else if(data.content === '/players') callback({name:'players', payload: game.players});
             else if(data.content.includes('/kick')){
-                console.log('KICK')
-                const id = data.content.replace('/kick ', '');
+                let id = data.content.replace('/kick ', '');
                 domain.connect4Service.kickPlayer(token, id);
             }
             else callback({name: 'unknown'});

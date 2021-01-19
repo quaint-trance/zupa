@@ -21,7 +21,6 @@ export default (gameId: string)=>{
         });
         socketRef.current = socket;
         socket.emit('checkin', { gameId }, (data)=>{
-            console.log(data);
             if(!data) return;
             setPlayers(data.players);
             setTurn(data.turn);
@@ -39,11 +38,12 @@ export default (gameId: string)=>{
             pushSystemInfo('start');
         });
         socket.on('kick', ({kicked, by}:{kicked: string, by: string})=>{
-            //const kickedPlayer = players.find(p=> p.id == kicked);
-            //const byPlayer = players.find(p=> p.id == by);
-            console.log(players);
-            //setPlayers(o => [...o.filter(p=> p.id !== kicked)]);
-            //pushSystemInfo(`${kickedPlayer?.name} was kicked by ${byPlayer?.name}`);
+            setPlayers(o=>{
+                const byPlayer = o.find(p=> p.id == by);
+                const kickedPlayer = o.find(p=> p.id == kicked);
+                pushSystemInfo(`${kickedPlayer?.name} was kicked by ${byPlayer?.name}`);
+                return [...o.filter(p=> p.id !== kicked)];
+            })
         });
         socket.on('reset', (data)=>{
             if(!data) return;
@@ -53,11 +53,9 @@ export default (gameId: string)=>{
             pushSystemInfo('reset');
         });
         socket.on('field selected', (data)=>{
-            console.log('column selected', data);
             setBoard(o=>{
                 o[data.column][data.row] = data.id;
                 return [...o];
-                
             });
         });
         socket.on('win', (data: {name: string})=>{
@@ -69,6 +67,10 @@ export default (gameId: string)=>{
         }
     
     }, [gameId]);
+
+    useEffect(() => {
+        console.log(players)
+    }, [players]);
 
     const chooseColumn = (column: number) =>{
         if(!socketRef.current) return;
