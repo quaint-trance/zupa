@@ -11,7 +11,7 @@ const Header:React.FC<props> = ({ players, turn }) =>{
     return(
         <Container>
            {players.map((player, playerIndex)=>
-                <Name turn={playerIndex===turn}>{player.name}</Name>
+                <Name turn={playerIndex===turn} color={colors[playerIndex]} >{player.name}</Name>
             )}
         </Container>
     )
@@ -24,13 +24,22 @@ const Container = styled.div`
 `
 interface NameProps{
     turn: boolean;
+    color: string;
 }
 const Name = styled.div<NameProps>`
     font-size: 30px;
-    font-weight: ${props => props.turn ? '900' : '300'};
-    text-decoration: ${props => props.turn ? 'underline' : 'none'}
+    font-weight: ${props => props.turn ? '900' : '400'};
+    text-decoration: ${props => props.turn ? 'underline' : 'none'};
+    color: ${props=>props.color};
 `
 
+const colors = [
+    'coral',
+    'lightblue',
+    'lightgreen',
+    'orange',
+    'pink'
+]
 
 
 export default Header;

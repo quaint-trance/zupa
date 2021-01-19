@@ -68,6 +68,8 @@ const colors = [
     'coral',
     'lightblue',
     'lightgreen',
+    'orange',
+    'pink'
 ]
 
 

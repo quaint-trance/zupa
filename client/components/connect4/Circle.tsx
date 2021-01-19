@@ -42,7 +42,9 @@ const Blank = styled.div`
 const colors = [
     'coral',
     'lightblue',
-    'lightgreen'
+    'lightgreen',
+    'orange',
+    'pink'
 ]
 
 
