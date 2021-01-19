@@ -17,9 +17,11 @@ const Join:React.FC<props> = () =>{
         typeof router.query.gameId==='object' ? router.query.gameId[0] : router.query.gameId || '',
     );
     
-    const [playerName, setPlayerName] = useState('');
+    const [playerName, setPlayerName] = useState(localStorage?.getItem('name') || '');
 
-    const handleClick = ()=>{
+    const handleClick = (e)=>{
+        e.preventDefault();
+        if(!playerName)
         mutate({
             playerName
         });
@@ -28,15 +30,15 @@ const Join:React.FC<props> = () =>{
     return(
         <div>
             <Container>
-                <section>
+                <form>
                     <h2>Join connect4 game</h2>
                     
                     <input value={playerName} type="text" placeholder="Your Name" onChange={(e)=>setPlayerName(e.target.value)} />
                     
                     {isLoading && <div>loading</div>}
                     {isError && <div>error</div>}
-                    {!isError && !isLoading && <div><button onClick={handleClick}>join</button></div>}
-                </section>
+                    {!isError && !isLoading && <button onClick={handleClick}>join</button>}
+                </form>
             </Container>
         </div>
     )
@@ -50,29 +52,62 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    & > section{
+    & > form{
         border: 2px solid white;
         border-radius: 20px;
         padding: 30px;
+        display: grid;
+        grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
+        grid-gap: 10px;
         
         & > h2{
             margin: 0 0 20px 0;
+            grid-column: 1 / 4;
+            text-align: center;
         }
+
+        & input{
+            font-size: 25px;
+            background-color: rgba(255, 0, 0, 0);
+            border: none;
+            border-bottom: 1px solid white;
+            color: white;
+            padding: 5px;
+        }
+
         & > input{
-            width: 100%;
+            grid-column: 1 /4;
         }
+
         & > div{
-            width: 100%;
-            margin: 10px 0 0 0;
-            & > button{
-                width: 100%;
-                color: white;
-                background-color: rgba(255, 0, 0, 0);
-                font-size: 20px;
-                font-weight: 800;
-                padding: 5px;
-                border: 2px solid white;
+            display: flex;
+            flex-direction: column;
+
+            & > label{   
+                color: #5d5d5d;
             }
+
+            & > input{
+                font-size: 20px;
+                max-width: 100px;
+            }
+        }
+
+        & > button{
+            width: 100%;
+            color: white;
+            background-color: rgba(255, 0, 0, 0);
+            font-size: 20px;
+            font-weight: 800;
+            padding: 5px;
+            border: 2px solid white;
+            grid-column: 1 / 4;
+            cursor: pointer;
+        }
+
+        & > span:last-of-type{
+            text-align: center;
+            grid-column: 1 / 4;
         }
     }
 `

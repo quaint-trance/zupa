@@ -12,7 +12,7 @@ const Create:React.FC<props> = () =>{
 
     const {isLoading, isError, mutate} = useCreate('connect4')
     
-    const [playerName, setPlayerName] = useState( (window && localStorage?.getItem('name')) || '');
+    const [playerName, setPlayerName] = useState( localStorage?.getItem('name') || '');
     const [columns, setColumns] = useState('7');
     const [rows, setRows] = useState('6');
     const [connectToWin, setConnectToWin] = useState('4');
