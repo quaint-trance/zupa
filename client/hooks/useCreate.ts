@@ -11,10 +11,11 @@ export default (gameType: string)=>{
     const handleSuccess = (data: {token: string, name: string, gameId: string}) =>{
         localStorage.setItem(`token-${data.gameId}`, data.token);
         localStorage.setItem(`name-${data.gameId}`, data.name);
+        localStorage.setItem(`name`, data.name);
         router.push(`/games/${gameType}?gameId=${data.gameId}`);
     };
 
-    const  {data, mutate, isLoading, isError } = useMutation( (playerName)=>
+    const  {data, mutate, isLoading, isError } = useMutation( (props:{playerName: string})=>
         fetch(ENDPOINT+`/${gameType}/create`, {
             method: "POST",
             headers: {
@@ -23,7 +24,7 @@ export default (gameType: string)=>{
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                playerName
+                ...props
             })
         }).then(res=>{
             return res.json();

@@ -1,3 +1,4 @@
+import { Console } from 'console';
 import { v4 } from'uuid'
 import { eventType } from '../types/EventEmitter';
 import checkWinnerConnect4 from '../utils/checkWinnerConnect4';
@@ -13,14 +14,19 @@ export interface Connect4Data{
     fields: string[][];
     turn: number;
     eventStack: eventType[];
+    size: {columns: number, rows: number};
+    connectToWin: number;
 }
 
 export default class Connect4 implements Connect4Data{
-    id: string;
-    players: any[];
-    fields: string[][];
-    turn: number;
-    eventStack: eventType[];
+    
+    id: Connect4Data['id'];
+    players: Connect4Data['players'];
+    fields: Connect4Data['fields'];
+    turn: Connect4Data['turn'];
+    eventStack: Connect4Data['eventStack'];
+    size: Connect4Data['size'];
+    connectToWin: Connect4Data['connectToWin'];
 
     constructor(data: Omit<Connect4Data, 'eventStack'>){
         this.id = data.id;
@@ -28,15 +34,20 @@ export default class Connect4 implements Connect4Data{
         this.fields = data.fields;
         this.turn = data.turn;
         this.eventStack = [];
+        this.size = data.size;
+        this.connectToWin = data.connectToWin;
     }
 
-    static create(){
+    static create(size:Connect4Data['size'] = {columns: 7, rows: 6}, connectToWin: number = 4){
         return new Connect4({
             id: v4(),
             turn: -1,
             players: [],
-            fields: new Array(7).fill(0).map(()=> new Array(6))
+            fields: new Array(size.columns).fill(0).map(()=> new Array(size.rows)),
+            size,
+            connectToWin,
         });
+
     }
 
     static hydrate(data: Omit<Connect4Data, 'eventStack'>){
@@ -47,14 +58,8 @@ export default class Connect4 implements Connect4Data{
 
     reset(){
         this.turn = -1,
-        this.fields = new Array(7).fill(0).map(()=> new Array(6));
-        this.eventStack.push({name: 'reset', 'payload': {
-            id: this.id,
-            players: this.players,
-            fields: this.fields,
-            turn: this.turn,
-        }});
-        console.log(this.getAll());
+        this.fields = new Array(this.size.columns).fill(0).map(()=> new Array(this.size.rows));
+        this.eventStack.push({name: 'reset', 'payload': this.getData() });
     }
 
     getId(){
@@ -70,12 +75,19 @@ export default class Connect4 implements Connect4Data{
         return this.players[this.turn];
     }
 
-    getAll(){
-        return{
+    getData(){
+        return {
             id: this.id,
             players: this.players,
             fields: this.fields,
             turn: this.turn,
+            size: this.size,
+            connectToWin: this.connectToWin,
+        };
+    }
+    getAll(){
+        return {
+            ...this.getData(),
             eventStack: this.eventStack
         }
     }
@@ -101,7 +113,7 @@ export default class Connect4 implements Connect4Data{
     }
 
     nextTurn(){
-        if(checkWinnerConnect4(this.fields)) return this.win();
+        if(checkWinnerConnect4(this.fields, this.connectToWin)) return this.win();
         this.turn = (this.turn+1)%this.players.length;
         this.eventStack.push({name:'next turn', payload: this.turn});
     }

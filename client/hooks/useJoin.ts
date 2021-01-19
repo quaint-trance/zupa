@@ -8,13 +8,14 @@ export default (gameType: string, gameId: string)=>{
     
     const router = useRouter();
 
-    const handleSuccess = (data: {token: string, name: string, gameId: string}) =>{
+    const handleSuccess = (data: {token: string, name: string, gameId: string, settings: any}) =>{
         localStorage.setItem(`token-${data.gameId}`, data.token);
         localStorage.setItem(`name-${data.gameId}`, data.name);
+        localStorage.setItem(`name`, data.name);
         router.push(`/games/${gameType}?gameId=${data.gameId}`);
     }
 
-    const  {data, mutate, isLoading, isError } = useMutation( (playerName)=>
+    const  {data, mutate, isLoading, isError } = useMutation( (props:{playerName: string})=>
         fetch(ENDPOINT+`/${gameType}/join`, {
             method: "POST",
             headers: {
@@ -23,8 +24,9 @@ export default (gameType: string, gameId: string)=>{
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                playerName,
-                gameId
+                ...props,
+                gameId,
+                
             })
         }).then(res=>{
             return res.json();
@@ -44,7 +46,7 @@ export default (gameType: string, gameId: string)=>{
         if(
             localStorage.getItem(`token-${gameId}`)
             && localStorage.getItem(`name-${gameId}`)
-        ) router.push(`/games/yatzy?gameId=${gameId}`);
+        ) router.push(`/games/${gameType}?gameId=${gameId}`);
     }, [])
 
 

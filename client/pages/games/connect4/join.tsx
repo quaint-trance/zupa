@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useState } from 'react'
 import Head from 'next/head'
 import styled from '@emotion/styled'
 
@@ -12,18 +12,30 @@ interface props{
 const Join:React.FC<props> = () =>{
 
     const router = useRouter();
-    const { data, isError, isLoading, mutate } = useJoin('connect4', typeof router.query.gameId==='object' ? router.query.gameId[0] : router.query.gameId || '')
-    const inputRef = useRef<HTMLInputElement | null>(null);
+    const { data, isError, isLoading, mutate } = useJoin(
+        'connect4',
+        typeof router.query.gameId==='object' ? router.query.gameId[0] : router.query.gameId || '',
+    );
+    
+    const [playerName, setPlayerName] = useState('');
+
+    const handleClick = ()=>{
+        mutate({
+            playerName
+        });
+    }
 
     return(
         <div>
             <Container>
                 <section>
                     <h2>Join connect4 game</h2>
-                    <input ref={inputRef} type="text" placeholder="Your Name"/>
+                    
+                    <input value={playerName} type="text" placeholder="Your Name" onChange={(e)=>setPlayerName(e.target.value)} />
+                    
                     {isLoading && <div>loading</div>}
                     {isError && <div>error</div>}
-                    {!isError && !isLoading && <div><button onClick={()=>mutate(inputRef.current?.value || '')}>join</button></div>}
+                    {!isError && !isLoading && <div><button onClick={handleClick}>join</button></div>}
                 </section>
             </Container>
         </div>

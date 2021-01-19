@@ -47,7 +47,7 @@ interface MessageProps{
 const Message = styled.div<MessageProps>`
     margin: 3px 0;
     color: black;
-    padding: 5px 10px;
+    padding: 10px 15px;
     border-radius: 20px;
     max-width: 65%;
     overflow-wrap: break-word;

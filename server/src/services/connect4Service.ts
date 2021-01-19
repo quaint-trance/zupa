@@ -20,8 +20,13 @@ export default class Connect4Service{
         return [Connect4.hydrate(gameData), payload.playerId];
     }
 
-    async createGame(playerName: string){
-        const result = Connect4.create();
+    async createGame(playerName: string, size?:{columns: number, rows: number}, connectToWin?: number){
+        let result;
+        if( size && connectToWin) result = Connect4.create(size, connectToWin);
+        else if( size ) result = Connect4.create(size);
+        else if( connectToWin ) result = Connect4.create(undefined ,connectToWin);
+        else result = Connect4.create();
+
         await this.gamesStore.push({...result, t: 'connect4'});
         return this.joinPlayer(result.id, playerName);
     }

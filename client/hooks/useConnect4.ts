@@ -43,6 +43,7 @@ export default (gameId: string)=>{
             setPlayers(data.players);
             setTurn(data.turn);
             setBoard(data.fields);
+            pushSystemInfo('reset');
         });
         socket.on('field selected', (data)=>{
             console.log('column selected', data);
