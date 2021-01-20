@@ -15,6 +15,11 @@ const Join:React.FC<props> = () =>{
     const { data, isError, isLoading, mutate } = useJoin('yatzy', typeof router.query.gameId==='object' ? router.query.gameId[0] : router.query.gameId || '')
     const inputRef = useRef<HTMLInputElement | null>(null);
 
+    const handleClick = (e) =>{
+        e.preventDefault();
+        mutate({playerName: inputRef.current?.value || ''});
+    }
+
     return(
         <div>
             <Container>
@@ -23,7 +28,7 @@ const Join:React.FC<props> = () =>{
                     <input ref={inputRef} type="text" placeholder="Your Name"/>
                     {isLoading && <div>loading</div>}
                     {isError && <div>error</div>}
-                    {!isError && !isLoading && <div><button onClick={()=>mutate(inputRef.current?.value || '')}>join</button></div>}
+                    {!isError && !isLoading && <div><button onClick={handleClick}>join</button></div>}
                 </section>
             </Container>
         </div>

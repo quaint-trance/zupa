@@ -72,7 +72,7 @@ export default class Connect4 implements Connect4Data{
     }
 
     getCurrentPlayer(){
-        if(this.turn < 0) return null;
+        if(this.turn < 0 || !this.players[this.turn]) return null;
         return this.players[this.turn];
     }
 
@@ -96,7 +96,7 @@ export default class Connect4 implements Connect4Data{
     getAll(){
         return {
             ...this.getData(),
-            eventStack: this.eventStack
+           eventStack: this.eventStack
         }
     }
 
@@ -117,8 +117,16 @@ export default class Connect4 implements Connect4Data{
     }
 
     kickPlayer(id: string, by: string){
+        const turnId = this.players.find(player => player.id === id)?.id;
+        if(!turnId) return;
         this.players = this.players.filter(player => player.id !== id);
         this.eventStack.push({name:'kick', payload: {kicked: id, by}});
+        
+        if( turnId === id ) this.nextTurn();
+        else {
+            this.turn = this.players.findIndex(player => player.id === turnId);
+            this.eventStack.push({name:'next turn', payload: this.turn});
+        }
     }
 
     win(){

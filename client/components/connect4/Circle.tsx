@@ -10,7 +10,7 @@ const Circle:React.FC<props> = ({ row }) =>{
 
     
     return(
-        <Square color={colors[row]} />
+        <Square color={colors[row >= 0 ? row : 4]} />
     )
 }
 

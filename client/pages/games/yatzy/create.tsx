@@ -14,6 +14,11 @@ const GamesList:React.FC<props> = () =>{
     const {isLoading, isError, mutate} = useCreate('yatzy')
     const inputRef = useRef<HTMLInputElement | null>(null);
 
+    const handleClick = (e) =>{
+        e.preventDefault();
+        mutate({playerName: inputRef.current?.value || ''});
+    }
+
     return(
         <div>
             <Container>
@@ -22,7 +27,7 @@ const GamesList:React.FC<props> = () =>{
                     <input ref={inputRef} type="text" placeholder="Your Name"/>
                     {isLoading && <div>loading</div>}
                     {isError && <div>error</div>}
-                    {!isError && !isLoading && <div><button onClick={()=>mutate(inputRef.current?.value || '')}>create</button></div>}
+                    {!isError && !isLoading && <div><button onClick={handleClick}>create</button></div>}
                 </section>
             </Container>
         </div>

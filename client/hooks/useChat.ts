@@ -59,6 +59,8 @@ const helpMessage = `<b>/new</b> create new game
 <b>/reset</b> create new game
 <b>/start</b> start game
 <b>/players</b> list players
+<b>/scoreboard</b> show scoreboard
+<b>/kick id</b> kick player
 <b>/clear</b> clear chat
 <b>/help</b> show this message
 `
