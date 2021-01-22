@@ -1,17 +1,31 @@
 import styled from '@emotion/styled'
+import { useTransition, animated } from 'react-spring'
 
 interface props{
-   row: undefined | number;
+   playerNumber: undefined | number;
 }
 
-const Circle:React.FC<props> = ({ row }) =>{
+const Circle:React.FC<props> = ({ playerNumber }) =>{
 
-    if(row === undefined || row===-1) return <Blank />;
+    const transition = useTransition(true, null, {
+        from: {
+            transform: `translate(0, -100vh)`
+        },
+        enter: {
+            transform: `translate(0, 0)`
+        }
+    })
 
+    if( playerNumber === undefined || playerNumber ===-1) return <Blank />;
     
     return(
-        <Square color={colors[row >= 0 ? row : 4]} />
-    )
+        <>
+            {transition.map(({ item, key, props }) =>( 
+                <Square color={colors[playerNumber >= 0 ? playerNumber : 4]} style={props} key={key} />
+            ))}
+        </>
+    ) 
+    
 }
 
 const Full = styled.div`
@@ -28,10 +42,9 @@ const Full = styled.div`
     } 
 `
 
-const Square = styled.div`
+const Square = styled(animated.div)`
     height: 100%;
     margin: 10px;
-    
     background-color: ${props => props.color};
 `
 

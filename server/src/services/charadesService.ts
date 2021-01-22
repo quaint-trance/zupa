@@ -13,7 +13,7 @@ export default class CharadesService{
     async guess(token: string, charades: string){
         const [ game, playerId ] = await this.hydrateFromToken(token);
         if( !game || !playerId ) return null;
-        if( playerId === game.getCurrentPlayer()?.id ) return null;
+        //if( playerId === game.getCurrentPlayer()?.id ) return null;
         
         const result = game.guess(charades, playerId);
         this.gamesStore.save({...game.getAll(), t: 'charades'});

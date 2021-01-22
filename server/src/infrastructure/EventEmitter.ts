@@ -11,8 +11,8 @@ export default class EventEmitter implements EventEmitterType{
     }
 
     emit(events: eventType[], gameId: string){
-        events.reverse().forEach(event=>{
-            console.log(`emitting ${event.name} data ${JSON.stringify(event.payload)}`)
+        events.forEach(event=>{
+            //console.log(`emitting ${event.name} data ${JSON.stringify(event.payload)}`)
             this.io.to(gameId).emit(event.name, event.payload);
         });
     }

@@ -47,7 +47,7 @@ export default class Charades implements CharadesData{
         this.eventStack = [];
         this.canvas = data.canvas;
         this.charade = data.charade;
-    }
+    };
     
     addPath(path: Chunk){
         this.canvas.push(path);
@@ -66,25 +66,21 @@ export default class Charades implements CharadesData{
         const currentPlayer = this.getCurrentPlayer();
         if(!currentPlayer) return;
         currentPlayer.score ++;
-        this.eventStack.push({name:'guessed', payload: playerId});
+        this.eventStack.push({name:'guessed', payload: {playerId, ans: this.charade}});
         this.nextTurn();
     }
     
     nextTurn(){
         this.drawing = (this.drawing+1)%this.players.length;
-        const charade = randomCharade();
-        console.log('3', charade);
-        this.charade = charade;
         this.eventStack.push({name:'next turn', payload: this.drawing});
-        //console.log(`hasło: ${this.charade}`);
-        //console.log(`rysuje ${this.getCurrentPlayer()?.name}`);
-        console.log(this.drawing, this.charade);
+        this.charade = randomCharade();
+        this.reset();
     }
     
     reset(){
-        this.drawing = -1,
-        this.canvas = [];
-        this.eventStack.push({name: 'reset', 'payload': this.getData() });
+        //this.drawing = -1,
+        //this.canvas = [];
+        this.eventStack.push({name: 'reset'});
     }
     startGame(){
         this.drawing = 0;

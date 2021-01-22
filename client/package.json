@@ -10,6 +10,7 @@
   "dependencies": {
     "@emotion/react": "^11.1.4",
     "@emotion/styled": "^11.0.0",
+    "jsonwebtoken": "^8.5.1",
     "next": "10.0.4",
     "react": "17.0.1",
     "react-dom": "17.0.1",
@@ -20,6 +21,7 @@
     "socket.io-client": "^3.0.4"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^8.5.0",
     "@types/node": "^14.14.19",
     "@types/react": "^17.0.0",
     "@types/react-html-parser": "^2.0.1",

@@ -18,8 +18,8 @@ const Board:React.FC<props> = ({ board, chooseColumn, players }) =>{
         <Container>
             {board.map((column, columnIndex)=>(
                 <div key={columnIndex} onClick={()=>handleClick(columnIndex)}>
-                    {column.map((row, rowIndex)=>{
-                        return <Circle key={rowIndex} row={ players.findIndex(p=>p.id===row)} />
+                    {column.map((circle, circleIndex)=>{
+                        return <Circle key={circle+circleIndex} playerNumber={ players.findIndex(p=>p.id===circle)} />
                     })}
                 </div>
             ))}
