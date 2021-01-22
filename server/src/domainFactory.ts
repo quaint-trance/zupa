@@ -5,18 +5,22 @@ import GameStoreService from "./services/gameStoreService";
 import YatzyService from "./services/yatzyService";
 import Connect4Service from "./services/connect4Service";
 import GamesStore from "./types/GameStore";
+import Charades from "./entities/Charades";
+import CharadesService from "./services/charadesService";
 
 export default (gameStore: GamesStore)=>{
     const entities = {
         Yatzy,
         Token,
         Connect4,
+        Charades,
     };
 
     return{
         yatzyService: new YatzyService(gameStore),
         gameStoreService: new GameStoreService(gameStore),
         connect4Service: new Connect4Service(gameStore),
+        charadesService: new CharadesService(gameStore),
         entities,
     }
 }

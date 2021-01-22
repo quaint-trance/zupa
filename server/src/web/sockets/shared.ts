@@ -34,10 +34,22 @@ export const command =  async(socket: socketWithAuth, data: {content: string}, c
                 domain.connect4Service.kickPlayer(token, id);
             }
             else callback({name: 'unknown'});
-        }   
+        }
         if( game.t === 'yatzy' ){
             console.log(game.t, data.content);
         }
+        if( game.t === 'charades'){
+            if(data.content === '/start') domain.charadesService.start(token);
+            else if(data.content === '/reset') domain.charadesService.reset(token);
+            else if(data.content === '/new') domain.charadesService.reset(token);
+            else if(data.content === '/scoreboard') callback({name: 'scoreboard', payload: await domain.charadesService.getScoreboard(gameId)});
+            else if(data.content === '/players') callback({name:'players', payload: game.players});
+            else if(data.content.includes('/kick')){
+                let id = data.content.replace('/kick ', '');
+                domain.charadesService.kickPlayer(token, id);
+            }
+            else callback({name: 'unknown'});
+        }   
     }
     catch(err){
         console.error(err);
