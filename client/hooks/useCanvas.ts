@@ -10,7 +10,7 @@ export type typeStyle = {
 
 
 
-const useCanvas = ({width, height}, sendChunk: (chunk: Omit<Chunk, 'id'>)=>void , addChunk, clearCanvas, drawingState) =>{
+const useCanvas = ({width, height}, sendChunk: (chunk: Omit<Chunk, 'id'>)=>void , addChunk, clearCanvas, drawingState: boolean) =>{
     
     const canvasRef = useRef<null | HTMLCanvasElement>(null);
     const contextRef = useRef<null | CanvasRenderingContext2D>(null);
@@ -30,7 +30,7 @@ const useCanvas = ({width, height}, sendChunk: (chunk: Omit<Chunk, 'id'>)=>void 
     }
 
     const handleMouseUp = ( event )=>{
-        if( drawing.current === true ){
+        if( drawing.current === true && drawingState){
             drawLine( style.current,
                 coords.current.x, coords.current.y,
                 event.offsetX, event.offsetY - offset.current.y);
@@ -43,7 +43,7 @@ const useCanvas = ({width, height}, sendChunk: (chunk: Omit<Chunk, 'id'>)=>void 
     }
     
     const handleMouseMove = ( event )=>{
-        if( drawing.current === true ){
+        if( drawing.current === true && drawingState){
             stack.current.push({
                 x1: coords.current.x,
                 y1:coords.current.y,
@@ -60,7 +60,6 @@ const useCanvas = ({width, height}, sendChunk: (chunk: Omit<Chunk, 'id'>)=>void 
     
     const drawLine = (styledep: typeStyle, x1, y1, x2, y2) => {
         if(!contextRef.current || !styledep) return;
-        if(!drawingState) return;
 
         contextRef.current.beginPath();
         contextRef.current.strokeStyle = styledep.color;

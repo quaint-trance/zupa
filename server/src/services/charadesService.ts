@@ -28,6 +28,14 @@ export default class CharadesService{
         game.addPath(path);
         this.gamesStore.save({...game.getAll(), t: 'charades'});
     }
+
+    async getCharade(token: string){
+        const [ game, playerId ] = await this.hydrateFromToken(token);
+        if( !game || !playerId ) return null;
+        if( playerId !== game.getCurrentPlayer()?.id ) return null;
+        
+        return game.getData().charade;
+    }
     
     async start(token: string){
         const [ game, playerId ] = await this.hydrateFromToken(token);

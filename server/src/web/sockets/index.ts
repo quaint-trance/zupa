@@ -3,7 +3,7 @@ import checkin from './checkin'
 import { throwDice, chooseRow } from './yatzy'
 import { chatMessage, command } from './shared'
 import { chooseColumn } from './connect4'
-import { guess, addPath } from './charades'
+import { guess, addPath, getCharade } from './charades'
 
 export type socketWithAuth = io.Socket & {
     handshake:{
@@ -22,4 +22,5 @@ export default (socket: socketWithAuth)=>{
     socket.on('command', (data, callback)=> command(socket, data, callback));
     socket.on('guess', (data)=> guess(socket, data));
     socket.on('add path', (data)=> addPath(socket, data));
+    socket.on('get charade', (data)=> getCharade(socket, data));
 }

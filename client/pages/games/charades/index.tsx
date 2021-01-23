@@ -25,7 +25,7 @@ const Connect4 :React.FC<props> = () =>{
             </Head>
             <Container>
                 <Chat messages={messages} sendMessage={sendMessage}/>
-                <div></div>
+                <div>{drawingState ? 'drawin' : 'guessing'}</div>
                 <Canvas sendChunk={sendChunk} drawChunk={drawChunk} clearCanvas={clearCanvas} drawingState={drawingState} />
             </Container>
         </div>

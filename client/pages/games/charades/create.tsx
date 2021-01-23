@@ -58,7 +58,7 @@ const Container = styled.div`
         border-radius: 20px;
         padding: 30px;
         display: grid;
-        grid-template: 1fr 1fr 1fr 1fr / 1fr 1fr 1fr;
+        grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
         grid-gap: 10px;
         
         & > h2{

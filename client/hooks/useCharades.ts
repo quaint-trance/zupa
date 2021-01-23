@@ -10,8 +10,10 @@ export default (gameId: string)=>{
     const [drawing, setDrawing] = useState(-1);
     const socketRef = useRef<Socket | undefined>();
     const [board, setBoard] = useState<string[][]>([]);
+    const [canIDraw, setCanIDraw] = useState<boolean>(false);
     const drowChunkCallback= useRef<any>(()=>{});
     const clearCanvasCallback= useRef<any>(()=>{});
+
     
     const { messages, sendMessage, pushSystemInfo } = useChat(socketRef, gameId);
 
@@ -34,78 +36,89 @@ export default (gameId: string)=>{
             setPlayers(o => [...o, data]);
             pushSystemInfo(`${data.name} joined`)
         });
-        socket.on('next turn', (data)=>{
-            setDrawing(data);
-            setPlayers(o=>{
-                const playerName = o.find(p=>p.id===data);
-                pushSystemInfo(`now drawing: ${playerName}`)
-                return o;
-            })
-        });
         socket.on('start', ()=>{
             pushSystemInfo('start');
+            setDrawing(0);
         });
-        socket.on('kick', ({kicked, by}:{kicked: string, by: string})=>{
+        socket.on('reset', ()=>{
+            clearCanvasCallback.current();
+        });
+        socket.on('path',(data)=>{
+            drowChunkCallback.current(data);
+        });
+        return () => {
+            socket.close();
+        }
+        
+    }, [gameId]);
+    
+    useEffect(() => {
+        socketRef.current?.on('guessed', (data: {playerId: string, ans: string})=>{
+            pushSystemInfo(`${players.find(p=>p.id===data.playerId)?.name} guessed: ${data.ans}`);
+        });
+        socketRef.current?.on('kick', ({kicked, by}:{kicked: string, by: string})=>{
             setPlayers(o=>{
                 const byPlayer = o.find(p=> p.id == by);
                 const kickedPlayer = o.find(p=> p.id == kicked);
                 pushSystemInfo(`${kickedPlayer?.name} was kicked by ${byPlayer?.name}`);
                 return [...o.filter(p=> p.id !== kicked)];
-            })
+            });
         });
-        socket.on('reset', ()=>{
-            clearCanvasCallback.current();
+        socketRef.current?.on('next turn', (data)=>{
+            setDrawing(data);
+            console.log('e', data);
+            const playerName = players[drawing]?.name;
+            playerName && pushSystemInfo(`now drawing: ${playerName}`)
         });
-        socket.on('guessed', (data: {playerId: string, ans: string})=>{
-            console.log(data);
-            pushSystemInfo(`${players.find(p=>p.id===data.playerId)?.name} guessed: ${data.ans}`);
-        });
-        socket.on('path',(data)=>{
-            drowChunkCallback.current(data);
-        })
-        return () => {
-            socket.close();
+        
+        return()=>{
+            socketRef.current?.off('guessed');
+            socketRef.current?.off('kick');
+            socketRef.current?.off('next turn');
         }
+    }, [players, socketRef.current]);
     
-    }, [gameId]);
-
-    useEffect(() => {
-        console.log(players)
-    }, [players]);
-
     const makeGuess = (content: string) =>{
         if(!socketRef.current) return;
-        socketRef.current.emit('guess', content);
         sendMessage(content);
-    }
+        socketRef.current.emit('guess', content);
+    };
 
     const sendChunk = (chunk) =>{
         if(!socketRef.current) return;
         socketRef.current.emit('add path', chunk);
-    }
+    };
 
     const drawChunk = ((callback: any)=>{
         drowChunkCallback.current = callback;
     });
+
     const clearCanvas = ((callback: any)=>{
         clearCanvasCallback.current = callback;
     });
 
-    const canIDraw = () =>{
-        const token = localStorage.getItem(`token-${gameId}`);
-        if(!token || !token) return false;
-        const payload = decode(token);
-        if(!payload || typeof payload==='string' || !('playerId' in payload)) return false;
-        
-        let drawingId;
-        setPlayers(o=>{
-            drawingId = o[drawing]         
-            return o;
-        })
-        
-        if(!drawingId) return false;
-        return drawingId === payload.playerId;
-    }
+    useEffect(() => {
+        setCanIDraw(()=>{
+            const token = localStorage.getItem(`token-${gameId}`);
+            if(!token) return false;
+            const payload = decode(token);
+            console.log(21);
+            if(!payload || typeof payload==='string' || !('playerId' in payload)) return false;
+            
+            let drawingId = players[drawing]?.id;
+            console.log(24);
+            
+            if(!drawingId) return false;
+            console.log(drawingId === payload.playerId);
+            return drawingId === payload.playerId;
+        });
+    }, [drawing, players]);
+
+    useEffect(() => {
+       socketRef.current?.emit('get charade', (data)=>{
+            pushSystemInfo(`you're drawing: <b>${data}</b>`)
+       });
+    }, [canIDraw]);
 
     return{
         players,
@@ -116,6 +129,6 @@ export default (gameId: string)=>{
         sendChunk,
         drawChunk,
         clearCanvas,
-        drawingState: canIDraw(),
+        drawingState: canIDraw,
     }
 }

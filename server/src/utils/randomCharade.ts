@@ -14,5 +14,5 @@ export default ()=>{
         
     ];
 
-    return charades[random(0, charades.length)];
+    return charades[random(0, charades.length-1)];
 }

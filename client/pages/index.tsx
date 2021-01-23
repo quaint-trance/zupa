@@ -33,7 +33,16 @@ export default function Home() {
             </div>
           </section>
           </Link>
-          
+
+          <Link href='/games/charades/create'>
+          <section>
+            <h2>Charades</h2>
+            <div>
+              <img src='/charades.svg' alt='' />
+            </div>
+          </section>
+          </Link>
+
         </div>
         
         <div><Link href='/gamesList'>show list</Link></div>
