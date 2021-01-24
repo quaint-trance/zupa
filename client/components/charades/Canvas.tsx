@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { Player } from '../../../server/src/entities/Yatzy'
 import useCanvas from '../../hooks/useCanvas'
+import Toolbar from './Toolbar'
 
 
 interface props{
@@ -8,16 +9,18 @@ interface props{
     drawChunk: any;
     clearCanvas: any;
     drawingState: boolean;
+    clear: any;
 }
 
-const Canvas:React.FC<props> = ({ sendChunk, drawChunk, clearCanvas, drawingState }) =>{
+const Canvas:React.FC<props> = ({ sendChunk, drawChunk, clearCanvas, drawingState, clear }) =>{
 
-    const { canvasRef } = useCanvas({height: 500, width: 500}, sendChunk, drawChunk, clearCanvas, drawingState)
+    const { canvasRef, style, setStyle } = useCanvas({height: 500, width: 500}, sendChunk, drawChunk, clearCanvas, drawingState)
 
     return(
-       
+        <Container>
+            <Toolbar style={style} setStyle={setStyle} clear={clear}/>
             <Canv ref={canvasRef} height={500} width={500} />
-       
+        </Container>
     )
 }
 

@@ -9,9 +9,8 @@ export default (gameId: string)=>{
     const [players, setPlayers] = useState<Player[]>([]);
     const [drawing, setDrawing] = useState(-1);
     const socketRef = useRef<Socket | undefined>();
-    const [board, setBoard] = useState<string[][]>([]);
     const [canIDraw, setCanIDraw] = useState<boolean>(false);
-    const drowChunkCallback= useRef<any>(()=>{});
+    const drawChunkCallback= useRef<any>(()=>{});
     const clearCanvasCallback= useRef<any>(()=>{});
 
     
@@ -29,7 +28,7 @@ export default (gameId: string)=>{
             if(!data) return;
             setPlayers(data.players);
             setDrawing(data.turn);
-            setBoard(data.fields);
+            data.canvas.forEach(e=> drawChunkCallback.current(e));
         });
 
         socket.on('new player', (data)=>{
@@ -44,7 +43,7 @@ export default (gameId: string)=>{
             clearCanvasCallback.current();
         });
         socket.on('path',(data)=>{
-            drowChunkCallback.current(data);
+            drawChunkCallback.current(data);
         });
         return () => {
             socket.close();
@@ -90,12 +89,16 @@ export default (gameId: string)=>{
     };
 
     const drawChunk = ((callback: any)=>{
-        drowChunkCallback.current = callback;
+        drawChunkCallback.current = callback;
     });
 
     const clearCanvas = ((callback: any)=>{
         clearCanvasCallback.current = callback;
     });
+
+    const clear = () =>{
+        socketRef.current?.emit('clear canvas');
+    }
 
     useEffect(() => {
         setCanIDraw(()=>{
@@ -125,10 +128,10 @@ export default (gameId: string)=>{
         drawing,
         messages,
         sendMessage: makeGuess,
-        board,
         sendChunk,
         drawChunk,
         clearCanvas,
         drawingState: canIDraw,
+        clear,
     }
 }

@@ -6,6 +6,7 @@ import Chat from '../../../components/Chat'
 import { useRouter } from 'next/router'
 import useCharades from '../../../hooks/useCharades'
 import Canvas from '../../../components/charades/Canvas'
+import Toolbar from '../../../components/charades/Toolbar'
 
 interface props{
 
@@ -15,7 +16,7 @@ const Connect4 :React.FC<props> = () =>{
 
     const router = useRouter();
 
-    const { sendMessage, messages, sendChunk, drawChunk, clearCanvas, drawingState} = useCharades(typeof router.query.gameId==='object' ? router.query.gameId[0] : router.query.gameId || '');
+    const { sendMessage, messages, sendChunk, drawChunk, clearCanvas, drawingState, clear } = useCharades(typeof router.query.gameId==='object' ? router.query.gameId[0] : router.query.gameId || '');
 
 
     return(
@@ -25,8 +26,8 @@ const Connect4 :React.FC<props> = () =>{
             </Head>
             <Container>
                 <Chat messages={messages} sendMessage={sendMessage}/>
-                <div>{drawingState ? 'drawin' : 'guessing'}</div>
-                <Canvas sendChunk={sendChunk} drawChunk={drawChunk} clearCanvas={clearCanvas} drawingState={drawingState} />
+                <div>{drawingState ? 'drawing' : 'guessing'}</div>
+                <Canvas sendChunk={sendChunk} drawChunk={drawChunk} clearCanvas={clearCanvas} drawingState={drawingState} clear={clear} />
             </Container>
         </div>
     )
@@ -45,12 +46,12 @@ const Container = styled.div`
         grid-row: 1 /3;
         grid-column: 1 / 2;        
     }
-    & > div:last-of-type{
+    & > div:nth-of-type(2){
         grid-row: 1 / 2;
         grid-column: 2 / 3;        
     }
      
-    & > canvas{
+    & > div:last-of-type{
         grid-row: 2 / 3;
         grid-column: 2 / 3;       
     }

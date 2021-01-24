@@ -15,3 +15,9 @@ export const getCharade = async (socket: socketWithAuth, callback: any)=>{
     if(!result) return;
     callback(result);
 }
+
+export const clearCanvas = async (socket: socketWithAuth)=>{
+    console.log('clear canvas');
+    const result = await domain.charadesService.clearCanvas(socket.handshake.auth.token);
+
+}

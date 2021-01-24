@@ -29,6 +29,15 @@ export default class CharadesService{
         this.gamesStore.save({...game.getAll(), t: 'charades'});
     }
 
+    async clearCanvas(token: string){
+        const [ game, playerId ] = await this.hydrateFromToken(token);
+        if( !game || !playerId ) return null;
+        if( playerId !== game.getCurrentPlayer()?.id ) return null;
+        
+        game.reset();
+        this.gamesStore.save({...game.getAll(), t: 'charades'});
+    }
+
     async getCharade(token: string){
         const [ game, playerId ] = await this.hydrateFromToken(token);
         if( !game || !playerId ) return null;

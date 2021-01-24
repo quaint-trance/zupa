@@ -62,7 +62,6 @@ export default class Charades implements CharadesData{
     }
     
     correct(playerId: string){
-        console.log('correct');
         const currentPlayer = this.getCurrentPlayer();
         if(!currentPlayer) return;
         currentPlayer.score ++;
@@ -79,7 +78,7 @@ export default class Charades implements CharadesData{
     
     reset(){
         //this.drawing = -1,
-        //this.canvas = [];
+        this.canvas = [];
         this.eventStack.push({name: 'reset'});
     }
     startGame(){

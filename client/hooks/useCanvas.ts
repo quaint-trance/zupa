@@ -17,7 +17,7 @@ const useCanvas = ({width, height}, sendChunk: (chunk: Omit<Chunk, 'id'>)=>void 
 
     const drawing = useRef(false);
     const coords = useRef({x: 0, y: 0});
-    const style = useRef<typeStyle>({color: "#ffffff", width: 3});
+    const [style, setStyle] = useState<typeStyle>({color: "#ffffff", width: 3});
     const stack = useRef<Chunk['lines']>([]);
     const offset = useRef({x: 0, y: 0});
     
@@ -31,7 +31,7 @@ const useCanvas = ({width, height}, sendChunk: (chunk: Omit<Chunk, 'id'>)=>void 
 
     const handleMouseUp = ( event )=>{
         if( drawing.current === true && drawingState){
-            drawLine( style.current,
+            drawLine( style,
                 coords.current.x, coords.current.y,
                 event.offsetX, event.offsetY - offset.current.y);
             sendNewLine();
@@ -50,7 +50,7 @@ const useCanvas = ({width, height}, sendChunk: (chunk: Omit<Chunk, 'id'>)=>void 
                 x2: event.offsetX,
                 y2: event.offsetY - offset.current.y,
             });
-            drawLine( style.current,
+            drawLine( style,
                 coords.current.x, coords.current.y,
                 event.offsetX, event.offsetY - offset.current.y);
             coords.current.x = event.offsetX;
@@ -80,7 +80,7 @@ const useCanvas = ({width, height}, sendChunk: (chunk: Omit<Chunk, 'id'>)=>void 
     }
 
     const sendNewLine = () =>{
-        sendChunk( {lines: stack.current, style: style.current} );
+        sendChunk( {lines: stack.current, style: style} );
         wholePicture.current.push({lines: stack.current});
         stack.current = [];
     };
@@ -151,6 +151,7 @@ const useCanvas = ({width, height}, sendChunk: (chunk: Omit<Chunk, 'id'>)=>void 
         canvasRef,
         clear,
         style,
+        setStyle,
         addChunk,
     }
 
