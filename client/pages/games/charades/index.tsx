@@ -12,7 +12,7 @@ interface props{
 
 }
 
-const Connect4 :React.FC<props> = () =>{
+const Charades:React.FC<props> = () =>{
 
     const router = useRouter();
 
@@ -22,7 +22,7 @@ const Connect4 :React.FC<props> = () =>{
     return(
         <div>
             <Head>
-                <title>zupa - Connect4</title>
+                <title>zupa - Charades</title>
             </Head>
             <Container>
                 <Chat messages={messages} sendMessage={sendMessage}/>
@@ -57,4 +57,4 @@ const Container = styled.div`
     }
 `
 
-export default Connect4 ;
+export default Charades;

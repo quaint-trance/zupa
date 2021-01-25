@@ -57,6 +57,10 @@ const useCanvas = ({width, height}, sendChunk: (chunk: Omit<Chunk, 'id'>)=>void 
             coords.current.y = event.offsetY - offset.current.y;
         }
     }
+
+    const handleMouseEnter = (event: React.MouseEvent) =>{
+        if( event.buttons === 1 ) handleMouseDown(event);
+    }
     
     const drawLine = (styledep: typeStyle, x1, y1, x2, y2) => {
         if(!contextRef.current || !styledep) return;
@@ -88,6 +92,8 @@ const useCanvas = ({width, height}, sendChunk: (chunk: Omit<Chunk, 'id'>)=>void 
     useEventListener('mouseup', canvasRef.current, handleMouseUp);
     useEventListener('mousemove', canvasRef.current, handleMouseMove);
     useEventListener('mousedown', canvasRef.current, handleMouseDown);
+    useEventListener('mouseout', canvasRef.current, handleMouseUp);
+    useEventListener('mouseenter', canvasRef.current, handleMouseEnter);
     useEventListener('wheel', canvasRef.current, (event)=>{
         if(event.deltaY > 0) offset.current.y+=100;
         else offset.current.y-=100;

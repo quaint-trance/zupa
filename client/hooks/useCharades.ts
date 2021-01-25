@@ -27,7 +27,7 @@ export default (gameId: string)=>{
         socket.emit('checkin', { gameId }, (data)=>{
             if(!data) return;
             setPlayers(data.players);
-            setDrawing(data.turn);
+            setDrawing(data.drawing);
             data.canvas.forEach(e=> drawChunkCallback.current(e));
         });
 
@@ -65,8 +65,7 @@ export default (gameId: string)=>{
         });
         socketRef.current?.on('next turn', (data)=>{
             setDrawing(data);
-            console.log('e', data);
-            const playerName = players[drawing]?.name;
+            const playerName = players[data]?.name;
             playerName && pushSystemInfo(`now drawing: ${playerName}`)
         });
         
@@ -105,14 +104,9 @@ export default (gameId: string)=>{
             const token = localStorage.getItem(`token-${gameId}`);
             if(!token) return false;
             const payload = decode(token);
-            console.log(21);
             if(!payload || typeof payload==='string' || !('playerId' in payload)) return false;
-            
             let drawingId = players[drawing]?.id;
-            console.log(24);
-            
             if(!drawingId) return false;
-            console.log(drawingId === payload.playerId);
             return drawingId === payload.playerId;
         });
     }, [drawing, players]);

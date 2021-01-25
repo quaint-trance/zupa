@@ -79,7 +79,7 @@ export default class Connect4 implements Connect4Data{
     getScoreboard(){
         return this.players
             .map(p=>({score: p.score, name: p.name}))
-            .sort((a, b)=> a.score - b.score);
+            .sort((a, b)=> b.score - a.score);
     }
 
     getData(){
@@ -117,7 +117,7 @@ export default class Connect4 implements Connect4Data{
     }
 
     kickPlayer(id: string, by: string){
-        const turnId = this.players.find(player => player.id === id)?.id;
+        const turnId = this.players[this.turn]?.id;
         if(!turnId) return;
         this.players = this.players.filter(player => player.id !== id);
         this.eventStack.push({name:'kick', payload: {kicked: id, by}});

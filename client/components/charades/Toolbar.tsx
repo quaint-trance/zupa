@@ -1,7 +1,8 @@
 import styled from '@emotion/styled'
 import { Player } from '../../../server/src/entities/Yatzy'
 import useCanvas, { typeStyle } from '../../hooks/useCanvas'
-import { FaEraser } from 'react-icons/fa'
+import { FaEraser, FaRegTrashAlt } from 'react-icons/fa'
+import { TiDelete } from 'react-icons/ti'
 
 
 interface props{
@@ -35,8 +36,9 @@ const Toolbar:React.FC<props> = ({ setStyle, style, clear }) =>{
             <Color color='yellow' onClick={()=>handleColorPick('yellow')} />
             <Color color='pink' onClick={()=>handleColorPick('pink')} />
             <Color color='blue' onClick={()=>handleColorPick('blue')} />
-            <FaEraser onClick={clear} />
+            <FaEraser onClick={()=>handleColorPick('rgb(14,14,14)')} />
             <input type="range" min="1" max="50" defaultValue={style.width} onChange={handleRangeChange} />
+            <FaRegTrashAlt onClick={clear} />
         </Container>
     )
 }
@@ -58,6 +60,10 @@ const Container = styled.ul`
 
     & > input{
         margin-left: auto;
+    }
+
+    & > svg:last-of-type{
+        
     }
 `
 

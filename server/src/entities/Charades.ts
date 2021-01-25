@@ -77,7 +77,6 @@ export default class Charades implements CharadesData{
     }
     
     reset(){
-        //this.drawing = -1,
         this.canvas = [];
         this.eventStack.push({name: 'reset'});
     }
@@ -101,7 +100,7 @@ export default class Charades implements CharadesData{
     }
 
     kickPlayer(id: string, by: string){
-        const drawingId = this.players.find(player => player.id === id)?.id;
+        const drawingId = this.players[this.drawing]?.id;
         if(!drawingId) return;
         this.players = this.players.filter(player => player.id !== id);
         this.eventStack.push({name:'kick', payload: {kicked: id, by}});
@@ -146,7 +145,7 @@ export default class Charades implements CharadesData{
     getScoreboard(){
         return this.players
         .map(p=>({score: p.score, name: p.name}))
-        .sort((a, b)=> a.score - b.score);
+        .sort((a, b)=> b.score - a.score);
     }
     
     getData(){

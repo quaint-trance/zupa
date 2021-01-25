@@ -28,10 +28,15 @@ const Chat:React.FC<props> = ({messages, sendMessage}) =>{
     return(
         <Container>
                 <div ref={divRef}>
-                    {messages.map((m, i)=>
+                    {messages.map((m, i, arr)=>
+                    <>
+                        {!['$me$','$system$'].includes(m.author) && 
+                            arr[i-1]?.author !== m.author &&
+                        <span>{m.author}</span>}
                         <Message key={i+m.author} author={m.author}>
                             {ReactHtmlParser(m.content)}
                         </Message>    
+                    </>
                     )}
                 </div>
                 <form>
@@ -71,6 +76,11 @@ const Message = styled.div<MessageProps>`
             max-width: 65%;
         `;
     }}
+
+    & ~ span{
+        font-size: 15px;
+        color: rgba(255, 255, 255, 0.705);
+    }
 `
 
 const Container = styled.div`
