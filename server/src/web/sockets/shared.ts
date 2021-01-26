@@ -1,6 +1,7 @@
 import io from 'socket.io'
 import { socketWithAuth } from '.';
 import { domain } from '../../index'
+import gamesStore from '../../infrastructure/gamesStore';
 
 export const chatMessage =  async(socket: socketWithAuth, data: any)=>{
     let gameId: string | undefined;
@@ -42,6 +43,7 @@ export const command =  async(socket: socketWithAuth, data: {content: string}, c
             if(data.content === '/start') domain.charadesService.start(token);
             else if(data.content === '/reset') domain.charadesService.reset(token);
             else if(data.content === '/new') domain.charadesService.reset(token);
+            else if(data.content === '/delete') domain.gameStoreService.deleteGame(gameId);
             else if(data.content === '/scoreboard') callback({name: 'scoreboard', payload: await domain.charadesService.getScoreboard(gameId)});
             else if(data.content === '/players') callback({name:'players', payload: game.players});
             else if(data.content.includes('/kick')){

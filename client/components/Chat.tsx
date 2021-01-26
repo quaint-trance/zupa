@@ -78,6 +78,7 @@ const Message = styled.div<MessageProps>`
     }}
 
     & ~ span{
+        margin-top: 15px;
         font-size: 15px;
         color: rgba(255, 255, 255, 0.705);
     }

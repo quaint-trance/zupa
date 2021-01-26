@@ -31,4 +31,8 @@ export default class gamesStore{
     async findMany(t?: string){
         return this.store;
     }
+
+    async delete(gameId: string){
+        this.store = this.store.filter(game=> game.id !== gameId);
+    }
 }

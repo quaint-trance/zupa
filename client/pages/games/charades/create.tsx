@@ -14,6 +14,7 @@ const Create:React.FC<props> = () =>{
     
     const [playerName, setPlayerName] = useState('');
     const [error, setError] = useState('');
+    const [timeouts, setTimeouts] = useState([60, 60, 45, 15]);
 
     useEffect(()=>{
         const temp = localStorage?.getItem('name');
@@ -24,8 +25,16 @@ const Create:React.FC<props> = () =>{
         e.preventDefault();
         mutate({
             playerName,
+            timeouts,
         });
     };
+
+    const changeTimeouts = (index: number, value: number) =>{
+        setTimeouts(o=>{
+            o[index] = value;
+            return [...o];
+        })
+    }
 
     return(
         <div>
@@ -34,6 +43,23 @@ const Create:React.FC<props> = () =>{
                     <h2>Create charades game</h2>
                     
                     <input value={playerName} type="text" placeholder="Your Name" onChange={(e)=>setPlayerName(e.target.value)} />
+                    
+                    <div>
+                        <input min="1" value={timeouts[0]} type="number" placeholder="number of columns" onChange={(e)=>changeTimeouts(0, parseInt(e.target.value))} />
+                        <label htmlFor="">first hint</label>
+                    </div>
+                    <div>
+                        <input min="1" value={timeouts[1]} type="number" placeholder="number of columns" onChange={(e)=>changeTimeouts(1, parseInt(e.target.value))} />
+                        <label htmlFor="">second</label>
+                    </div>
+                    <div>
+                        <input min="1" value={timeouts[2]} type="number" placeholder="number of columns"  onChange={(e)=>changeTimeouts(2, parseInt(e.target.value))} />
+                        <label htmlFor="">third</label>
+                    </div>
+                    <div>
+                        <input min="1" value={timeouts[3]} type="number" placeholder="number of columns"  onChange={(e)=>changeTimeouts(3, parseInt(e.target.value))} />
+                        <label htmlFor="">end of time</label>
+                    </div>
                     
                     {isLoading && <div>loading</div>}
                     {isError && <div>error</div>}
@@ -58,12 +84,12 @@ const Container = styled.div`
         border-radius: 20px;
         padding: 30px;
         display: grid;
-        grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
+        grid-template: 1fr 1fr 1fr 1fr / 1fr 1fr 1fr 1fr;
         grid-gap: 10px;
         
         & > h2{
             margin: 0 0 20px 0;
-            grid-column: 1 / 4;
+            grid-column: 1 / 5;
             text-align: center;
         }
 
@@ -77,7 +103,7 @@ const Container = styled.div`
         }
 
         & > input{
-            grid-column: 1 /4;
+            grid-column: 1 /5;
         }
 
         & > div{
@@ -102,13 +128,13 @@ const Container = styled.div`
             font-weight: 800;
             padding: 5px;
             border: 2px solid white;
-            grid-column: 1 / 4;
+            grid-column: 1 / 5;
             cursor: pointer;
         }
 
         & > span:last-of-type{
             text-align: center;
-            grid-column: 1 / 4;
+            grid-column: 1 / 5;
         }
     }
 `

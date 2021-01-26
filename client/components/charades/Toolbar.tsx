@@ -3,15 +3,16 @@ import { Player } from '../../../server/src/entities/Yatzy'
 import useCanvas, { typeStyle } from '../../hooks/useCanvas'
 import { FaEraser, FaRegTrashAlt } from 'react-icons/fa'
 import { TiDelete } from 'react-icons/ti'
-
+import { animated, useSpring } from 'react-spring'
 
 interface props{
    setStyle: React.Dispatch<React.SetStateAction<typeStyle>>;
    style: typeStyle;
    clear: any;
+   display: boolean;
 }
 
-const Toolbar:React.FC<props> = ({ setStyle, style, clear }) =>{
+const Toolbar:React.FC<props> = ({ setStyle, style, clear, display }) =>{
 
     const handleColorPick = (color: string) =>{
         setStyle(o=>{
@@ -27,9 +28,13 @@ const Toolbar:React.FC<props> = ({ setStyle, style, clear }) =>{
         })
     }
 
+    const animatedProps = useSpring({
+        opacity: display ? '1' : '0'
+    });
+
 
     return(
-        <Container>
+        <Container style={animatedProps}>
             <Color color='red' onClick={()=>handleColorPick('red')} />
             <Color color='green' onClick={()=>handleColorPick('green')} />
             <Color color='white' onClick={()=>handleColorPick('white')} />
@@ -43,7 +48,7 @@ const Toolbar:React.FC<props> = ({ setStyle, style, clear }) =>{
     )
 }
 
-const Container = styled.ul`
+const Container = styled(animated.ul)`
     display: flex;
     padding: 0;
     margin: 10px 0;

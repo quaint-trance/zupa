@@ -1,6 +1,7 @@
 import GamesStore, { Game } from "../types/GameStore";
 import Token from '../entities/Token'
 import Charades, { Chunk } from "../entities/Charades";
+import { time } from "console";
 
 export default class CharadesService{
     
@@ -13,7 +14,7 @@ export default class CharadesService{
     async guess(token: string, charades: string){
         const [ game, playerId ] = await this.hydrateFromToken(token);
         if( !game || !playerId ) return null;
-        //if( playerId === game.getCurrentPlayer()?.id ) return null;
+        if( playerId === game.getCurrentPlayer()?.id ) return null;
         
         const result = game.guess(charades, playerId);
         this.gamesStore.save({...game.getAll(), t: 'charades'});
@@ -65,8 +66,8 @@ export default class CharadesService{
         return result;
     }
 
-    async createGame(playerName: string){
-        const result = Charades.create();
+    async createGame(playerName: string, timeouts?: number[]){
+        const result = Charades.create(timeouts);
         await this.gamesStore.push({...result, t: 'charades'});
         return this.joinPlayer(result.id, playerName);
     }

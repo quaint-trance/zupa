@@ -8,6 +8,7 @@ import { decode } from 'jsonwebtoken'
 export default (gameId: string)=>{
     const [players, setPlayers] = useState<Player[]>([]);
     const [drawing, setDrawing] = useState(-1);
+    const [time, setTime] = useState(10000);
     const socketRef = useRef<Socket | undefined>();
     const [canIDraw, setCanIDraw] = useState<boolean>(false);
     const drawChunkCallback= useRef<any>(()=>{});
@@ -29,6 +30,7 @@ export default (gameId: string)=>{
             setPlayers(data.players);
             setDrawing(data.drawing);
             data.canvas.forEach(e=> drawChunkCallback.current(e));
+            setTime(data.timeouts.reduce((accumVariable, curValue)=>accumVariable + curValue, 0));
         });
 
         socket.on('new player', (data)=>{
@@ -71,12 +73,16 @@ export default (gameId: string)=>{
         socketRef.current?.on('hint', (data: string)=>{
             pushSystemInfo(`<b>${data}...</b>`);
         });
+        socketRef.current?.on('eot', (data: string)=>{
+            pushSystemInfo(`eot: ${data}`);
+        });
         
         return()=>{
             socketRef.current?.off('guessed');
             socketRef.current?.off('kick');
             socketRef.current?.off('next turn');
             socketRef.current?.off('hint');
+            socketRef.current?.off('eot');
         }
     }, [players, socketRef.current]);
     
@@ -131,5 +137,6 @@ export default (gameId: string)=>{
         clearCanvas,
         drawingState: canIDraw,
         clear,
+        time,
     }
 }

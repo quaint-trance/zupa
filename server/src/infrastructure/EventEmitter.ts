@@ -20,9 +20,12 @@ export default class EventEmitter implements EventEmitterType{
             
             if( gameData.t === 'charades' ){
                 if( event.name === 'next turn' || event.name === 'start'){
-                    setTimeout(()=>domain.charadesService.endOfTime(gameId, gameData.roundId, 1), 1000*60*1);
-                    setTimeout(()=>domain.charadesService.endOfTime(gameId, gameData.roundId, 2), 1000*60*2);
-                    setTimeout(()=>domain.charadesService.endOfTime(gameId, gameData.roundId, 3), 1000*60*3);
+                    let sum = 0;
+                    gameData.timeouts.forEach((timeout, index, arr)=>{
+                        sum+=timeout;
+                        if( index === arr.length-1 ) setTimeout(()=>domain.charadesService.endOfTime(gameId, gameData.roundId, 0), 1000*sum);
+                        else setTimeout(()=>domain.charadesService.endOfTime(gameId, gameData.roundId, index+1), 1000*sum);
+                    });
                 }
             }
             

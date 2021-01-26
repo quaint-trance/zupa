@@ -5,8 +5,11 @@ const router = express.Router();
 
 router.post('/create', async (req, res)=>{
 
+    const timeouts = req.body.timeouts;
+
     const result = await domain.charadesService.createGame(
         req.body.playerName,
+        timeouts,
     );
     
     if(!result) return res.status(400).send();

@@ -9,4 +9,5 @@ export default interface GamesStore{
     findMany: (t?: string)=>Promise<Game[]>,
     push: (data: Game)=> Promise<any>,
     save: (data: Game)=> Promise<boolean>,
+    delete: (id: string)=>any;    
 }

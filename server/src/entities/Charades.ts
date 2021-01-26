@@ -31,6 +31,7 @@ export interface CharadesData{
     eventStack: eventType[];
     charade: string;
     roundId: string;
+    timeouts: number[];
 }
 
 export default class Charades implements CharadesData{
@@ -42,6 +43,7 @@ export default class Charades implements CharadesData{
     canvas: CharadesData['canvas'];
     charade: CharadesData['charade'];
     roundId: CharadesData['roundId'];
+    timeouts: CharadesData['timeouts'];
     
     constructor(data: Omit<CharadesData, 'eventStack'>){
         this.id = data.id;
@@ -51,6 +53,7 @@ export default class Charades implements CharadesData{
         this.canvas = data.canvas;
         this.charade = data.charade;
         this.roundId = data.roundId;
+        this.timeouts = data.timeouts;
     };
     
     addPath(path: Chunk){
@@ -68,7 +71,9 @@ export default class Charades implements CharadesData{
     
     correct(playerId: string){
         const winner = this.players.find(p=>p.id === playerId);
-        winner && winner.score++;
+        const drawer = this.players[this.drawing];
+        winner && (winner.score += 2);
+        drawer && (drawer.score+=1);
         this.eventStack.push({name:'guessed', payload: {playerId, ans: this.charade}});
         this.nextTurn();
     }
@@ -95,8 +100,11 @@ export default class Charades implements CharadesData{
 
     endOfTime(roundId: string, phase: number){
         if(roundId !== this.roundId) return;
-        if(phase === 1 || phase === 2) this.hint(phase);
-        else if(phase === 3) this.nextTurn();
+        if(phase === 0){
+            this.eventStack.push({name: 'eot', payload: this.charade});
+            this.nextTurn();
+        }
+        else this.hint(phase);
     }
     hint(phase: number){
         this.eventStack.push({name: 'hint', payload: this.charade.slice(0, phase)});
@@ -128,7 +136,7 @@ export default class Charades implements CharadesData{
         }
     }
 
-    static create(){
+    static create(timeouts:number[] = [60, 60, 45, 15]){
         return new Charades({
             id: v4(),
             drawing: -1,
@@ -136,6 +144,7 @@ export default class Charades implements CharadesData{
             canvas: [],
             charade: 'initial',
             roundId: v4(),
+            timeouts: timeouts,
         });
         
     }
@@ -173,6 +182,7 @@ export default class Charades implements CharadesData{
             canvas: this.canvas,
             charade: this.charade,
             roundId: this.roundId,
+            timeouts: this.timeouts,
         };
     }
     

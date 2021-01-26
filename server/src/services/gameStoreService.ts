@@ -14,4 +14,8 @@ export default class GameStoreService{
     getGame(gameId: string){
         return this.gamesStore.findById(gameId);
     }
+
+    deleteGame(gameId: string){
+        return this.gamesStore.delete(gameId);
+    }
 }

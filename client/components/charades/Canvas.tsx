@@ -18,7 +18,7 @@ const Canvas:React.FC<props> = ({ sendChunk, drawChunk, clearCanvas, drawingStat
 
     return(
         <Container>
-            <Toolbar style={style} setStyle={setStyle} clear={clear}/>
+            <Toolbar style={style} setStyle={setStyle} clear={clear} display={drawingState} />
             <Canv ref={canvasRef} height={500} width={500} />
         </Container>
     )

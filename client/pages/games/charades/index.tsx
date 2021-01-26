@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import useCharades from '../../../hooks/useCharades'
 import Canvas from '../../../components/charades/Canvas'
 import Toolbar from '../../../components/charades/Toolbar'
+import Bar from '../../../components/charades/Bar'
 
 interface props{
 
@@ -16,7 +17,7 @@ const Charades:React.FC<props> = () =>{
 
     const router = useRouter();
 
-    const { sendMessage, messages, sendChunk, drawChunk, clearCanvas, drawingState, clear } = useCharades(typeof router.query.gameId==='object' ? router.query.gameId[0] : router.query.gameId || '');
+    const { sendMessage, messages, sendChunk, drawChunk, clearCanvas, drawingState, clear, time, drawing } = useCharades(typeof router.query.gameId==='object' ? router.query.gameId[0] : router.query.gameId || '');
 
 
     return(
@@ -26,7 +27,7 @@ const Charades:React.FC<props> = () =>{
             </Head>
             <Container>
                 <Chat messages={messages} sendMessage={sendMessage}/>
-                <div>{drawingState ? 'drawing' : 'guessing'}</div>
+                <Bar time={time} key={drawing} />
                 <Canvas sendChunk={sendChunk} drawChunk={drawChunk} clearCanvas={clearCanvas} drawingState={drawingState} clear={clear} />
             </Container>
         </div>
