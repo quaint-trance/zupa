@@ -70,6 +70,15 @@ export default class CharadesService{
         await this.gamesStore.push({...result, t: 'charades'});
         return this.joinPlayer(result.id, playerName);
     }
+
+    async endOfTime(gameId: string, roundId: string, phase: number){
+        const gameData = await this.gamesStore.findById(gameId);
+        if( !gameData || gameData.t!=='charades') return null;
+        const game = Charades.hydrate(gameData);
+
+        game.endOfTime(roundId, phase);
+        this.gamesStore.save({...game.getAll(), t: 'charades'})
+    }
     
     async joinPlayer(gameId: string, playerName: string){
         const gameData = await this.gamesStore.findById(gameId);

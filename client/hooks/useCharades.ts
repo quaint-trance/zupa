@@ -68,11 +68,15 @@ export default (gameId: string)=>{
             const playerName = players[data]?.name;
             playerName && pushSystemInfo(`now drawing: ${playerName}`)
         });
+        socketRef.current?.on('hint', (data: string)=>{
+            pushSystemInfo(`<b>${data}...</b>`);
+        });
         
         return()=>{
             socketRef.current?.off('guessed');
             socketRef.current?.off('kick');
             socketRef.current?.off('next turn');
+            socketRef.current?.off('hint');
         }
     }, [players, socketRef.current]);
     

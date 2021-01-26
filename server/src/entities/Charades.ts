@@ -1,3 +1,4 @@
+import { hasUncaughtExceptionCaptureCallback } from 'process';
 import { v4 } from'uuid'
 import { eventType } from '../types/EventEmitter'
 import randomCharade from '../utils/randomCharade'
@@ -29,6 +30,7 @@ export interface CharadesData{
     drawing: number;
     eventStack: eventType[];
     charade: string;
+    roundId: string;
 }
 
 export default class Charades implements CharadesData{
@@ -39,6 +41,7 @@ export default class Charades implements CharadesData{
     eventStack: CharadesData['eventStack'];
     canvas: CharadesData['canvas'];
     charade: CharadesData['charade'];
+    roundId: CharadesData['roundId'];
     
     constructor(data: Omit<CharadesData, 'eventStack'>){
         this.id = data.id;
@@ -47,6 +50,7 @@ export default class Charades implements CharadesData{
         this.eventStack = [];
         this.canvas = data.canvas;
         this.charade = data.charade;
+        this.roundId = data.roundId;
     };
     
     addPath(path: Chunk){
@@ -55,22 +59,24 @@ export default class Charades implements CharadesData{
     }
     
     guess(charade: string, playerId: string){
-        console.log(charade, this.charade);
         if(charade === this.charade){
             this.correct(playerId);
+            return true;
         }
+        return false;
     }
     
     correct(playerId: string){
-        const currentPlayer = this.getCurrentPlayer();
-        if(!currentPlayer) return;
-        currentPlayer.score ++;
+        const winner = this.players.find(p=>p.id === playerId);
+        winner && winner.score++;
         this.eventStack.push({name:'guessed', payload: {playerId, ans: this.charade}});
         this.nextTurn();
     }
     
     nextTurn(){
+        console.log('nowa runda')
         this.drawing = (this.drawing+1)%this.players.length;
+        this.roundId = v4();
         this.eventStack.push({name:'next turn', payload: this.drawing});
         this.charade = randomCharade();
         this.reset();
@@ -84,6 +90,16 @@ export default class Charades implements CharadesData{
         this.drawing = 0;
         this.charade = randomCharade();
         this.eventStack.push({name: 'start'});
+    }
+
+
+    endOfTime(roundId: string, phase: number){
+        if(roundId !== this.roundId) return;
+        if(phase === 1 || phase === 2) this.hint(phase);
+        else if(phase === 3) this.nextTurn();
+    }
+    hint(phase: number){
+        this.eventStack.push({name: 'hint', payload: this.charade.slice(0, phase)});
     }
 
 
@@ -119,6 +135,7 @@ export default class Charades implements CharadesData{
             players: [],
             canvas: [],
             charade: 'initial',
+            roundId: v4(),
         });
         
     }
@@ -148,20 +165,21 @@ export default class Charades implements CharadesData{
         .sort((a, b)=> b.score - a.score);
     }
     
-    getData(){
+    getData():Omit<CharadesData, 'eventStack'>{
         return {
             id: this.id,
             players: this.players,
             drawing: this.drawing,
             canvas: this.canvas,
             charade: this.charade,
+            roundId: this.roundId,
         };
     }
     
-    getAll(){
+    getAll():CharadesData{
         return {
             ...this.getData(),
-            eventStack: this.eventStack
+            eventStack: this.eventStack,
         }
     }
     

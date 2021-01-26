@@ -24,7 +24,7 @@ export default class gamesStore{
         const gameIndex = this.store.findIndex(game => game.id === data.id);
         if(gameIndex < 0) return false;
         this.store[gameIndex] = data;
-        this.eventEmitter.emit(data.eventStack, data.id);
+        this.eventEmitter.emit(data.eventStack, data.id, data);
         return true;
     }
 
