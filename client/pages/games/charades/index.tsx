@@ -27,7 +27,7 @@ const Charades:React.FC<props> = () =>{
             </Head>
             <Container>
                 <Chat messages={messages} sendMessage={sendMessage}/>
-                <Bar time={time} key={drawing} />
+                <Bar time={time} key={drawing} drawing={drawing} />
                 <Canvas sendChunk={sendChunk} drawChunk={drawChunk} clearCanvas={clearCanvas} drawingState={drawingState} clear={clear} />
             </Container>
         </div>

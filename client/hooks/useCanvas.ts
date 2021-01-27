@@ -94,11 +94,6 @@ const useCanvas = ({width, height}, sendChunk: (chunk: Omit<Chunk, 'id'>)=>void 
     useEventListener('mousedown', canvasRef.current, handleMouseDown);
     useEventListener('mouseout', canvasRef.current, handleMouseUp);
     useEventListener('mouseenter', canvasRef.current, handleMouseEnter);
-    useEventListener('wheel', canvasRef.current, (event)=>{
-        if(event.deltaY > 0) offset.current.y+=100;
-        else offset.current.y-=100;
-        handleOffsetChange();
-    });
     
     useEffect(() => {
         if(!canvasRef.current) return;

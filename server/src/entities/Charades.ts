@@ -62,7 +62,7 @@ export default class Charades implements CharadesData{
     }
     
     guess(charade: string, playerId: string){
-        if(charade === this.charade){
+        if( charade.toLowerCase() === this.charade.toLowerCase() ){
             this.correct(playerId);
             return true;
         }
@@ -102,6 +102,8 @@ export default class Charades implements CharadesData{
         if(roundId !== this.roundId) return;
         if(phase === 0){
             this.eventStack.push({name: 'eot', payload: this.charade});
+            const drawer = this.players[this.drawing];
+            drawer && drawer.score--;
             this.nextTurn();
         }
         else this.hint(phase);
