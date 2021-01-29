@@ -15,6 +15,8 @@ describe('join player', ()=>{
     });
 });
 
+connect4.startGame();
+
 describe('choose filed', ()=>{
     it('first', ()=>{
         const result = connect4.chooseColumn(3);
@@ -43,5 +45,5 @@ describe('choose filed', ()=>{
         }
         const result = connect4.chooseColumn(5);
         expect(result).toBe(null);        
-        });
+    });
 })

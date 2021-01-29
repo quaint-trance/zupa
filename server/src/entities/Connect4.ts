@@ -1,4 +1,3 @@
-import { Console } from 'console';
 import { v4 } from'uuid'
 import { eventType } from '../types/EventEmitter';
 import checkWinnerConnect4 from '../utils/checkWinnerConnect4';
