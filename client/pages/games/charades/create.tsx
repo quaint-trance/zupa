@@ -38,6 +38,9 @@ const Create:React.FC<props> = () =>{
 
     return(
         <div>
+            <Head>
+                <title>Zupa - create charades</title>
+            </Head>
             <Container>
                 <form>
                     <h2>Create charades game</h2>

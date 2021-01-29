@@ -43,6 +43,9 @@ const Create:React.FC<props> = () =>{
 
     return(
         <div>
+            <Head>
+                <title>Zupa - create connect4</title>
+            </Head>
             <Container>
                 <form>
                     <h2>Create connect4 game</h2>

@@ -21,7 +21,7 @@ const Connect4 :React.FC<props> = () =>{
     return(
         <div>
             <Head>
-                <title>zupa - Connect4</title>
+                <title>Zupa - Connect4</title>
             </Head>
             <Container>
                 <Chat messages={messages} sendMessage={sendMessage}/>

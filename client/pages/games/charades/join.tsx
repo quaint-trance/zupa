@@ -33,6 +33,9 @@ const Join:React.FC<props> = () =>{
 
     return(
         <div>
+            <Head>
+                <title>Zupa - join</title>
+            </Head>
             <Container>
                 <form>
                     <h2>Join charades game</h2>

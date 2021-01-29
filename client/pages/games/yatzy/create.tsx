@@ -26,6 +26,9 @@ const GamesList:React.FC<props> = () =>{
 
     return(
         <div>
+            <Head>
+                <title>Zupa - create yatzy</title>
+            </Head>
             <Container>
                 <form>
                     <h2>Create yatzy game</h2>

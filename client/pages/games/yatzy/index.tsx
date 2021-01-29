@@ -20,7 +20,7 @@ const GamesList:React.FC<props> = () =>{
     return(
         <div>
             <Head>
-                <title>Yatzy</title>
+                <title>Zupa - Yatzy</title>
             </Head>
             <Container>
                 <Chat messages={messages} sendMessage={sendMessage}/>

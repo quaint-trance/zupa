@@ -16,7 +16,7 @@ const GamesList:React.FC<props> = () =>{
     return(
         <div>
             <Head>
-
+                <title>Zupa - game list</title>
             </Head>
             <Container>
                 <ul>

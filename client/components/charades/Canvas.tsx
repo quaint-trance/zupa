@@ -32,6 +32,7 @@ const Container = styled.div`
 const Canv = styled.canvas`
     border: solid 1px white;
     display: block;
+    cursor: crosshair;
 `
 
 export default Canvas;

@@ -8,14 +8,21 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>Create Next App</title>
+        <title>Zupa</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <Main>
+
+          <section id="zupa">
+            <h2>Zupa</h2>
+            <div>
+              <img src='/zupa.svg' alt='' />
+            </div>
+          </section>
 
         <div>
   
+
           <Link href='/games/yatzy/create'>
           <section>
             <h2>Yatzy</h2>
@@ -63,12 +70,21 @@ const Main = styled.main`
   justify-content: center;
   align-items: center;
 
+  #zupa{
+    cursor: default;
+    pointer-events: none;
+    display: none;
+  }
+
   & > div:first-of-type{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    
-    & > section{
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+  }
+    & section{
       margin: 20px;
       border: solid 2px white;
       border-radius: 20px;
@@ -98,12 +114,11 @@ const Main = styled.main`
         }
       }
     }
-  }
   
   & > div:last-of-type{
     margin: 10px;
     font-size: 20px;
-    font-weight: 100;
+    font-weight: 800;
     color: white;
   }
 `
