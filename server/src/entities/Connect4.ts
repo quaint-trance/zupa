@@ -6,6 +6,7 @@ export interface Player{
     id: string;
     name: string;
     score: number;
+    userName?: string;
 }
 
 export interface Connect4Data{
@@ -104,11 +105,12 @@ export default class Connect4 implements Connect4Data{
         this.eventStack.push({name: 'start'});
     }
 
-    joinPlayer(name: string){
+    joinPlayer(name: string, userName: string){
         const newPlayer:Player = {
             id: v4(),
             name,
             score: 0,
+            userName
         };
         this.players.push(newPlayer);
         this.eventStack.push({name: 'new player', payload: newPlayer});

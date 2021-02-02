@@ -20,7 +20,7 @@ export default class Connect4Service{
         return [Connect4.hydrate(gameData), payload.playerId];
     }
 
-    async createGame(playerName: string, size?:{columns: number, rows: number}, connectToWin?: number){
+    async createGame(playerName: string, size?:{columns: number, rows: number}, connectToWin?: number, userToken?: string){
         let result;
         if( size && connectToWin) result = Connect4.create(size, connectToWin);
         else if( size ) result = Connect4.create(size);
@@ -28,17 +28,19 @@ export default class Connect4Service{
         else result = Connect4.create();
 
         await this.gamesStore.push({...result, t: 'connect4'});
-        return this.joinPlayer(result.id, playerName);
+        return this.joinPlayer(result.id, playerName, userToken);
     }
 
-    async joinPlayer(gameId: string, playerName: string){
+    async joinPlayer(gameId: string, playerName: string, userToken?: string){
         const gameData = await this.gamesStore.findById(gameId);
         if(!gameData || gameData.t !== 'connect4') return null;
         const game = Connect4.hydrate(gameData);
+        const user = userToken && Token.hydrate(userToken).payload.name;
         
-        const player = game.joinPlayer(playerName);
+        const player = game.joinPlayer(playerName, user);
         this.gamesStore.save({...game, t: 'connect4'});
-        const token = Token.create({ gameId, playerId: player.id }).getToken();
+
+        const token = Token.create({ gameId, playerId: player.id, userName: user }).getToken();
         return {...player, token, gameId};
     }
 

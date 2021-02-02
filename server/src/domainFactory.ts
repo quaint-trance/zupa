@@ -8,14 +8,19 @@ import GamesStore from "./types/GameStore";
 import Charades from "./entities/Charades";
 import CharadesService from "./services/charadesService";
 import SetService from "./services/setService";
+import User from "./entities/User";
+import UserService from "./services/userService";
+import { UserStore } from "./types/UserStore";
 
-export default (gameStore: GamesStore)=>{
+export default (gameStore: GamesStore, userStore: UserStore)=>{
     const entities = {
         Yatzy,
         Token,
         Connect4,
         Charades,
         Set,
+
+        User,
     };
 
     return{
@@ -24,6 +29,8 @@ export default (gameStore: GamesStore)=>{
         connect4Service: new Connect4Service(gameStore),
         charadesService: new CharadesService(gameStore),
         setService: new SetService(gameStore),
+
+        userService: new UserService(userStore),
         entities,
     }
 }
