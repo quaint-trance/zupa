@@ -8,6 +8,7 @@ import gameRoute from './web/routes/games'
 import yatzyRoute from './web/routes/yatzy'
 import connect4Route from './web/routes/connect4'
 import charadesRoute from './web/routes/charades'
+import setRoute from './web/routes/set'
 
 export default()=>{
     const app = express();
@@ -32,6 +33,7 @@ export default()=>{
     app.use('/yatzy', yatzyRoute);
     app.use('/connect4', connect4Route);
     app.use('/charades', charadesRoute);
+    app.use('/set', setRoute);
 
 
     return { io }

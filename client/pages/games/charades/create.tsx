@@ -40,6 +40,7 @@ const Create:React.FC<props> = () =>{
         <div>
             <Head>
                 <title>Zupa - create charades</title>
+                <meta name="description" content="zupa online charades kalambury"></meta>
             </Head>
             <Container>
                 <form>

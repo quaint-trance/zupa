@@ -10,8 +10,10 @@ export default function Home() {
       <Head>
         <title>Zupa</title>
         <link rel="icon" href="/favicon.ico" />
+        <meta name="description" content="zupa online games connect4 yatzy charades kalambury kości multiplayer"></meta>
       </Head>
       <Main>
+        <img src="/zupa.svg" id="zupa-bg" alt="background" />
 
           <section id="zupa">
             <h2>Zupa</h2>
@@ -70,6 +72,14 @@ const Main = styled.main`
   justify-content: center;
   align-items: center;
 
+  #zupa-bg{
+    position: absolute;
+    z-index: 1;
+    width: 50%;
+    opacity: .15;
+    pointer-events: none;
+  }
+
   #zupa{
     cursor: default;
     pointer-events: none;
@@ -85,6 +95,7 @@ const Main = styled.main`
     margin: 0 auto;
   }
     & section{
+      z-index: 2;
       margin: 20px;
       border: solid 2px white;
       border-radius: 20px;
@@ -96,6 +107,7 @@ const Main = styled.main`
       flex-direction: column;
       grid-template: auto 1fr / 1fr;
       padding: 20px;
+      
     
       & > h2{
         margin: 0px;

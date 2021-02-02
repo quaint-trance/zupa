@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import styled from '@emotion/styled'
 import Die from './Die'
 import { useSpring, animated, config } from 'react-spring'
+import random from '../../utils/random'
 
 interface props{
     score: number;
@@ -19,11 +20,19 @@ const positions = [
     {x: 90, y: 0},
 ]
 
+function horizontalPosCalc(pos: number){
+    let result = pos%180;
+    if(result > 90) result = 180 - result;
+    return result;
+}
+
 const Dice3D:React.FC<props> = ({score, onClick, selected, throwRefresh}) =>{
     const [deg, setDeg] = useState({x: 0, y: 0, z: 0});
+    const [horizontalPos, setHorizontalPos] = useState(0);
 
     const props = useSpring({
         transform: `rotateX(${deg.x + ([9].includes(score)? -15 : 15)}deg) rotateY(${deg.y + ([3, 6].includes(score)? 15 : -15)}deg) rotateZ(${deg.z + + ([6].includes(score)? 15 : 0)}deg)`,
+        left: `${horizontalPosCalc(horizontalPos)}%`,
         config: {
             tension: 280,
             friction: 180,
@@ -45,6 +54,7 @@ const Dice3D:React.FC<props> = ({score, onClick, selected, throwRefresh}) =>{
             z: 0
         };
         setDeg(obj);
+        setHorizontalPos(horizontalPos + random(0, 500));
     }, [score, throwRefresh]);
 
     return(
@@ -64,6 +74,8 @@ const Container = styled(animated.div)`
     height: 50px;
     position: relative;
     transform-style: preserve-3d;
+    position: relative;
+    left: 90%;
 
     & > *{
         position: absolute;

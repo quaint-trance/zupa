@@ -28,6 +28,7 @@ const GamesList:React.FC<props> = () =>{
         <div>
             <Head>
                 <title>Zupa - create yatzy</title>
+                <meta name="description" content="yatzy kości zupa"></meta>
             </Head>
             <Container>
                 <form>

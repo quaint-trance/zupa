@@ -8,6 +8,7 @@ export default (gameId: string)=>{
     const [dice, setDice] = useState([1, 2, 3, 4, 5].map(e=>({score: e, throwRefresh: 0})));
     const [players, setPlayers] = useState<Player[]>([]);
     const [turn, setTurn] = useState(-1);
+    const [throwCount, setThrowCount] = useState(0);
     const socketRef = useRef<Socket | undefined>();
 
     const { messages, sendMessage, pushSystemInfo } = useChat(socketRef, gameId);
@@ -32,15 +33,16 @@ export default (gameId: string)=>{
         });
         socket.on('next turn', (data)=>{
             setTurn(data);
+            setThrowCount(0);
         });
         socket.on('dice throw', (data: (null|number)[])=>{
+            setThrowCount(o=>o+1);
             setDice(o => data.map((die, index)=>{
                 if(die === null) return o[index];
                 return {score: die, throwRefresh: Date.now()}
             }));
         });
         socket.on('row chosen', (data: {row: number, score: number, turn: number})=>{
-            console.log('row chosen');
             setPlayers(o=>{
                o[data.turn].usedRows[data.row] = data.score;
                o[data.turn].score += data.score;
@@ -49,7 +51,6 @@ export default (gameId: string)=>{
         });
         
         socket.on('win', (data: {name: string})=>{
-            console.log(data);
             pushSystemInfo(`${data.name} wins`);
         });
 
@@ -69,7 +70,7 @@ export default (gameId: string)=>{
         socketRef.current.emit('choose row', row);
     }
 
-    return{
+    return {
         dice,
         players,
         turn,
@@ -77,6 +78,7 @@ export default (gameId: string)=>{
         chooseRow,
         messages,
         sendMessage,
+        throwCount,
     }
 
 }

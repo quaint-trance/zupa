@@ -45,6 +45,7 @@ const Create:React.FC<props> = () =>{
         <div>
             <Head>
                 <title>Zupa - create connect4</title>
+                <meta name="description" content="zupa connect4"></meta>
             </Head>
             <Container>
                 <form>

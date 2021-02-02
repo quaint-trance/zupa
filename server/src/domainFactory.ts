@@ -7,6 +7,7 @@ import Connect4Service from "./services/connect4Service";
 import GamesStore from "./types/GameStore";
 import Charades from "./entities/Charades";
 import CharadesService from "./services/charadesService";
+import SetService from "./services/setService";
 
 export default (gameStore: GamesStore)=>{
     const entities = {
@@ -14,6 +15,7 @@ export default (gameStore: GamesStore)=>{
         Token,
         Connect4,
         Charades,
+        Set,
     };
 
     return{
@@ -21,6 +23,7 @@ export default (gameStore: GamesStore)=>{
         gameStoreService: new GameStoreService(gameStore),
         connect4Service: new Connect4Service(gameStore),
         charadesService: new CharadesService(gameStore),
+        setService: new SetService(gameStore),
         entities,
     }
 }

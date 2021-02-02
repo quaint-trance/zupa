@@ -69,7 +69,7 @@ export default class Set implements SetData{
     }
     
     end(){ //TODO
-        this.eventStack.push({name:'win'}) 
+        this.eventStack.push({name:'end', payload: this.getScoreboard()[0]});
     }
     
     static create(shuffle?:boolean){
@@ -89,7 +89,7 @@ export default class Set implements SetData{
     
     reset(){
         this.table = [];
-        this.deck = [];
+        this.deck = genDeck();
         this.players.forEach(p=> p.score = 0);
         this.eventStack.push({name: 'reset', 'payload': this.getData() });
     }

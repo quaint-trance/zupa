@@ -14,7 +14,7 @@ interface props{
 const GamesList:React.FC<props> = () =>{
 
     const router = useRouter();
-    const { sendMessage, messages, dice, players, turn, throwDice, chooseRow } = useYatzy(typeof router.query.gameId==='object' ? router.query.gameId[0] : router.query.gameId || '');
+    const { sendMessage, messages, dice, players, turn, throwDice, chooseRow, throwCount } = useYatzy(typeof router.query.gameId==='object' ? router.query.gameId[0] : router.query.gameId || '');
 
 
     return(
@@ -24,7 +24,7 @@ const GamesList:React.FC<props> = () =>{
             </Head>
             <Container>
                 <Chat messages={messages} sendMessage={sendMessage}/>
-                <Dice dice={dice} throwDice={throwDice}/>
+                <Dice dice={dice} throwDice={throwDice} throwCount={throwCount}/>
                 <Card players={players} chooseRow={chooseRow} turn={turn} />
             </Container>
         </div>
@@ -38,15 +38,19 @@ const Container = styled.div`
     display: grid;
 
     grid-template:  50px 1fr / .6fr 1fr .8fr;
-`
-const Players = styled.div`
-    grid-row: 1 / 2;
-    grid-column: 1 / 4;
-    border-bottom: 1px dashed white;
-    margin: 0 10px;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+
+    &>div:first-of-type{
+        grid-column: 1 / 2;
+        grid-row: 1 / 3;
+    }
+    &>div:nth-of-type(2){
+        grid-column: 2 / 3;
+        grid-row: 1 / 3;
+    }
+    &>div:last-of-type{
+        grid-column: 3 / 4;
+        grid-row: 1 / 3;
+    }
 `
 
 export default GamesList;
