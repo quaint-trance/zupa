@@ -26,6 +26,7 @@ export default (gameType: string, gameId: string)=>{
             body: JSON.stringify({
                 ...props,
                 gameId,
+                userToken: localStorage.getItem('token')
                 
             })
         }).then(res=>{

@@ -29,6 +29,12 @@ export default class EventEmitter implements EventEmitterType{
                 }
             }
             
+            if(gameData.t === 'connect4'){
+                if(event.name === 'win'){
+                    domain.userService.addHistory('connect4', event.payload ,gameData);
+                }
+            }
+            
         });
     }
 }

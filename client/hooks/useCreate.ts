@@ -24,7 +24,8 @@ export default (gameType: string)=>{
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                ...props
+                ...props,
+                userToken: localStorage.getItem('token')
             })
         }).then(res=>{
             return res.json();

@@ -22,6 +22,7 @@ router.post('/create', async (req, res)=>{
         req.body.playerName,
         size,
         connectToWin,
+        req.body.userToken
     );
     
     if(!result) return res.status(400).send();
@@ -29,7 +30,8 @@ router.post('/create', async (req, res)=>{
 });
 
 router.post('/join', async (req, res)=>{
-    const result = await domain.connect4Service.joinPlayer(req.body.gameId, req.body.playerName);
+    console.log(req.body)
+    const result = await domain.connect4Service.joinPlayer(req.body.gameId, req.body.playerName, req.body.userToken);
     if(!result) return res.status(400).send();
     res.status(200).send(result);
 });

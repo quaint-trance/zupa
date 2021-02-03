@@ -1,7 +1,9 @@
 import { v4 } from 'uuid'
 
 export interface matchHistory{
-
+    t: string, 
+    winner: string,
+    date: string;
 }
 
 export interface UserData{
@@ -52,4 +54,10 @@ export default class User implements UserData{
         }
     }
 
+    pushHistory(type: string, winner: string){
+        if(!this.history || this.history.length === 0)
+            this.history=[{t: type, winner, date: (new Date()).toISOString()}];
+        else this.history.push({t: type, winner, date: (new Date().toISOString())});
+    }
+    
 }

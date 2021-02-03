@@ -11,6 +11,7 @@ export default class userStore implements UserStore{
     }
     
     async create(data: UserData){
+        console.log(data);
         const user = new User({
             ...data
         });
@@ -21,32 +22,35 @@ export default class userStore implements UserStore{
             console.log(err)
         }
         
-        this.log();
         return true;
     }
 
     async findByEmail(email: string){
         const user = await User.findOne({email});
         if(!user) return null;
-        return user;
+        return {
+            ...user,
+        };
     }
 
     async findByName(name: string){
         const result = await User.findOne({name});
         if(!result) return null;
-        let user:UserData = {
-            description: result.description,
-            email: result.email,
+        let user = {
+            name: result.name,
+            email: result.name,
             history: result.history,
             password: result.password,
-            name: result.name,
+            description: result.description,
         }
         return user;
     }
 
     async save(data: UserData){
+        console.log(data);
         try{
-            User.updateOne({name: data.name}, {...data});
+            await User.updateOne({name: data.name}, {...data });
+            //await User.updateOne({name: data.name}, {history: data.history });
             return true;
         }catch(err){
             console.log(err);
@@ -54,7 +58,4 @@ export default class userStore implements UserStore{
         }
     }
 
-    log(){
-        console.log(this.store);
-    }
 }

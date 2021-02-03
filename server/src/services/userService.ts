@@ -3,6 +3,7 @@ import Token from "../entities/Token";
 import User from "../entities/User";
 import { UserStore } from "../types/UserStore";
 import bcrypt from 'bcryptjs'
+import { Game } from "../types/GameStore";
 
 export default class UserService{
    
@@ -44,6 +45,23 @@ export default class UserService{
             name: user.name,
             description: user.description,
             history: user.history,
+        }
+    }
+
+    async addHistory(type: Game['t'], payload: any, gameData: Game){
+        if(gameData.t === 'connect4'){
+            const winner = payload.userName || 'undefined';
+            for(let player of gameData.players){
+                if(!player.userName) return;
+                const userData = await this.userStore.findByName(player.userName);
+                if(!userData) return;
+                console.log(userData);
+                
+                const user = User.hydrate(userData);
+                user.pushHistory('connect4', winner);
+                console.log(user.getData());
+                this.userStore.save(user.getData());
+            }
         }
     }
 

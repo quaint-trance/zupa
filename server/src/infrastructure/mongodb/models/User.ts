@@ -6,7 +6,7 @@ export interface IUser extends mongoose.Document{
     email: string,
     password: string,
     description: string,
-    history: matchHistory[],
+    history: matchHistory[]
 }
 
 let __in:IUser;
@@ -30,9 +30,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    matchHistory:[{
-        score: Number,
-        date: Date
+    history:[{
+        t: String,
+        winner: String,
+        date: String,
     }],
 });
 
