@@ -4,13 +4,13 @@ import domainFactory from './domainFactory'
 import {resolve} from 'path'
 import gamesStore from './infrastructure/gamesStore';
 import EventEmitter from './infrastructure/EventEmitter';
-import userStore from './infrastructure/userStore';
+import mongoUserStore from './infrastructure/mongodb'
 
-dotenv.config({path: resolve(__dirname, "./.env")});
+dotenv.config({path: resolve(__dirname, "../.env")});
 
 const { io } = server();
 
-export const domain = domainFactory(new gamesStore(new EventEmitter(io)), new userStore());
+export const domain = domainFactory(new gamesStore(new EventEmitter(io)), new mongoUserStore() );
 export type domainType = typeof domain;
 
 

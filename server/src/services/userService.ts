@@ -2,7 +2,7 @@ import { Namespace } from "socket.io";
 import Token from "../entities/Token";
 import User from "../entities/User";
 import { UserStore } from "../types/UserStore";
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 
 export default class UserService{
    
@@ -14,7 +14,8 @@ export default class UserService{
 
     async createUser(name: string, email: string, password: string){
         if(await this.userStore.findByEmail(email) || await this.userStore.findByName(name)) return null;
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
         const user = User.create(name, email, hashedPassword);
         return await this.userStore.create(user.getData());
     }
@@ -23,9 +24,9 @@ export default class UserService{
         let user;
         if(name) user = await this.userStore.findByName(name);
         else if(email) user = await this.userStore.findByName(email);
-        if(!user) return null;
+        if(!user) return null
         
-        if( await bcrypt.compare(user.password, password) ) return user;
+        if( await bcrypt.compare(password, user.password) ) return user;
         return null;
     }
 

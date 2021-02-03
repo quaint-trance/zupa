@@ -10,6 +10,7 @@ import connect4Route from './web/routes/connect4'
 import charadesRoute from './web/routes/charades'
 import setRoute from './web/routes/set'
 import userRoute from './web/routes/user'
+import mongoose from 'mongoose'
 
 export default()=>{
     const app = express();
@@ -25,6 +26,10 @@ export default()=>{
     //const prisma = new PrismaClient()
     //prisma.yatzy.deleteMany({}).then(res=> console.log('deleted'));
 
+    if(!process.env.DB_URL) throw new Error();
+    mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true}, ()=>{
+        console.log('connected to db')
+    });
 
     io.on('connection', socketHandler);
     app.use(express.json());
