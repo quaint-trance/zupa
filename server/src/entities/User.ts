@@ -12,6 +12,12 @@ export interface UserData{
     password: string;
     description: string;
     history: matchHistory[];
+    music: string;
+    gameSettings:{
+        connect4?:{
+            skin?:string
+        }
+    }
 }
 
 export default class User implements UserData{
@@ -20,6 +26,8 @@ export default class User implements UserData{
     description: string;
     history: matchHistory[];
     password: string;
+    music: string;
+    gameSettings: UserData['gameSettings'];
 
     constructor(data: UserData){
         this.email = data.email;
@@ -27,6 +35,8 @@ export default class User implements UserData{
         this.password = data.password;
         this.description = data.description;
         this.history = data.history;
+        this.music = data.music;
+        this.gameSettings = data.gameSettings;
     }
 
     
@@ -37,6 +47,10 @@ export default class User implements UserData{
             password,
             description: '',
             history: [],
+            music: '',
+            gameSettings:{
+                connect4:{},
+            }
         })
     }
 
@@ -51,6 +65,8 @@ export default class User implements UserData{
             name: this.name,
             description: this.description,
             history: this.history,
+            music: this.music,
+            gameSettings: this.gameSettings,
         }
     }
 

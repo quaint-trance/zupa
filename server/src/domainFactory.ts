@@ -19,14 +19,13 @@ export default (gameStore: GamesStore, userStore: UserStore)=>{
         Connect4,
         Charades,
         Set,
-
         User,
     };
 
     return{
         yatzyService: new YatzyService(gameStore),
         gameStoreService: new GameStoreService(gameStore),
-        connect4Service: new Connect4Service(gameStore),
+        connect4Service: new Connect4Service(gameStore, userStore),
         charadesService: new CharadesService(gameStore),
         setService: new SetService(gameStore),
 

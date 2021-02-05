@@ -6,7 +6,13 @@ export interface IUser extends mongoose.Document{
     email: string,
     password: string,
     description: string,
-    history: matchHistory[]
+    history: matchHistory[],
+    music: string,
+    gameSettings:{
+        connect4?:{
+            skin?: string
+        }
+    }
 }
 
 let __in:IUser;
@@ -35,6 +41,12 @@ const userSchema = new mongoose.Schema({
         winner: String,
         date: String,
     }],
+    music: String,
+    gameSettings:{
+        connect4:{
+            skin: String
+        }
+    }
 });
 
 export default mongoose.model<IUser>('User', userSchema);

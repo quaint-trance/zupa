@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Player } from '../../../server/src/entities/Yatzy'
+import { Player } from '../../../server/src/entities/Connect4'
 import Circle from './Circle'
 
 interface props{
@@ -19,7 +19,7 @@ const Board:React.FC<props> = ({ board, chooseColumn, players }) =>{
             {board.map((column, columnIndex)=>(
                 <div key={columnIndex} onClick={()=>handleClick(columnIndex)}>
                     {column.map((circle, circleIndex)=>{
-                        return <Circle key={circle+circleIndex} playerNumber={ players.findIndex(p=>p.id===circle)} />
+                        return <Circle key={circle+circleIndex} playerNumber={ players.findIndex(p=>p.id===circle)} player={players.find(p=>p.id===circle)} />
                     })}
                 </div>
             ))}
@@ -63,14 +63,5 @@ const Container = styled.div`
     }
 
 `
-
-const colors = [
-    'coral',
-    'lightblue',
-    'lightgreen',
-    'orange',
-    'pink'
-]
-
 
 export default Board;

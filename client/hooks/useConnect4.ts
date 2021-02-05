@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Player } from '../../server/src/entities/Yatzy'
+import { Player } from '../../server/src/entities/Connect4'
 import { io, Socket }  from 'socket.io-client'
 import ENDPOINT from '../ENDPOINT'
 import useChat from './useChat'

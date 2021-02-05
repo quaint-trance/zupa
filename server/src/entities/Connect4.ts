@@ -7,6 +7,7 @@ export interface Player{
     name: string;
     score: number;
     userName?: string;
+    skin: string;
 }
 
 export interface Connect4Data{
@@ -105,13 +106,18 @@ export default class Connect4 implements Connect4Data{
         this.eventStack.push({name: 'start'});
     }
 
-    joinPlayer(name: string, userName: string){
+    joinPlayer( name: string, userName?: string, skin?:string ){
+        const skinE = skin ? skin : this.getDefaultSkin();
+        console.log( skinE );
+        
         const newPlayer:Player = {
             id: v4(),
             name,
             score: 0,
-            userName
+            userName,
+            skin: skin ? skin : skinE,
         };
+        console.log(newPlayer)
         this.players.push(newPlayer);
         this.eventStack.push({name: 'new player', payload: newPlayer});
         return newPlayer;
@@ -146,6 +152,7 @@ export default class Connect4 implements Connect4Data{
 
 
     chooseColumn(column: number){
+        console.log(this.players)
         const currentPlayer = this.getCurrentPlayer();
         if(!currentPlayer) return;
         if(!this.fields[column]) return null;
@@ -162,6 +169,17 @@ export default class Connect4 implements Connect4Data{
         this.eventStack.push({name: 'field selected', payload: data});
         this.nextTurn();
         return index;
+    }
+
+    getDefaultSkin(){
+        const colors = [
+            'tomato',
+            'lightblue',
+            'lightgreen',
+            'orange',
+            'pink',
+        ];
+        return colors[this.players.length];
     }
 
 }

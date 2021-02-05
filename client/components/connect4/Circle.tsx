@@ -1,11 +1,13 @@
 import styled from '@emotion/styled'
 import { useTransition, animated } from 'react-spring'
+import { Player } from '../../../server/src/entities/Connect4';
 
 interface props{
    playerNumber: undefined | number;
+   player: Player | undefined;
 }
 
-const Circle:React.FC<props> = ({ playerNumber }) =>{
+const Circle:React.FC<props> = ({ playerNumber, player }) =>{
 
     const transition = useTransition(true, null, {
         from: {
@@ -16,12 +18,12 @@ const Circle:React.FC<props> = ({ playerNumber }) =>{
         }
     })
 
-    if( playerNumber === undefined || playerNumber ===-1) return <Blank />;
+    if( playerNumber === undefined || playerNumber ===-1 || player === undefined ) return <Blank />;
     
     return(
         <>
             {transition.map(({ item, key, props }) =>( 
-                <Square color={colors[playerNumber >= 0 ? playerNumber : 4]} style={props} key={key} />
+                <Square color={player.skin} style={props} key={key} />
             ))}
         </>
     ) 
@@ -38,14 +40,15 @@ const Full = styled.div`
         content:'';
         display: block;
         padding-bottom: 90%;
-        background-color: ${props => props.color};
-    } 
+        background: red; 
+    }
 `
 
 const Square = styled(animated.div)`
     height: 100%;
     margin: 10px;
-    background-color: ${props => props.color};
+    background: ${props => props.color} no-repeat center;
+    background-size: 200px;
 `
 
 const Blank = styled.div`

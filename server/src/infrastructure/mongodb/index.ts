@@ -42,6 +42,8 @@ export default class userStore implements UserStore{
             history: result.history,
             password: result.password,
             description: result.description,
+            music: result.music,
+            gameSettings: result.gameSettings
         }
         return user;
     }

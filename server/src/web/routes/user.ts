@@ -26,4 +26,13 @@ router.get('/profile', async (req, res)=>{
 });
 
 
+router.post('/save', async (req, res)=>{
+    const result = await domain.userService.updateUser(req.body.token, {
+        description: req.body.description,
+        music: req.body.music,
+    });
+    if(!result) res.status(400).send();
+    else res.status(200).send();
+});
+
 export default router;

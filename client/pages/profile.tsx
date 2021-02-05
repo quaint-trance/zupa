@@ -3,8 +3,8 @@ import Head from 'next/head'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import useProfile from '../hooks/useProfile'
-import useYtMusic from '../hooks/useYtMusic'
 import { Doughnut, Line } from 'react-chartjs-2'
+import YouTube from "react-yt";
 
 interface props{
 
@@ -17,8 +17,6 @@ const Profile:React.FC<props> = () =>{
         typeof router.query.userId==='object' ? router.query.userId[0] : router.query.userId || '',
     );
 
-    const { audioRef } = useYtMusic(data?.videoId);
-
     return(
         <Container>
             <Head>
@@ -26,13 +24,21 @@ const Profile:React.FC<props> = () =>{
             </Head>
             <Content>
                
-               <div className="imageBox">
+                <div className="imageBox">
 
-               </div>
+                </div>
    
-               <h1>{data?.name}</h1>
-               <div className="description">{data?.description}</div>
+                <h1>{data?.name}</h1>
+                <div className="description">{data?.description}</div>
                
+               <YTWrapper>
+                    {data?.music&&<YouTube
+                        videoId={data?.music}
+                        autoplay={1}
+                        controls={0}
+                        showinfo={0}
+                    />}{data?.music}
+                </YTWrapper>
 
             <div className="charts">
                <div className="chart">
@@ -43,11 +49,14 @@ const Profile:React.FC<props> = () =>{
                </div>
             </div>
 
-               <audio ref={audioRef} autoPlay loop />
             </Content>
         </Container>
     )
 }
+
+const YTWrapper = styled.div`
+    display: none;
+`
 
 const Container = styled.div`
     background-color: rgb(26, 26, 26);
@@ -114,6 +123,7 @@ const Content = styled.div`
 export default Profile;
 
 function chart0Data(data){
+    console.log( data );
     if(!data) return data;
     const gameTypes:{t: string, count: number}[] = [];
     data.history.forEach(game => {

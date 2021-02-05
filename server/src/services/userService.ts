@@ -21,6 +21,23 @@ export default class UserService{
         return await this.userStore.create(user.getData());
     }
 
+    async updateUser(token: string, data: any){
+        console.log(token, data);
+        const name = Token.hydrate(token).getPayload().name;
+        if(!name) return;
+        const userData = await this.userStore.findByName(name);
+        if(!userData) return;
+        const user = User.hydrate(userData);
+        ["description", "music"].forEach(prop=>{
+            if(!data[prop]) return;
+            //@ts-ignore
+            user[prop] = data[prop];
+        });
+        this.userStore.save(user.getData());
+        console.log(true);
+        return true;
+    }
+
     async checkPassword(password: string, email?: string, name?: string){
         let user;
         if(name) user = await this.userStore.findByName(name);
@@ -45,6 +62,7 @@ export default class UserService{
             name: user.name,
             description: user.description,
             history: user.history,
+            music: user.music,
         }
     }
 

@@ -3,10 +3,34 @@ import styled from '@emotion/styled'
 import { FaDice } from 'react-icons/fa'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
+import { decode } from 'jsonwebtoken'
 
 export default function Home() {
+
+  const [userName, setUserName] = useState('');
+
+  useEffect(() => {
+      const token = localStorage.getItem('token');
+      if(!token) return;
+      const payload = decode(token);
+      console.log(payload)
+      if(!payload || typeof payload === 'string' || !payload.name) return;
+      console.log(payload.name)
+      setUserName(payload.name);
+  }, [])
+
   return (
     <div>
+      <Header>
+        {
+          !userName 
+           ?<><Link href="/login"><div>Login In</div></Link>
+              <Link href="/signup"><div>Sign Up</div></Link></>
+          : <><Link href={`/profile?userId=${userName}`}><div>Profile</div></Link>
+              <Link href={`/settings`}><div>Settings</div></Link></>
+      }
+      </Header>
       <Head>
         <title>Zupa</title>
         <link rel="icon" href="/favicon.ico" />
@@ -63,6 +87,22 @@ export default function Home() {
     </div>
   )
 }
+
+const Header = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  color: white;
+  width: 100%;
+  padding: 20px;
+  font-size: 25px;
+  font-weight: 300;
+
+  & > div{
+    margin: 0 20px;
+    cursor: pointer;
+  }
+`
 
 const Main = styled.main`
   background-color: black;
