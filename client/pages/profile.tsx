@@ -123,7 +123,6 @@ const Content = styled.div`
 export default Profile;
 
 function chart0Data(data){
-    console.log( data );
     if(!data) return data;
     const gameTypes:{t: string, count: number}[] = [];
     data.history.forEach(game => {
@@ -164,33 +163,30 @@ function chart0Data(data){
 
 function chart1Data(data){
     if(!data) return data;
-    const gameTypes:{date: string, score: number}[] = [];
+    const gameTypes:{date: string, score: number, total: number, d: Date}[] = [];
 
     data.history.forEach(game => {
         const getDate = (ds: string) => `${new Date(ds).getDate()+1}.${(new Date(ds).getMonth()+1)}`
         
         let index = gameTypes.findIndex(e=>{
-            //console.log(e.date, getDate(game.date));
-            //console.log(e.date === getDate(game.date));
             return e.date === getDate(game.date);
         });
-        console.log(index);
         if(index===-1){
-            gameTypes.push({date: getDate(game.date), score: 0});
+            gameTypes.push({date: getDate(game.date), score: 0, total: 0, d: new Date(game.date)});
             index = gameTypes.length-1;
         }
-
-        if(  localStorage.getItem('name') === game.winner ) gameTypes[index].score++;
+        gameTypes[index].total++;
+        if( data.name  === game.winner ) gameTypes[index].score++;
         else gameTypes[index].score--;
     });
 
-    console.log(gameTypes)
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
     return{
-        labels: gameTypes.map(e=> e.date),
+        labels: gameTypes.sort((a, b)=>a.d.getTime()-b.d.getTime()).map(e=> `${e.d.getDate()+1} ${months[e.d.getMonth()]}`),
         datasets:[{
-            label: '',
-            data: gameTypes.map(e=> e.score),
+            label: 'win/lose % ratio',
+            data: gameTypes.map(e=> Math.round(100*e.score/e.total)),
             fill: true,    
             backgroundColor: 'rgba(64, 99, 255, 0.445)',
             borderColor: '#1425bd',
