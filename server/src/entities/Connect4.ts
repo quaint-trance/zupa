@@ -108,7 +108,6 @@ export default class Connect4 implements Connect4Data{
 
     joinPlayer( name: string, userName?: string, skin?:string ){
         const skinE = skin ? skin : this.getDefaultSkin();
-        console.log( skinE );
         
         const newPlayer:Player = {
             id: v4(),
@@ -117,7 +116,6 @@ export default class Connect4 implements Connect4Data{
             userName,
             skin: skin ? skin : skinE,
         };
-        console.log(newPlayer)
         this.players.push(newPlayer);
         this.eventStack.push({name: 'new player', payload: newPlayer});
         return newPlayer;

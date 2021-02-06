@@ -2,15 +2,18 @@ import GamesStore, { Game } from "../types/GameStore";
 import Token from '../entities/Token'
 import Connect4 from "../entities/Connect4";
 import { UserStore } from "../types/UserStore";
+import { UserType } from "../entities/User";
 
 export default class Connect4Service{
 
     gamesStore: GamesStore;
+    User: UserType;
     userStore: UserStore;
 
-    constructor(gamesStore: GamesStore, userStore: UserStore){
+    constructor(gamesStore: GamesStore, userStore: UserStore, User: UserType){
         this.gamesStore = gamesStore;
         this.userStore = userStore;
+        this.User = User;
     }
 
     async hydrateFromToken(token: string):Promise<[null | Connect4, null | string]>{
@@ -37,11 +40,14 @@ export default class Connect4Service{
     async joinPlayer(gameId: string, playerName: string, userToken?: string){
         const gameData = await this.gamesStore.findById(gameId);
         if(!gameData || gameData.t !== 'connect4') return null;
+        
         const game = Connect4.hydrate(gameData);
         const userName = userToken && Token.hydrate(userToken).payload.name;
         const userData = await this.userStore.findByName(userName);
+        const user = userData && this.User.hydrate(userData);
+        await user?.loadSkins();
         
-        const player = game.joinPlayer(playerName, userName, userData?.gameSettings?.connect4?.skin);
+        const player = game.joinPlayer(playerName, userName, user?.gameSettings?.connect4?.skin);
         this.gamesStore.save({...game, t: 'connect4'});
 
         const token = Token.create({ gameId, playerId: player.id, userName }).getToken();

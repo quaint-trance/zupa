@@ -11,25 +11,33 @@ import SetService from "./services/setService";
 import User from "./entities/User";
 import UserService from "./services/userService";
 import { UserStore } from "./types/UserStore";
+import Skin from "./valueObjects/Skin";
+import { SkinStore } from "./types/SkinStore";
 
-export default (gameStore: GamesStore, userStore: UserStore)=>{
+export default (gameStore: GamesStore, userStore: UserStore, skinStore: SkinStore)=>{
+    
+    const valueObjects = {
+        Skin: Skin(skinStore),
+    }
+
     const entities = {
         Yatzy,
         Token,
         Connect4,
         Charades,
         Set,
-        User,
+
+        User: User(valueObjects.Skin),
     };
 
     return{
         yatzyService: new YatzyService(gameStore),
         gameStoreService: new GameStoreService(gameStore),
-        connect4Service: new Connect4Service(gameStore, userStore),
+        connect4Service: new Connect4Service(gameStore, userStore, entities.User),
         charadesService: new CharadesService(gameStore),
         setService: new SetService(gameStore),
 
-        userService: new UserService(userStore),
+        userService: new UserService(userStore, entities.User),
         entities,
     }
 }

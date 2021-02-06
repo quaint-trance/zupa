@@ -1,23 +1,25 @@
 import { Namespace } from "socket.io";
 import Token from "../entities/Token";
-import User from "../entities/User";
 import { UserStore } from "../types/UserStore";
 import bcrypt from 'bcryptjs'
 import { Game } from "../types/GameStore";
+import { UserType } from '../entities/User';
 
 export default class UserService{
    
     userStore: UserStore;
+    User: UserType;
 
-    constructor(userStore: UserStore){
-        this.userStore = userStore
+    constructor(userStore: UserStore, User: UserType){
+        this.userStore = userStore,
+        this.User = User;
     } 
 
     async createUser(name: string, email: string, password: string){
         if(await this.userStore.findByEmail(email) || await this.userStore.findByName(name)) return null;
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-        const user = User.create(name, email, hashedPassword);
+        const user = this.User.create(name, email, hashedPassword);
         return await this.userStore.create(user.getData());
     }
 
@@ -27,7 +29,7 @@ export default class UserService{
         if(!name) return;
         const userData = await this.userStore.findByName(name);
         if(!userData) return;
-        const user = User.hydrate(userData);
+        const user = this.User.hydrate(userData);
         ["description", "music"].forEach(prop=>{
             if(!data[prop]) return;
             //@ts-ignore
@@ -75,7 +77,7 @@ export default class UserService{
                 if(!userData) return;
                 console.log(userData);
                 
-                const user = User.hydrate(userData);
+                const user = this.User.hydrate(userData);
                 user.pushHistory('connect4', winner);
                 console.log(user.getData());
                 this.userStore.save(user.getData());
