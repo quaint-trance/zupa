@@ -13,6 +13,7 @@ import UserService from "./services/userService";
 import { UserStore } from "./types/UserStore";
 import Skin from "./valueObjects/Skin";
 import { SkinStore } from "./types/SkinStore";
+import SkinService from "./services/skinService";
 
 export default (gameStore: GamesStore, userStore: UserStore, skinStore: SkinStore)=>{
     
@@ -37,6 +38,7 @@ export default (gameStore: GamesStore, userStore: UserStore, skinStore: SkinStor
         charadesService: new CharadesService(gameStore),
         setService: new SetService(gameStore),
 
+        skinService: new SkinService(skinStore, valueObjects.Skin, userStore, entities.User),
         userService: new UserService(userStore, entities.User),
         entities,
     }

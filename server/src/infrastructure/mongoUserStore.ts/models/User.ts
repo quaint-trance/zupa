@@ -10,7 +10,8 @@ export interface IUser extends mongoose.Document{
     music: string,
     gameSettings:{
         connect4?:{
-            skin?: string
+            skin?: string,
+            unlocked: string[],
         }
     }
 }
@@ -44,7 +45,8 @@ const userSchema = new mongoose.Schema({
     music: String,
     gameSettings:{
         connect4:{
-            skin: String
+            skin: String,
+            unlocked: [String]
         }
     }
 });

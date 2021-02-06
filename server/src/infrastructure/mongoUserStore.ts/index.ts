@@ -1,4 +1,4 @@
-import { UserData } from "../../entities/User";
+import { UserData, UserType } from "../../entities/User";
 import { UserStore } from "../../types/UserStore";
 import User from './models/User'
 

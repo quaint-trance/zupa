@@ -35,4 +35,20 @@ router.post('/save', async (req, res)=>{
     else res.status(200).send();
 });
 
+router.get('/skin', async (req, res)=>{
+    const id = req.query.id;
+    if(typeof id !== 'string') return res.status(400).send({value: ''});
+    const result = await domain.skinService.getOne(id);
+    if(!result) return res.status(400).send({value: ''});
+    res.status(200).send({value: result});
+});
+
+router.post('/setSkin', async (req, res)=>{
+    console.log(req.body);
+    const result = await domain.skinService.setSkin(req.body.token, req.body.skinId);
+    console.log(result);
+    if(result === null) res.status(400).send();
+    else res.status(200).send();    
+});
+
 export default router;

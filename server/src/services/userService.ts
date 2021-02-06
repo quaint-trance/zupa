@@ -1,4 +1,3 @@
-import { Namespace } from "socket.io";
 import Token from "../entities/Token";
 import { UserStore } from "../types/UserStore";
 import bcrypt from 'bcryptjs'
@@ -58,13 +57,17 @@ export default class UserService{
     }
 
     async getUser(name: string){
-        const user = await this.userStore.findByName(name);
-        if(!user) return null;
-        else return{
+        const userData = await this.userStore.findByName(name);
+        if(!userData) return null;
+        const user = this.User.hydrate(userData);
+        //await user.loadSkins();
+        //await user.loadAllSkins();
+        return{
             name: user.name,
             description: user.description,
             history: user.history,
             music: user.music,
+            gameSettings: user.gameSettings
         }
     }
 

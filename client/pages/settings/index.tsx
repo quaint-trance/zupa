@@ -1,10 +1,9 @@
 import { useState, useEffect, useReducer } from 'react'
 import Head from 'next/head'
 import styled from '@emotion/styled'
-import { useRouter } from 'next/router'
-import useProfile from '../hooks/useProfile'
+import useProfile from '../../hooks/useProfile'
 import { decode } from 'jsonwebtoken'
-import useSettings from '../hooks/useSettings'
+import useSettings from '../../hooks/useSettings'
 
 interface props{
 

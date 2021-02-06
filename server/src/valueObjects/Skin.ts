@@ -27,7 +27,7 @@ function SkinFactory(skinStore: SkinStore){
                 id: v4(),
                 value,
             });
-            const result = await skinStore.save(skin.getData());
+            const result = await skinStore.create(skin.getData());
             if(!result) return null;
             return skin;
         }

@@ -17,4 +17,4 @@ export const domain = domainFactory(
     new mongoSkinStore(),    
 );
 
-    export type domainType = typeof domain;
+export type domainType = typeof domain;

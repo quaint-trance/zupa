@@ -16,7 +16,8 @@ export interface UserData{
     music: string;
     gameSettings:{
         connect4?:{
-            skin?:string
+            skin?:string,
+            unlocked:string[]
         }
     }
 }
@@ -51,7 +52,9 @@ function UserFactory(Skin: SkinType){
                 history: [],
                 music: '',
                 gameSettings:{
-                    connect4:{},
+                    connect4:{
+                        unlocked: []
+                    },
                 }
             })
         }
@@ -85,7 +88,20 @@ function UserFactory(Skin: SkinType){
                 this.gameSettings.connect4.skin = skin.getValue(); 
             }
         }
+
+        async loadAllSkins(){
+            if(!this.gameSettings.connect4?.unlocked) return null;
+            this.gameSettings.connect4.unlocked = await Promise.all(this.gameSettings.connect4.unlocked.map(async skinId=>{
+                const skin = await Skin.get(skinId);
+                if(!skin) return '';
+                return skin.getValue();
+            }));
+        }
         
+        setSkin(id: string){
+            if(!this.gameSettings.connect4?.skin) return;
+            this.gameSettings.connect4.skin = id;
+        }
     }
 }
 

@@ -45,4 +45,9 @@ export default class skinStore implements SkinStore{
         }
     }
 
+    async getAll(){
+        const result = await Skin.find();
+        return result;
+    }
+
 }
