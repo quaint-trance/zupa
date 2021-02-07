@@ -14,7 +14,7 @@ interface props{
 const skins:React.FC<props> = () =>{
 
     const [userName, setUserName] = useState('');
-    const { data } = useProfile(userName);
+    const { data, refetch } = useProfile(userName);
     const { isError, isLoading,isSuccess,  mutate } = useSettings();
 
     const [usMusic, setUsMusic] = useState('');
@@ -51,7 +51,7 @@ const skins:React.FC<props> = () =>{
                 token: localStorage.getItem('token'),
                 skinId: data?.gameSettings?.connect4?.unlocked[number]
             })
-        }).then(res=> ({}) );
+        }).then( res => refetch() );
     }
 
     return(
@@ -68,10 +68,6 @@ const skins:React.FC<props> = () =>{
                     ))}
 
                 </div>
-
-                <button disabled={isLoading}>{!isLoading ? "Save" : "Loading"}</button>
-                {isSuccess && <div>saved</div> }
-                {isError && <div>error</div> }
 
             </Content>
         </Container>
@@ -163,6 +159,8 @@ const Content = styled.div`
 
     .skinBox{
         display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
     }
 
 `

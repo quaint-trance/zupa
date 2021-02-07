@@ -7,7 +7,8 @@ export interface Player{
     name: string;
     score: number;
     userName?: string;
-    skin: string;
+    color: string;
+    skin?: string;
 }
 
 export interface Connect4Data{
@@ -107,14 +108,14 @@ export default class Connect4 implements Connect4Data{
     }
 
     joinPlayer( name: string, userName?: string, skin?:string ){
-        const skinE = skin ? skin : this.getDefaultSkin();
         
         const newPlayer:Player = {
             id: v4(),
             name,
             score: 0,
             userName,
-            skin: skin ? skin : skinE,
+            color: this.getDefaultSkin(),
+            skin,
         };
         this.players.push(newPlayer);
         this.eventStack.push({name: 'new player', payload: newPlayer});

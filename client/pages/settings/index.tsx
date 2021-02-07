@@ -4,6 +4,7 @@ import styled from '@emotion/styled'
 import useProfile from '../../hooks/useProfile'
 import { decode } from 'jsonwebtoken'
 import useSettings from '../../hooks/useSettings'
+import Link from 'next/link'
 
 interface props{
 
@@ -48,6 +49,8 @@ const Profile:React.FC<props> = () =>{
                 <title>Zupa - user profile</title>
             </Head>
             <Content>
+                <main>
+
                
                 <div className="imageBox">
 
@@ -62,7 +65,7 @@ const Profile:React.FC<props> = () =>{
                     placeholder="Description" 
                     value={usDesc? usDesc : data?.description} 
                     onChange={handleChange}
-                />
+                    />
                 
                 <label htmlFor="">Music</label>
                 <input
@@ -71,12 +74,17 @@ const Profile:React.FC<props> = () =>{
                     placeholder="Music YT video ID" 
                     value={usMusic? usMusic : data?.music} 
                     onChange={handleChange}
-                />
+                    />
                
 
                 <button onClick={handleClick} disabled={isLoading}>{!isLoading ? "Save" : "Loading"}</button>
                 {isSuccess && <div>saved</div> }
                 {isError && <div>error</div> }
+
+            </main>
+            <nav>
+                <div><Link href="/settings/skins">Skins</Link></div>
+            </nav>
 
             </Content>
         </Container>
@@ -114,10 +122,27 @@ const Content = styled.div`
     background-color: rgb(14, 14, 14);
     flex: 1;
     min-width: 1200px;
-    display: flex;
-    flex-direction: column;
     padding: 0 100px;
     padding-top: 5vh;
+
+    display: grid;
+    grid-template: 1fr / 1fr 200px;
+
+    main{
+        display: flex;
+        flex-direction: column;
+
+    }
+
+    nav{
+        border-left: 1px solid white;
+        padding: 20px;
+         & > div{
+            font-size: 25px;
+            font-weight: 400;
+            cursor: pointer;
+         }
+    }
 
     .imageBox{
         background-color: #4e4e4e;

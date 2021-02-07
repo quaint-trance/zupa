@@ -6,7 +6,7 @@ export default (userId: string)=>{
     
     const router = useRouter();
 
-    const  {data, isLoading, isError } = useQuery(`profile-${userId}`, ()=>
+    const  {data, isLoading, isError, refetch } = useQuery(`profile-${userId}`, ()=>
         fetch(ENDPOINT+`/user/profile?name=${userId}`, {
             method: "GET",
             headers: {
@@ -24,6 +24,7 @@ export default (userId: string)=>{
     return{
         data,
         isLoading,
-        isError
+        isError,
+        refetch,
     }
 }
