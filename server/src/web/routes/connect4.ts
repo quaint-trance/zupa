@@ -5,7 +5,6 @@ const router = express.Router();
 
 router.post('/create', async (req, res)=>{
     try{
-
         let size;
         if(!req.body.size || !req.body.size.columns || !req.body.size.columns){
             size = undefined;
@@ -18,7 +17,6 @@ router.post('/create', async (req, res)=>{
         
         let connectToWin;
         if(req.body.connectToWin) connectToWin = parseInt(req.body.connectToWin);
-        console.log(connectToWin);
         const result = await domain.connect4Service.createGame(
             req.body.playerName,
             size,
