@@ -23,47 +23,37 @@ const Circle:React.FC<props> = ({ playerNumber, player }) =>{
     return(
         <>
             {transition.map(({ item, key, props }) =>( 
-                <Square color={player.color} skin={player.skin} style={props} key={key} />
+                <Square color={player.color || 'white'} skin={player.skin} style={props} key={key}>
+                    <div></div>
+                </Square>
             ))}
         </>
     ) 
     
 }
 
-const Full = styled.div`
-    margin: 10px auto;
-    width: 90%;
-
-    overflow: hidden;
-    &:before{
-        border-radius: 50%;
-        content:'';
-        display: block;
-        padding-bottom: 90%;
-        background: red; 
-    }
-`
 
 const Square = styled(animated.div)<{color: string, skin: string|undefined}>`
     height: 100%;
     margin: 10px;
-    background: ${props => props.skin} no-repeat center;
-    background-size: cover;
-    border: 8px solid ${props=>props.color};
     border-radius: 10px;
+    display: flex;
+    background: ${props=> props.color};
+
+    & div{
+        margin: 7px;
+        margin-top: 8px;
+        background: ${props => props.skin} no-repeat center;
+        background-size: cover;
+        border-radius: 10px;
+        flex: 1;
+        overflow: hidden;
+
+    }
 `
 
 const Blank = styled.div`
     margin: 10px; 
 `
-
-const colors = [
-    'coral',
-    'lightblue',
-    'lightgreen',
-    'orange',
-    'pink'
-]
-
 
 export default Circle;

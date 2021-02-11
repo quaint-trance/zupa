@@ -21,7 +21,12 @@ export default function Home() {
   }, [])
 
   return (
-    <div>
+    <Container>
+      <Head>
+        <title>Zupa</title>
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="description" content="zupa online games connect4 yatzy charades kalambury kości multiplayer"></meta>
+      </Head>
       <Header>
         {
           !userName 
@@ -31,11 +36,6 @@ export default function Home() {
               <Link href={`/settings`}><div>Settings</div></Link></>
       }
       </Header>
-      <Head>
-        <title>Zupa</title>
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="description" content="zupa online games connect4 yatzy charades kalambury kości multiplayer"></meta>
-      </Head>
       <Main>
         <img src="/zupa.svg" id="zupa-bg" alt="background" />
 
@@ -84,14 +84,19 @@ export default function Home() {
       <footer>
         
       </footer>
-    </div>
+    </Container>
   )
 }
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+`
 
 const Header = styled.div`
   display: flex;
   justify-content: flex-end;
-  position: absolute;
   color: white;
   width: 100%;
   padding: 20px;

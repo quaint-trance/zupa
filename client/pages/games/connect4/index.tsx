@@ -24,7 +24,7 @@ const Connect4 :React.FC<props> = () =>{
                 <title>Zupa - Connect4</title>
             </Head>
             <Container>
-                <Chat messages={messages} sendMessage={sendMessage}/>
+                <Chat messages={messages} sendMessage={sendMessage} />
                 <Header players={players} turn={turn} />
                 <Board board={board} chooseColumn={chooseColumn} players={players} />
             </Container>

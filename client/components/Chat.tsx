@@ -40,7 +40,7 @@ const Chat:React.FC<props> = ({messages, sendMessage}) =>{
                     )}
                 </div>
                 <form>
-                    <input type="text" ref={inputRef} placeholder="Ee"/>
+                    <div><input type="text" ref={inputRef} placeholder="Ee"/></div>
                     <button onClick={handleClick}><RiSendPlaneFill/></button>
                 </form>
         </Container>
@@ -90,8 +90,9 @@ const Container = styled.div`
     background-color: rgba(209, 104, 104, 0);
     display: grid;
     grid-template: 1fr 50px / 1fr;
-        
+
         & > div{
+            max-width: 100%;
             overflow-y: scroll;
             max-height: 100%;
             padding: 10px;
@@ -115,18 +116,22 @@ const Container = styled.div`
         & > form{
             background-color: rgba(236, 235, 235, 0);
             height: 40px;
-            display: flex;
+            display: grid;
+            max-width: 100%;
+            grid-template-columns: 1fr auto;
 
-            & > input{
-                flex: 1;
-                margin: 0 10px 0 0;
-                border: none;
-                border-radius: 20px;
-                outline: none;
-                font-size: 20px;
-                padding: 10px;
-                &:active{
+            & > div{
+                padding-right: 10px;
+                & > input{
+                    width: 100%;
+                    border: none;
+                    border-radius: 20px;
                     outline: none;
+                    font-size: 20px;
+                    padding: 10px;
+                    &:active{
+                        outline: none;
+                    }
                 }
             }
             & > button{

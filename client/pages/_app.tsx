@@ -21,6 +21,7 @@ function App({ Component, pageProps }: AppProps) {
               }}
               />
             <link rel="icon" href="/zupa.png" type = "image/x-icon" /> 
+            <link rel="manifest" href="/manifest.json" />
         </Head>
         <Component {...pageProps} />
       </QueryClientProvider>

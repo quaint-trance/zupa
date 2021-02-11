@@ -1,0 +1,9 @@
+{
+    "short_name": "Zupa",
+    "name": "Zupa",
+    "background_color": "#3367D6",
+    "display": "standalone",
+    "orientation":  "landscape", 
+    "scope": "/",
+    "theme_color": "#3367D6"
+}
