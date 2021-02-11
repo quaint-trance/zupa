@@ -55,7 +55,7 @@ export default (socketRef: React.MutableRefObject<Socket | undefined>, gameId: s
 
 
 
-const helpMessage = `<b>/new</b> create new game
+const helpMessage = `<b>/new</b> reset + start
 <b>/reset</b> create new game
 <b>/start</b> start game
 <b>/players</b> list players

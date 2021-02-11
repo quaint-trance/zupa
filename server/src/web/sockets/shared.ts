@@ -42,7 +42,7 @@ export const command =  async(socket: socketWithAuth, data: {content: string}, c
         if( game.t === 'charades'){
             if(data.content === '/start') domain.charadesService.start(token);
             else if(data.content === '/reset') domain.charadesService.reset(token);
-            else if(data.content === '/new') domain.charadesService.reset(token);
+            else if(data.content === '/new') { domain.charadesService.reset(token); domain.charadesService.start(token)}
             else if(data.content === '/delete') domain.gameStoreService.deleteGame(gameId);
             else if(data.content === '/scoreboard') callback({name: 'scoreboard', payload: await domain.charadesService.getScoreboard(gameId)});
             else if(data.content === '/players') callback({name:'players', payload: game.players});

@@ -1,23 +1,30 @@
-import { useRef, useEffect } from 'react'
-import Head from 'next/head'
+import { useRef, useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import { RiSendPlaneFill } from 'react-icons/ri'
+import { RiSettings5Fill } from 'react-icons/ri'
 import ReactHtmlParser from 'react-html-parser'
 
 interface props{
     messages: {author: string, content: string}[],
     sendMessage: (content: string)=> any;
+    Settings: React.FC<any>;
 }
 
-const Chat:React.FC<props> = ({messages, sendMessage}) =>{
+const Chat:React.FC<props> = ({messages, sendMessage, Settings}) =>{
 
     const inputRef = useRef<HTMLInputElement | null>(null);
     const divRef = useRef<HTMLDivElement | null>(null);
+    const [displaySettings, setDisplaySettings] = useState(true);
+    
     const handleClick = (event) =>{
         event.preventDefault();
         if(!inputRef.current || inputRef.current.value === '') return;
         sendMessage(inputRef.current.value);
         inputRef.current.value = '';
+    }
+    const handleClick2 = (event) =>{
+        event.preventDefault();
+        setDisplaySettings(true);
     }
 
     useEffect(()=>{
@@ -27,6 +34,7 @@ const Chat:React.FC<props> = ({messages, sendMessage}) =>{
 
     return(
         <Container>
+            <Settings display={displaySettings} setDisplay={setDisplaySettings} sendMessage={sendMessage}/>
                 <div ref={divRef}>
                     {messages.map((m, i, arr)=>
                     <>
@@ -42,6 +50,7 @@ const Chat:React.FC<props> = ({messages, sendMessage}) =>{
                 <form>
                     <div><input type="text" ref={inputRef} placeholder="Ee"/></div>
                     <button onClick={handleClick}><RiSendPlaneFill/></button>
+                    <button onClick={handleClick2}><RiSettings5Fill/></button>
                 </form>
         </Container>
     )
@@ -60,18 +69,18 @@ const Message = styled.div<MessageProps>`
     white-space: pre-wrap;
     ${props=>{
         if(props.author === '$system$') return `
-        background-color: #d46d6a;
+        background-color: orange;
         align-self: center;
         width: 100%;
         text-align: center;
         `;
         if(props.author === '$me$') return `
-            background-color: #6ad48d;
+            background-color: #25c259;
             align-self: flex-end;
             max-width: 65%;
         `;
         return `
-            background-color: #eeeeee;
+            background-color: #ffffff;
             align-self: flex-start;
             max-width: 65%;
         `;
@@ -118,10 +127,10 @@ const Container = styled.div`
             height: 40px;
             display: grid;
             max-width: 100%;
-            grid-template-columns: 1fr auto;
+            grid-template-columns: 1fr auto auto;
 
             & > div{
-                padding-right: 10px;
+                padding-right: 5px;
                 & > input{
                     width: 100%;
                     border: none;
@@ -135,9 +144,9 @@ const Container = styled.div`
                 }
             }
             & > button{
-                margin: 0;
+                margin: 5px;
                 border: none;
-                background-color: #41c06b;
+                background-color: #4191c0;
                 color: white;
                 border-radius: 50%;
                 width: 40px;

@@ -4,6 +4,7 @@ import styled from '@emotion/styled'
 import Chat from '../../../components/Chat'
 import Board from '../../../components/connect4/Board'
 import Header from '../../../components/connect4/Header'
+import Settings from '../../../components/connect4/Settings'
 
 import { useRouter } from 'next/router'
 import useConnect4 from '../../../hooks/useConnect4'
@@ -24,7 +25,7 @@ const Connect4 :React.FC<props> = () =>{
                 <title>Zupa - Connect4</title>
             </Head>
             <Container>
-                <Chat messages={messages} sendMessage={sendMessage} />
+                <Chat messages={messages} sendMessage={sendMessage} Settings={Settings} />
                 <Header players={players} turn={turn} />
                 <Board board={board} chooseColumn={chooseColumn} players={players} />
             </Container>
