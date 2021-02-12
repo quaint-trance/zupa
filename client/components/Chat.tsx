@@ -7,14 +7,14 @@ import ReactHtmlParser from 'react-html-parser'
 interface props{
     messages: {author: string, content: string}[],
     sendMessage: (content: string)=> any;
-    Settings: React.FC<any>;
+    Settings?: React.FC<any>;
 }
 
 const Chat:React.FC<props> = ({messages, sendMessage, Settings}) =>{
 
     const inputRef = useRef<HTMLInputElement | null>(null);
     const divRef = useRef<HTMLDivElement | null>(null);
-    const [displaySettings, setDisplaySettings] = useState(true);
+    const [displaySettings, setDisplaySettings] = useState(false);
     
     const handleClick = (event) =>{
         event.preventDefault();
@@ -34,7 +34,7 @@ const Chat:React.FC<props> = ({messages, sendMessage, Settings}) =>{
 
     return(
         <Container>
-            <Settings display={displaySettings} setDisplay={setDisplaySettings} sendMessage={sendMessage}/>
+            {Settings && <Settings display={displaySettings} setDisplay={setDisplaySettings} sendMessage={sendMessage}/> }
                 <div ref={divRef}>
                     {messages.map((m, i, arr)=>
                     <>

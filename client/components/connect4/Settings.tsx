@@ -16,16 +16,21 @@ const Settings:React.FC<props> = ({ display, setDisplay, sendMessage}) =>{
     }
     
     const animatedProps = useSpring({
-        pointerEvents: display ? "all" : "none",
+        top: display? "50%" : "100%",
         opacity: display ? 1 : 0,
-        backdropFilter: display ? "blur(5px)" : "blur(0px)",
-        config: config.default
+        config: config.stiff
     });
+    
+    const animatedBlur = useSpring({
+        pointerEvents: display ? "all" : "none",
+        backdropFilter: display ? "blur(5px)" : "blur(0px)",
+    });
+    
+    
 
-    if(!display) return <></>;
     return(
-        <Container style={{backdropFilter: animatedProps.backdropFilter}} onClick={()=>changeState(false)}>
-            <animated.main style={{...animatedProps, backdropFilter: 'initial'}} onClick={e=>e.stopPropagation()}>
+        <Container style={animatedBlur} onClick={()=>changeState(false)}>
+            <animated.main style={animatedProps} onClick={e=>e.stopPropagation()}>
                 <section>
                     <span>start</span>
                     <button onClick={()=>sendMessage('/start')}><FaPlayCircle/></button>

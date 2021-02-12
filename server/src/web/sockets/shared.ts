@@ -27,7 +27,10 @@ export const command =  async(socket: socketWithAuth, data: {content: string}, c
         if( game.t === 'connect4'){
             if(data.content === '/start') domain.connect4Service.start(token);
             else if(data.content === '/reset') domain.connect4Service.reset(token);
-            else if(data.content === '/new') domain.connect4Service.reset(token);
+            else if(data.content === '/new'){
+                await domain.connect4Service.reset(token);
+                await domain.connect4Service.start(token)
+            }
             else if(data.content === '/scoreboard') callback({name: 'scoreboard', payload: await domain.connect4Service.getScoreboard(gameId)});
             else if(data.content === '/players') callback({name:'players', payload: game.players});
             else if(data.content.includes('/kick')){
@@ -42,7 +45,7 @@ export const command =  async(socket: socketWithAuth, data: {content: string}, c
         if( game.t === 'charades'){
             if(data.content === '/start') domain.charadesService.start(token);
             else if(data.content === '/reset') domain.charadesService.reset(token);
-            else if(data.content === '/new') { domain.charadesService.reset(token); domain.charadesService.start(token)}
+            else if(data.content === '/new') domain.charadesService.reset(token);
             else if(data.content === '/delete') domain.gameStoreService.deleteGame(gameId);
             else if(data.content === '/scoreboard') callback({name: 'scoreboard', payload: await domain.charadesService.getScoreboard(gameId)});
             else if(data.content === '/players') callback({name:'players', payload: game.players});
