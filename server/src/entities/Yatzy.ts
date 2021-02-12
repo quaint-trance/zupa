@@ -40,7 +40,7 @@ export default class Yatzy implements yatzyData{
         return new Yatzy({
             id: v4(),
             players: [],
-            turn: 0,
+            turn: -1,
             throwCount: 0,
             dice: [5, 5, 5, 5, 5],
         });
@@ -61,7 +61,7 @@ export default class Yatzy implements yatzyData{
     getDice(){
         return this.dice;
     }
-    getCurrentPlayer(){
+    getCurrentPlayer():Player | undefined{
         return this.players[this.turn];
     }
     getAll(){
@@ -99,7 +99,6 @@ export default class Yatzy implements yatzyData{
         if(this.players.some(p=>p.usedRows.some(r=> r===-1))) 'e';
         else {
             const winner = this.players.reduce((a, b)=> b.score > a.score ? b : a);
-            console.log('winner' ,winner);
             this.eventStack.push({name: 'win', payload: winner});
         }
     }
@@ -120,15 +119,34 @@ export default class Yatzy implements yatzyData{
     }
     
     chooseRow(row: number){
+        const currentPlayer = this.getCurrentPlayer();
+        if(!currentPlayer) return;
         if(this.throwCount === 0) return 0;
-        if(this.getCurrentPlayer().usedRows[row] >=0 ) return;
+        if(currentPlayer.usedRows[row] >=0 ) return;
         const score = calcScore(this.dice, row);
         if(score === undefined) return;
-        this.getCurrentPlayer().usedRows[row] = score;
-        this.getCurrentPlayer().score += score;
+
+        currentPlayer.usedRows[row] = score;
+        currentPlayer.score += score;
         this.eventStack.push({name: 'row chosen', payload: {row, score, turn: this.turn}});
         this.nextTurn();
         return score;
+    }
+
+    start(){
+        if(this.turn >= 0) return;
+        this.turn = 0;
+        this.eventStack.push({name:'start'});
+    }
+    
+    reset(){
+        this.turn = -1;
+        this.throwCount = 0;
+        this.players.forEach(player=>{
+            player.score = 0;
+            player.usedRows = new Array(15).fill(-1);
+        });
+        this.eventStack.push({name:'reset'});
     }
 
 }

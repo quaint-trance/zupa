@@ -4,6 +4,7 @@ import styled from '@emotion/styled'
 import Chat from '../../../components/Chat'
 import Dice from '../../../components/yatzy/Dice'
 import Card from '../../../components/yatzy/Card'
+import Settings from '../../../components/yatzy/Settings'
 import useYatzy from '../../../hooks/useYatzy'
 
 import { useRouter } from 'next/router'
@@ -23,7 +24,7 @@ const GamesList:React.FC<props> = () =>{
                 <title>Zupa - Yatzy</title>
             </Head>
             <Container>
-                <Chat messages={messages} sendMessage={sendMessage}/>
+                <Chat messages={messages} sendMessage={sendMessage} Settings={Settings} />
                 <Dice dice={dice} throwDice={throwDice} throwCount={throwCount}/>
                 <Card players={players} chooseRow={chooseRow} turn={turn} />
             </Container>

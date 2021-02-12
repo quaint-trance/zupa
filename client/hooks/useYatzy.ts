@@ -54,6 +54,16 @@ export default (gameId: string)=>{
             pushSystemInfo(`${data.name} wins`);
         });
 
+        socket.on('start', ()=>{
+            setTurn(0);
+            setThrowCount(0);
+            pushSystemInfo('start');
+        });
+
+        socket.on('reset', ()=>{
+            pushSystemInfo('reset');
+        });
+
         return () => {
             socket.close();
         }

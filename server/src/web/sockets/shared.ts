@@ -40,7 +40,13 @@ export const command =  async(socket: socketWithAuth, data: {content: string}, c
             else callback({name: 'unknown'});
         }
         if( game.t === 'yatzy' ){
-            console.log(game.t, data.content);
+            console.log(`"${data.content}"`)
+            if(data.content === '/start') domain.yatzyService.start(token);
+            else if(data.content === '/reset') domain.yatzyService.restart(token);
+            else if(data.content === '/new'){
+                await domain.yatzyService.restart(token);
+                await domain.yatzyService.start(token);
+            }
         }
         if( game.t === 'charades'){
             if(data.content === '/start') domain.charadesService.start(token);

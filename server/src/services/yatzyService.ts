@@ -39,7 +39,7 @@ export default class YatzyService{
     async throwDice(token: string, selectedDice: boolean[]){
         const [game, playerId] = await this.hydrateYatzyFromToken(token);
         if( !game || !playerId ) return null;
-        if( game.getCurrentPlayer().id !== playerId ) return;
+        if( game.getCurrentPlayer()?.id !== playerId ) return;
         
         const result = game.throwDice(selectedDice);
         this.gamesStore.save({...game, t: 'yatzy'});
@@ -48,11 +48,30 @@ export default class YatzyService{
     async chooseRow(token: string, row: number){
         const [ game, playerId ] = await this.hydrateYatzyFromToken(token);
         if( !game || !playerId ) return null;
-        if( game.getCurrentPlayer().id !== playerId ) return;
+        if( game.getCurrentPlayer()?.id !== playerId ) return;
         
         const result = game.chooseRow(row);
         if( result === undefined ) return null;
         this.gamesStore.save({...game.getAll(), t: 'yatzy'});
         return result;
     }
+    
+    async start(token: string){
+        const [ game, playerId ] = await this.hydrateYatzyFromToken(token);
+        if( !game || !playerId ) return null;
+        
+        const result = game.start();
+        this.gamesStore.save({...game.getAll(), t: 'yatzy'});
+        return result;
+    }
+    
+    async restart(token: string){
+        const [ game, playerId ] = await this.hydrateYatzyFromToken(token);
+        if( !game || !playerId ) return null;
+        
+        const result = game.reset();
+        this.gamesStore.save({...game.getAll(), t: 'yatzy'});
+        return result;
+    }
+
 };

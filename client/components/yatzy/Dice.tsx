@@ -3,6 +3,7 @@ import Head from 'next/head'
 import styled from '@emotion/styled'
 import Die3D from './Die3D'
 import { animated, useSprings } from 'react-spring'
+import { GiDiceFire } from 'react-icons/gi'
 
 interface props{
     dice: {score: number, throwRefresh: number}[],
@@ -41,7 +42,11 @@ const Dice:React.FC<props> = ({dice, throwDice, throwCount}) =>{
                         <Die3D key={i} score={n.score} throwRefresh={n.throwRefresh} onClick={()=>handleChangeSelected(i)} selected={selected[i]}/>
                     )}
                 </DiceBox>
-                <button onClick={handleThrow}>throw</button>
+                <button onClick={handleThrow}>
+                    <GiDiceFire />
+                    <GiDiceFire />
+                    <GiDiceFire />
+                </button>
             </Container>
         </div>
     )
@@ -60,6 +65,30 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     height: 100%;
+
+    & > button{
+        font-size: 40px;
+        margin: 10px auto;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: white;
+        background-color: transparent;
+        border: 2px white solid;
+        outline: none;
+        &:hover{
+            background-color: rgba(255, 255, 255, 0.198);
+        }
+        &:active{
+            transform: scale(0.96)
+        }
+
+        & > *{
+            margin: 0 5px;
+        }
+    }
 `
 const Rect = styled(animated.div)`
     background-color: white;

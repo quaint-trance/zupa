@@ -103,6 +103,7 @@ export default class Connect4 implements Connect4Data{
     }
 
     startGame(){
+        if(this.turn >= 0) return;
         this.turn = 0;
         this.eventStack.push({name: 'start'});
     }
