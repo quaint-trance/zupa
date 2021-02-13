@@ -103,7 +103,7 @@ export default class Connect4 implements Connect4Data{
     }
 
     startGame(){
-        if(this.turn >= 0) return;
+        if(this.turn !== -1) return;
         this.turn = 0;
         this.eventStack.push({name: 'start'});
     }
@@ -141,7 +141,7 @@ export default class Connect4 implements Connect4Data{
         if(!currentPlayer) return;
         currentPlayer.score ++;
         this.eventStack.push({name:'win', payload: this.getCurrentPlayer()});
-        this.turn = -5;
+        this.turn = -2;
     }
 
     nextTurn(){

@@ -146,7 +146,7 @@ export default class Yatzy implements yatzyData{
             player.score = 0;
             player.usedRows = new Array(15).fill(-1);
         });
-        this.eventStack.push({name:'reset'});
+        this.eventStack.push({name:'reset', payload: this.players});
     }
 
 }

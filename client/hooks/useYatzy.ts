@@ -60,7 +60,8 @@ export default (gameId: string)=>{
             pushSystemInfo('start');
         });
 
-        socket.on('reset', ()=>{
+        socket.on('reset', (newPlayers: Player[])=>{
+            setPlayers(newPlayers);
             pushSystemInfo('reset');
         });
 
