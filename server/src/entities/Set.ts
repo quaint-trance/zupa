@@ -53,9 +53,13 @@ export default class Set implements SetData{
     }
 
     correct(cardsId: string[], playerId: string){
-        this.table = this.table.filter(card => !cardsId.includes(card.id) );
-        const newCards = this.addCardsToTable();
-        this.eventStack.push({name: 'replace',  payload: { old: cardsId, newCards }});
+        this.table = this.table.map(card=>{
+            if(!cardsId.includes(card.id)) return card;
+            const newCard = this.deck.pop();
+            if(!newCard) throw new Error();
+            return newCard;
+        });
+        this.eventStack.push({name: 'replace',  payload: this.table});
     }
     
     addCardsToTable(){
@@ -77,7 +81,7 @@ export default class Set implements SetData{
             id: v4(),
             players: [],
             table: [],
-            deck: genDeck(shuffle),
+            deck: genDeck(false),
         });
     }
     
@@ -125,8 +129,8 @@ export default class Set implements SetData{
     }
 
     startGame(){
-        [0, 0, 0].forEach( ()=>this.addCardsToTable() );
-        this.eventStack.push({name: 'start'});
+        [0, 0, 0, 0].forEach( ()=>this.addCardsToTable() );
+        this.eventStack.push({name: 'start', payload: this.table});
     }
 
     joinPlayer(name: string){
@@ -146,6 +150,5 @@ export default class Set implements SetData{
         this.players = this.players.filter(player => player.id !== id);
         this.eventStack.push({name:'kick', payload: {kicked: id, by}});
     }
-
 
 }

@@ -61,6 +61,9 @@ export const command =  async(socket: socketWithAuth, data: {content: string}, c
             }
             else callback({name: 'unknown'});
         }   
+        if( game.t === 'set' ){
+            if(data.content === '/start') domain.setService.start(token);
+        }
     }
     catch(err){
         console.error(err);

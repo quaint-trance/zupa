@@ -10,7 +10,7 @@ export default class SetService{
         this.gamesStore = gamesStore;
     }
     
-    async chooseCards(token: string, cardsId: string[]){
+    async chooseSet(token: string, cardsId: string[]){
         const [ game, playerId ] = await this.hydrateFromToken(token);
         if( !game || !playerId ) return null;
         

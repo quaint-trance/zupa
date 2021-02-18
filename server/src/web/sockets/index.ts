@@ -4,7 +4,7 @@ import { throwDice, chooseRow } from './yatzy'
 import { chatMessage, command } from './shared'
 import { chooseColumn } from './connect4'
 import { guess, addPath, getCharade, clearCanvas } from './charades'
-import { chooseCards } from './set'
+import { chooseSet } from './set'
 
 export type socketWithAuth = io.Socket & {
     handshake:{
@@ -29,5 +29,5 @@ export default (socket: socketWithAuth)=>{
     socket.on('get charade', (data)=> getCharade(socket, data));
     socket.on('clear canvas', ()=> clearCanvas(socket));
 
-    socket.on('choose cards', (data)=>chooseCards(socket, data));
+    socket.on('choose set', (data)=>chooseSet(socket, data));
 }
