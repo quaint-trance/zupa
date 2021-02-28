@@ -29,20 +29,22 @@ const Board:React.FC<props> = ({ cards, chooseSet, players }) =>{
 
     return(
         <Container>
+            <div/><div/><div/>
             {cards.map(card=>
                 <Card card={card} selected={selected.includes(card.id)} onClick={()=>handleClick(card.id)} key={card.id} /> 
-            )}
+                )}
+            <div/><div/><div/>
         </Container>
     )
 }
 
 const Container = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    
-    & > div {
-        margin: 20px;
-    }
+    display: grid;
+    grid-template: repeat(3, 1fr) / repeat(6, 1fr);
+    grid-gap: 10px;
+    padding: 10px;
+    grid-auto-flow: column;
+    height: 100vh;
 `
 
 export default Board;

@@ -53,6 +53,7 @@ export default class Set implements SetData{
     }
 
     correct(cardsId: string[], playerId: string){
+        if(this.deck.length <= 0) return;
         this.table = this.table.map(card=>{
             if(!cardsId.includes(card.id)) return card;
             const newCard = this.deck.pop();
@@ -81,7 +82,7 @@ export default class Set implements SetData{
             id: v4(),
             players: [],
             table: [],
-            deck: genDeck(false),
+            deck: genDeck(shuffle),
         });
     }
     
