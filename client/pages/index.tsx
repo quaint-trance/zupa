@@ -4,21 +4,9 @@ import { FaDice } from 'react-icons/fa'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import { decode } from 'jsonwebtoken'
+import Navbar from '../components/Navbar'
 
 export default function Home() {
-
-  const [userName, setUserName] = useState('');
-
-  useEffect(() => {
-      const token = localStorage.getItem('token');
-      if(!token) return;
-      const payload = decode(token);
-      console.log(payload)
-      if(!payload || typeof payload === 'string' || !payload.name) return;
-      console.log(payload.name)
-      setUserName(payload.name);
-  }, [])
 
   return (
     <Container>
@@ -27,15 +15,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
         <meta name="description" content="zupa online games connect4 yatzy charades kalambury kości multiplayer"></meta>
       </Head>
-      <Header>
-        {
-          !userName 
-           ?<><Link href="/login"><div>Login In</div></Link>
-              <Link href="/signup"><div>Sign Up</div></Link></>
-          : <><Link href={`/profile?userId=${userName}`}><div>Profile</div></Link>
-              <Link href={`/settings`}><div>Settings</div></Link></>
-      }
-      </Header>
+      <Navbar />
       <Main>
         <img src="/zupa.svg" id="zupa-bg" alt="background" />
 
@@ -94,21 +74,6 @@ const Container = styled.div`
   background-color: black;
 `
 
-const Header = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  color: white;
-  width: 100%;
-  padding: 20px;
-  font-size: 25px;
-  font-weight: 300;
-
-  & > div{
-    margin: 0 20px;
-    cursor: pointer;
-  }
-`
-
 const Main = styled.main`
   background-color: black;
   min-height: 100vh;
@@ -123,6 +88,7 @@ const Main = styled.main`
     width: 50%;
     opacity: .15;
     pointer-events: none;
+    display: none;
   }
 
   #zupa{
