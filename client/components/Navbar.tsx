@@ -88,6 +88,7 @@ const Container = styled.nav`
     font-size: 25px;
     font-weight: 300;
     background-color: #FF6F91;
+    z-index: 50;
 
     & > .menu{
         position: relative;

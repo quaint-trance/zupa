@@ -1,19 +1,19 @@
 import { useState, useEffect, useReducer } from 'react'
 import Head from 'next/head'
 import styled from '@emotion/styled'
-import { useRouter } from 'next/router'
 import useProfile from '../../hooks/useProfile'
 import { decode } from 'jsonwebtoken'
 import useSettings from '../../hooks/useSettings'
+import Link from 'next/link'
+import SettingsSidenav from '../../components/SettingsSidenav'
 import ENDPOINT from '../../ENDPOINT'
 
 interface props{
 
 }
 
-const skins:React.FC<props> = () =>{
-
-    const [userName, setUserName] = useState('');
+const Profile:React.FC<props> = () =>{
+const [userName, setUserName] = useState('');
     const { data, refetch } = useProfile(userName);
     const { isError, isLoading,isSuccess,  mutate } = useSettings();
 
@@ -59,9 +59,10 @@ const skins:React.FC<props> = () =>{
             <Head>
                 <title>Zupa - user profile</title>
             </Head>
+            <SettingsSidenav/>
             <Content>
-               
-               <div className="skinBox">
+                    <h1>Connect4</h1>
+                     <div className="skinBox">
 
                     {data?.gameSettings?.connect4?.unlocked?.map((skinId, skinIndex)=>(
                         <Skin onClick={()=>handleClick(skinIndex)} bg={skins&&skins[skinIndex]} selected={data?.gameSettings?.connect4.skin === skinId ? true : false}/>
@@ -91,15 +92,12 @@ const Skin = styled.div<{bg:string, selected: boolean}>`
 `
 
 const Container = styled.div`
-    background-color: rgb(26, 26, 26);
+    background-color: #1b2025;
     min-height: 100vh;
     color: white;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    
 
-    &  button{
+    & button{
         width: 100%;
         color: white;
         background-color: rgba(255, 0, 0, 0);
@@ -114,13 +112,39 @@ const Container = styled.div`
 `
 
 const Content = styled.div`
-    background-color: rgb(14, 14, 14);
+    background-color: #15191d;
     flex: 1;
-    min-width: 1200px;
-    display: flex;
-    flex-direction: column;
     padding: 0 100px;
     padding-top: 5vh;
+    max-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    .skinBox{
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+
+
+    nav{
+        border-left: 1px solid white;
+        padding: 20px;
+         & > div{
+            font-size: 25px;
+            font-weight: 400;
+            cursor: pointer;
+         }
+    }
+
+    .imageBox{
+        background-color: #4e4e4e;
+        height: 300px;
+        width: 300px;
+        display: none;
+        
+    }
 
     h1{
         margin: 10px 0;
@@ -137,6 +161,22 @@ const Content = styled.div`
         padding: 10px;
         width: 500px;
     }
+
+    .music{
+        margin: 10px;
+        background-color: transparent;
+        border: none;
+        color: white;
+        border-bottom: 1px solid white;
+        font-size: 20px;
+        padding: 10px;
+        width: 500px;
+    }
+
+    label{
+        margin-top: 50px;
+    }
+
 
     button{
         margin: 10px;
@@ -157,15 +197,7 @@ const Content = styled.div`
         }
     }
 
-    .skinBox{
-        display: flex;
-        justify-content: space-around;
-        flex-wrap: wrap;
-    }
-
 `
-
-export default skins;
 
 async function loadSkin(id: string):Promise<string>{
     return fetch(ENDPOINT+`/user/skin?id=${id}`, {
@@ -179,3 +211,5 @@ async function loadSkin(id: string):Promise<string>{
        return res.json();
     }).then(res=>res.value);
 }
+
+export default Profile;

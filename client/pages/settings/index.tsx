@@ -5,6 +5,7 @@ import useProfile from '../../hooks/useProfile'
 import { decode } from 'jsonwebtoken'
 import useSettings from '../../hooks/useSettings'
 import Link from 'next/link'
+import SettingsSidenav from '../../components/SettingsSidenav'
 
 interface props{
 
@@ -48,63 +49,43 @@ const Profile:React.FC<props> = () =>{
             <Head>
                 <title>Zupa - user profile</title>
             </Head>
+            <SettingsSidenav/>
             <Content>
-                <main>
+                    <div className="imageBox"></div>
+    
+                    <h1>{data?.name || 'Loading...'}</h1>
 
-               
-                <div className="imageBox">
-
-                </div>
-   
-                <h1>{data?.name}</h1>
-
-                <label htmlFor="">Description</label>
-                <input
-                    name="description"
-                    className="description" 
-                    placeholder="Description" 
-                    value={usDesc? usDesc : data?.description} 
-                    onChange={handleChange}
+                    <label htmlFor="">Description</label>
+                    <input
+                        name="description"
+                        className="description" 
+                        placeholder="Description" 
+                        value={usDesc? usDesc : data?.description} 
+                        onChange={handleChange}
                     />
-                
-                <label htmlFor="">Music</label>
-                <input
-                    name="music"
-                    className="music" 
-                    placeholder="Music YT video ID" 
-                    value={usMusic? usMusic : data?.music} 
-                    onChange={handleChange}
+                    <label htmlFor="">Music</label>
+                    <input
+                        name="music"
+                        className="music" 
+                        placeholder="Music YT video ID" 
+                        value={usMusic? usMusic : data?.music} 
+                        onChange={handleChange}
                     />
-               
-
-                <button onClick={handleClick} disabled={isLoading}>{!isLoading ? "Save" : "Loading"}</button>
-                {isSuccess && <div>saved</div> }
-                {isError && <div>error</div> }
-
-            </main>
-            <nav>
-                <div><Link href="/settings/skins">Skins</Link></div>
-            </nav>
-
+                    <button onClick={handleClick} disabled={isLoading}>{!isLoading ? "Save" : "Loading"}</button>
+                    {isSuccess && <div>saved</div>}
+                    {isError && <div>error</div>}
             </Content>
         </Container>
     )
 }
 
-const YTWrapper = styled.div`
-    display: none;
-`
-
 const Container = styled.div`
-    background-color: rgb(26, 26, 26);
+    background-color: #1b2025;
     min-height: 100vh;
     color: white;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    
 
-    &  button{
+    & button{
         width: 100%;
         color: white;
         background-color: rgba(255, 0, 0, 0);
@@ -119,20 +100,14 @@ const Container = styled.div`
 `
 
 const Content = styled.div`
-    background-color: rgb(14, 14, 14);
+    background-color: #15191d;
     flex: 1;
-    min-width: 1200px;
     padding: 0 100px;
     padding-top: 5vh;
+    max-height: 100vh;
 
-    display: grid;
-    grid-template: 1fr / 1fr 200px;
-
-    main{
-        display: flex;
-        flex-direction: column;
-
-    }
+    display: flex;
+    flex-direction: column;
 
     nav{
         border-left: 1px solid white;
@@ -148,6 +123,7 @@ const Content = styled.div`
         background-color: #4e4e4e;
         height: 300px;
         width: 300px;
+        display: none;
         
     }
 
