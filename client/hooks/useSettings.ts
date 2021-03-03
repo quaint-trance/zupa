@@ -1,7 +1,7 @@
 import { useMutation } from 'react-query'
 import ENDPOINT from '../ENDPOINT'
 
-export default ()=>{
+export default (handleSave)=>{
     
     const  {data, mutate, isLoading, isError, isSuccess } = useMutation( (props:{playerName: string})=>
         fetch(ENDPOINT+`/user/save`, {
@@ -17,6 +17,7 @@ export default ()=>{
                 
             })
         }).then(res=>{
+            handleSave();
             return {};
         })
     ,{

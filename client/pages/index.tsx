@@ -71,11 +71,10 @@ export default function Home() {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: black;
-`
+  `
 
 const Main = styled.main`
-  background-color: black;
+  background-color: #0f1316;
   min-height: 100vh;
   display: flex;
   flex-direction: column;

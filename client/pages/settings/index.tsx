@@ -14,11 +14,18 @@ interface props{
 const Profile:React.FC<props> = () =>{
 
     const [userName, setUserName] = useState('');
-    const { data } = useProfile(userName);
-    const { isError, isLoading,isSuccess,  mutate } = useSettings();
-
+    const { data, refetch } = useProfile(userName);
+    
     const [usMusic, setUsMusic] = useState('');
     const [usDesc, setUsDesc] = useState('');
+    
+   function handleSave(){
+       setUsMusic('');
+       setUsDesc('');
+       refetch();
+   } 
+   const { isError, isLoading, isSuccess,  mutate } = useSettings(handleSave);
+
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -72,8 +79,9 @@ const Profile:React.FC<props> = () =>{
                         onChange={handleChange}
                     />
                     <button onClick={handleClick} disabled={isLoading}>{!isLoading ? "Save" : "Loading"}</button>
-                    {isSuccess && <div>saved</div>}
+                    {isSuccess && !(usDesc || usMusic) && <div>saved</div>}
                     {isError && <div>error</div>}
+                    {!isLoading && (usDesc || usMusic) && <div>click <i>save</i> to keep changes</div>}
             </Content>
         </Container>
     )

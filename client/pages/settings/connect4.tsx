@@ -15,7 +15,7 @@ interface props{
 const Profile:React.FC<props> = () =>{
 const [userName, setUserName] = useState('');
     const { data, refetch } = useProfile(userName);
-    const { isError, isLoading,isSuccess,  mutate } = useSettings();
+    const { isError, isLoading,isSuccess,  mutate } = useSettings(()=>{});
 
     const [usMusic, setUsMusic] = useState('');
     const [usDesc, setUsDesc] = useState('');

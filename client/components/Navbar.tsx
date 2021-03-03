@@ -27,7 +27,7 @@ const Chat:React.FC<props> = ({}) =>{
     const animatedProps = useSpring({
         height: show ? '150px' : '0px', 
         pointerEvents: show ? 'all' : 'none',
-        borderColor: show ? 'white' : '#FF6F91',
+        borderColor: show ? 'white' : '#1b2025',
     });
 
     const animatedArrow = useSpring({
@@ -87,7 +87,7 @@ const Container = styled.nav`
     padding: 20px;
     font-size: 25px;
     font-weight: 300;
-    background-color: #FF6F91;
+    background-color: #1b2025;
     z-index: 50;
 
     & > .menu{
@@ -121,7 +121,7 @@ const Container = styled.nav`
             padding: 5px;
             font-size: 20px;
             font-weight: 500;
-            background-color: #FF6F91;
+            background-color: #1b2025;
 
 
             & > li{
@@ -135,12 +135,12 @@ const Container = styled.nav`
                 display: grid;
                 grid-template: 1fr / auto 1fr;
                 
-                background-color: #FF6F91;
+                background-color: #1b2025;
                 transition: all .5s;
                 cursor: pointer;
 
                 &:hover{
-                    background-color: #f16182;
+                    background-color: #272e35;
                 }
 
                 & > i{
