@@ -15,7 +15,7 @@ export default function FourOhFour() {
 }
 
 const Container = styled.div`
-    background-color: rgb(14, 14, 14);
+    background-color: #0f1316;
     min-height: 100vh;
     color: white;
     display: flex;

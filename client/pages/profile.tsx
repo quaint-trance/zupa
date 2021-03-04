@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import useProfile from '../hooks/useProfile'
 import { Doughnut, Line } from 'react-chartjs-2'
 import YouTube from "react-yt";
+import Navbar from '../components/Navbar'
 
 interface props{
 
@@ -22,6 +23,7 @@ const Profile:React.FC<props> = () =>{
             <Head>
                 <title>Zupa - user profile</title>
             </Head>
+            <Navbar/>
             <Content>
                
                 <div className="imageBox">
@@ -59,7 +61,7 @@ const YTWrapper = styled.div`
 `
 
 const Container = styled.div`
-    background-color: rgb(26, 26, 26);
+    background-color: #090a0c; 
     min-height: 100vh;
     color: white;
     display: flex;
@@ -82,9 +84,9 @@ const Container = styled.div`
 `
 
 const Content = styled.div`
-    background-color: rgb(14, 14, 14);
+    background-color: #0f1316; 
     flex: 1;
-    min-width: 1200px;
+    max-width: 1200px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -110,6 +112,7 @@ const Content = styled.div`
     .charts{
         display: flex;
         flex-wrap: wrap;
+        justify-content: center;
     }
 
     .chart{

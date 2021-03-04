@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 import useProfile from '../../hooks/useProfile'
 import { decode } from 'jsonwebtoken'
 import useSettings from '../../hooks/useSettings'
-import Link from 'next/link'
+import { useRouter } from 'next/router'
 import SettingsSidenav from '../../components/SettingsSidenav'
 
 interface props{
@@ -18,6 +18,8 @@ const Profile:React.FC<props> = () =>{
     
     const [usMusic, setUsMusic] = useState('');
     const [usDesc, setUsDesc] = useState('');
+
+    const router = useRouter();
     
    function handleSave(){
        setUsMusic('');
@@ -51,6 +53,12 @@ const Profile:React.FC<props> = () =>{
         if(name==='description') setUsDesc(value);
     }
 
+    const handleLogout = () =>{
+        localStorage.removeItem('name');
+        localStorage.removeItem('token');
+        router.push('/')
+    }
+
     return(
         <Container>
             <Head>
@@ -61,6 +69,7 @@ const Profile:React.FC<props> = () =>{
                     <div className="imageBox"></div>
     
                     <h1>{data?.name || 'Loading...'}</h1>
+                    <span className="logout" onClick={handleLogout}>logout</span>
 
                     <label htmlFor="">Description</label>
                     <input
@@ -136,8 +145,14 @@ const Content = styled.div`
     }
 
     h1{
-        margin: 10px 0;
+        margin: 10px 0 0 0;
         font-size: 40px;
+    }
+
+    .logout{
+        font-size: 18px;
+        font-weight: 300;
+        cursor: pointer;
     }
 
     .description{

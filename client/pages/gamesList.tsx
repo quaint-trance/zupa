@@ -70,7 +70,7 @@ const Container = styled.div`
             padding: 20px 20px;
             border-bottom: 1px dashed rgba(255, 255, 255, 0.548);
             cursor: pointer;
-            &:hover{
+            &:not(:first-of-type):hover{
                 background-color: rgba(255, 255, 255, 0.096);
             }
             &:first-of-type{

@@ -25,7 +25,7 @@ const Chat:React.FC<props> = ({}) =>{
     }, [])
 
     const animatedProps = useSpring({
-        height: show ? '150px' : '0px', 
+        height: show ? userName ? '150px' : '100px' : '0px', 
         pointerEvents: show ? 'all' : 'none',
         borderColor: show ? 'white' : '#1b2025',
     });
@@ -37,9 +37,22 @@ const Chat:React.FC<props> = ({}) =>{
 
     if(!userName) return(
         <Container>
-            <Link href="/login"><div>Login In</div></Link>
-            <Link href="/signup"><div>Sign Up</div></Link>
-        </Container>
+            <div className="menu nlogged">
+                <animated.button onClick={handleClick} style={animatedArrow}><MdKeyboardArrowDown/></animated.button>
+                <animated.ul style={animatedProps} onMouseLeave={handleBlur}>
+                   <Link href={`/login`}>
+                        <li>
+                            <div>Log In</div>
+                        </li>
+                    </Link>
+                    <Link href={`/signup`}>
+                        <li>
+                            <div>Sign Up</div>
+                        </li>
+                    </Link>
+                </animated.ul>
+            </div>
+       </Container>
     )
 
     function handleClick(){
@@ -53,6 +66,7 @@ const Chat:React.FC<props> = ({}) =>{
 
     return(
         <Container>
+            <Link href={`/profile?userId=${userName}`}><div className="name">{userName}</div></Link>
 
             <div className="menu">
                 <animated.button onClick={handleClick} style={animatedArrow}><MdKeyboardArrowDown/></animated.button>
@@ -90,6 +104,16 @@ const Container = styled.nav`
     background-color: #1b2025;
     z-index: 50;
 
+    & > .name{
+        margin: 0 20px;
+        font-size: 20px;
+        height: 100%;
+        display: flex;
+        padding-top: 5px;
+        align-items: center;
+        cursor: default;
+    }
+
     & > .menu{
         position: relative;
         z-index: 60;
@@ -124,7 +148,6 @@ const Container = styled.nav`
             font-weight: 500;
             background-color: #1b2025;
 
-
             & > li{
                 margin: 0;
                 padding: 0;
@@ -139,6 +162,7 @@ const Container = styled.nav`
                 background-color: #1b2025;
                 transition: all .5s;
                 cursor: pointer;
+                white-space: nowrap;
 
                 &:hover{
                     background-color: #272e35;
