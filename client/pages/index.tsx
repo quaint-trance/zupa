@@ -15,7 +15,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
         <meta name="description" content="zupa online games connect4 yatzy charades kalambury kości multiplayer"></meta>
       </Head>
-      <Navbar />
+      <Navbar fixed={true} />
       <Main>
         <img src="/zupa.svg" id="zupa-bg" alt="background" />
 

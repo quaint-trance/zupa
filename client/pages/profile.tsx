@@ -23,7 +23,7 @@ const Profile:React.FC<props> = () =>{
             <Head>
                 <title>Zupa - user profile</title>
             </Head>
-            <Navbar/>
+            <Navbar fixed={true} />
             <Content>
                
                 <div className="imageBox">

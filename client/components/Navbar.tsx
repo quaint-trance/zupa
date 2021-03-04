@@ -7,10 +7,10 @@ import { animated, useSpring } from 'react-spring'
 import { MdPerson, MdSettings, MdKeyboardArrowDown, MdHelp } from 'react-icons/md'
 
 interface props{
-
+    fixed?: boolean;
 }
 
-const Chat:React.FC<props> = ({}) =>{
+const Navbar:React.FC<props> = ({fixed=false}) =>{
     const listRef = useRef<HTMLElement | null>(null);
 
     const [userName, setUserName] = useState('');
@@ -36,7 +36,9 @@ const Chat:React.FC<props> = ({}) =>{
 
 
     if(!userName) return(
-        <Container>
+        <>
+        <Space />
+        <Container fixed={fixed}>
             <div className="menu nlogged">
                 <animated.button onClick={handleClick} style={animatedArrow}><MdKeyboardArrowDown/></animated.button>
                 <animated.ul style={animatedProps} onMouseLeave={handleBlur}>
@@ -53,6 +55,7 @@ const Chat:React.FC<props> = ({}) =>{
                 </animated.ul>
             </div>
        </Container>
+       </>
     )
 
     function handleClick(){
@@ -65,7 +68,9 @@ const Chat:React.FC<props> = ({}) =>{
     }
 
     return(
-        <Container>
+        <>
+        {fixed&&<Space/>}
+        <Container fixed={fixed}>
             <Link href={`/profile?userId=${userName}`}><div className="name">{userName}</div></Link>
 
             <div className="menu">
@@ -90,10 +95,15 @@ const Chat:React.FC<props> = ({}) =>{
             </div>
 
        </Container>
+       </>
     )
 }
 
-const Container = styled.nav`
+const Container = styled.nav<{fixed:boolean}>`
+    ${props=>props.fixed && `
+        position: fixed;
+    `}
+
     display: flex;
     justify-content: flex-end;
     color: white;
@@ -179,5 +189,9 @@ const Container = styled.nav`
     }
 `
 
+const Space = styled.div`
+    height: 60px;
+`
 
-export default Chat;
+
+export default Navbar;
