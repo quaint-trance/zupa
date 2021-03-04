@@ -92,6 +92,7 @@ const Container = styled.nav`
 
     & > .menu{
         position: relative;
+        z-index: 60;
 
         & > button{
             background-color: transparent;
