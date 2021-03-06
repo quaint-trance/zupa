@@ -1,8 +1,8 @@
-import Token from "../entities/Token";
+import Token from "../domain/entities/Token";
 import { UserStore } from "../types/UserStore";
 import bcrypt from 'bcryptjs'
 import { Game } from "../types/GameStore";
-import { UserType } from '../entities/User';
+import { UserType } from '../domain/User/User';
 
 export default class UserService{
    

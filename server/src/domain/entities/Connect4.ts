@@ -1,6 +1,6 @@
 import { v4 } from'uuid'
-import { eventType } from '../types/EventEmitter';
-import checkWinnerConnect4 from '../utils/checkWinnerConnect4';
+import { eventType } from '../../types/EventEmitter';
+import checkWinnerConnect4 from '../../utils/checkWinnerConnect4';
 
 export interface Player{
     id: string;

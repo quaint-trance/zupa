@@ -1,4 +1,4 @@
-import User, { UserData } from "../entities/User";
+import User, { UserData } from "../domain/User/User";
 import { UserStore } from "../types/UserStore";
 
 export default class userStore implements UserStore{

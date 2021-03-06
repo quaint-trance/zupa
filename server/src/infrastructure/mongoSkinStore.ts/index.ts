@@ -1,5 +1,5 @@
-import { SkinData } from "../../valueObjects/Skin";
-import { UserData } from "../../entities/User";
+import { SkinData } from "../../domain/entities/Skin";
+import { UserData } from "../../domain/User/User";
 import { SkinStore } from "../../types/SkinStore";
 import Skin from './models/Skin'
 

@@ -1,6 +1,6 @@
 import GamesStore from "../types/GameStore";
-import Token from '../entities/Token'
-import Set, { Card } from "../entities/Set";
+import Token from '../domain/entities/Token'
+import Set, { Card } from "../domain/entities/Set";
 
 export default class SetService{
     

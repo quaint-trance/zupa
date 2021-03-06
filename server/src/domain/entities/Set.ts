@@ -1,8 +1,8 @@
 import { SourceMap } from 'module';
 import { v4 } from'uuid'
-import { eventType } from '../types/EventEmitter';
-import checkCards from '../utils/checkCards';
-import genDeck from '../utils/genDeck';
+import { eventType } from '../../types/EventEmitter';
+import checkCards from '../../utils/checkCards';
+import genDeck from '../../utils/genDeck';
 
 export interface Player{
     id: string;

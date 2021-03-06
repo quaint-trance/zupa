@@ -1,5 +1,5 @@
 import { v4 } from 'uuid'
-import { Card } from "../entities/Set";
+import { Card } from "../domain/entities/Set";
 
 export default (shuffle = true)=>{
     const deck:Card[] = [];

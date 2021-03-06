@@ -1,6 +1,6 @@
 import GamesStore, { Game } from "../types/GameStore";
-import Token from '../entities/Token'
-import Charades, { Chunk } from "../entities/Charades";
+import Token from '../domain/entities/Token'
+import Charades, { Chunk } from "../domain/entities/Charades";
 import { time } from "console";
 
 export default class CharadesService{

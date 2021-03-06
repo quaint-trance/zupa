@@ -13,7 +13,8 @@
       "resolveJsonModule": true,                
       "skipLibCheck": true,                     
       "forceConsistentCasingInFileNames": true,
-      "types": [ "node", "jest" ]
+      "types": [ "node", "jest" ],
+      "strictPropertyInitialization": false
     },
     "exclude": [
       "build",

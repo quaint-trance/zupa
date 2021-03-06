@@ -1,7 +1,7 @@
 import { v4 } from 'uuid'
-import { eventType } from '../types/EventEmitter';
-import calcScore from '../utils/calcScoreYatzy';
-import random from '../utils/random';
+import { eventType } from '../../types/EventEmitter';
+import calcScore from '../../utils/calcScoreYatzy';
+import random from '../../utils/random';
 
 export interface Player{
     id: string,

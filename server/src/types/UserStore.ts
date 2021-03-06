@@ -1,4 +1,4 @@
-import { UserData } from "../entities/User";
+import { UserData } from "../domain/User/User";
 
 export interface UserStore{
     findByName: (name: string) => Promise<UserData | null>,

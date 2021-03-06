@@ -1,4 +1,4 @@
-import { Card } from "../entities/Set";
+import { Card } from "../domain/entities/Set";
 
 export default (cards: Card[]) =>{
     type tp = 'color';

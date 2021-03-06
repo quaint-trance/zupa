@@ -1,7 +1,7 @@
 import { hasUncaughtExceptionCaptureCallback } from 'process';
 import { v4 } from'uuid'
-import { eventType } from '../types/EventEmitter'
-import randomCharade from '../utils/randomCharade'
+import { eventType } from '../../types/EventEmitter'
+import randomCharade from '../../utils/randomCharade'
 
 export interface Player{
     id: string;

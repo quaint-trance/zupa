@@ -1,12 +1,12 @@
 import { v4 } from 'uuid'
-import { SkinStore } from '../types/SkinStore';
+import { SkinStore } from '../../types/SkinStore';
 
 export interface SkinData{
     id: string;
     value: string;
 }
 
-function SkinFactory(skinStore: SkinStore){
+function makeSkinClass(skinStore: SkinStore){
     return class Skin{
         private id: string;
         private value: string;
@@ -50,5 +50,5 @@ function SkinFactory(skinStore: SkinStore){
     }
 }
 
-export default SkinFactory;
-export type SkinType = ReturnType<typeof SkinFactory>
+export default makeSkinClass;
+export type SkinType = ReturnType<typeof makeSkinClass>

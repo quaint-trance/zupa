@@ -1,8 +1,8 @@
-import Token from "../entities/Token";
-import { UserType } from "../entities/User";
+import Token from "../domain/entities/Token";
+import { UserType } from "../domain/User/User";
 import { SkinStore } from "../types/SkinStore";
 import { UserStore } from "../types/UserStore";
-import { SkinType } from "../valueObjects/Skin";
+import { SkinType } from "../domain/entities/Skin";
 
 export default class skinService{
     skinStore: SkinStore;

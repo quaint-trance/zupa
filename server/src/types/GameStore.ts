@@ -1,7 +1,7 @@
-import { CharadesData } from "../entities/Charades";
-import { Connect4Data } from "../entities/Connect4";
-import { SetData } from "../entities/Set";
-import { yatzyData } from "../entities/Yatzy";
+import { CharadesData } from "../domain/entities/Charades";
+import { Connect4Data } from "../domain/entities/Connect4";
+import { SetData } from "../domain/entities/Set";
+import { yatzyData } from "../domain/entities/Yatzy";
 
 export type Game = 
     (yatzyData & {t: 'yatzy'}) | 

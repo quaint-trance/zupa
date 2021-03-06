@@ -1,6 +1,6 @@
-import Yatzy from "../entities/Yatzy";
+import Yatzy from "../domain/entities/Yatzy";
 import GamesStore, { Game } from "../types/GameStore";
-import Token from '../entities/Token'
+import Token from '../domain/entities/Token'
 
 export default class YatzyService{
 
