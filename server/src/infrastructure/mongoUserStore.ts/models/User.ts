@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { matchHistory, UserData } from '../../../domain/User/User';
+import { matchHistory, UserData } from '../../../domain/User/UserLogic';
 
 export interface IUser extends mongoose.Document{
     name: string,

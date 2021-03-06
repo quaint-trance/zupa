@@ -2,7 +2,7 @@ import GamesStore, { Game } from "../types/GameStore";
 import Token from '../domain/entities/Token'
 import Connect4 from "../domain/entities/Connect4";
 import { UserStore } from "../types/UserStore";
-import { UserType } from "../domain/User/User";
+import { UserType } from "../domain/User/UserLogic";
 
 export default class Connect4Service{
 

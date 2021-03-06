@@ -9,7 +9,7 @@ export default class UserFrame{
     protected music: string;
     protected gameSettings: UserData['gameSettings'];
 
-    constructor(data: UserData){
+    protected constructor(data: UserData){
         this.email = data.email;
         this.name = data.name;
         this.password = data.password;
@@ -18,4 +18,17 @@ export default class UserFrame{
         this.music = data.music;
         this.gameSettings = data.gameSettings;
     }
+
+    getAll():UserData{
+        return {
+            email: this.email,
+            password: this.password,
+            name: this.name,
+            description: this.description,
+            history: this.history,
+            music: this.music,
+            gameSettings: this.gameSettings,
+        }
+    }
+
 }

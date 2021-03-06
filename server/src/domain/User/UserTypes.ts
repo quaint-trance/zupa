@@ -12,8 +12,8 @@ export interface UserData{
     history: matchHistory[];
     music: string;
     gameSettings:{
-        connect4?:{
-            skin?:string,
+        connect4:{
+            skin:string,
             unlocked:string[]
         }
     }

@@ -1,5 +1,5 @@
 import Token from "../domain/entities/Token";
-import { UserType } from "../domain/User/User";
+import { UserType } from "../domain/User/UserLogic";
 import { SkinStore } from "../types/SkinStore";
 import { UserStore } from "../types/UserStore";
 import { SkinType } from "../domain/entities/Skin";

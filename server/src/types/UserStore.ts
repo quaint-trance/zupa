@@ -1,4 +1,4 @@
-import { UserData } from "../domain/User/User";
+import UserData from "../domain/User/UserLogic"
 
 export interface UserStore{
     findByName: (name: string) => Promise<UserData | null>,

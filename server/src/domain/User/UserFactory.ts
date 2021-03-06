@@ -1,12 +1,12 @@
-import User from "./User";
+import UserLogic from "./UserLogic";
 import { UserData } from "./UserTypes";
 
-export default class UserFactory extends User{
+export default class UserFactory extends UserLogic{
     static create(name: string, email: string, password: string){
 
         if(!name || !email || !password) throw new Error('create User: invalid props');
 
-        return new User({
+        return new UserFactory({
             name,
             email,
             password,
@@ -15,6 +15,7 @@ export default class UserFactory extends User{
             music: '',
             gameSettings:{
                 connect4:{
+                    skin: '',
                     unlocked: []
                 },
             }
@@ -22,6 +23,6 @@ export default class UserFactory extends User{
     }
 
     static hydrate(data: UserData){
-        return new User(data);
+        return new UserFactory(data);
     }
 }

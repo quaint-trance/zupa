@@ -1,4 +1,4 @@
-import { UserData, UserType } from "../../domain/User/User";
+import { UserData, UserType } from "../../domain/User/UserLogic";
 import { UserStore } from "../../types/UserStore";
 import User from './models/User'
 

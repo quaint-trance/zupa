@@ -8,7 +8,7 @@ import GamesStore from "./types/GameStore";
 import Charades from "./domain/entities/Charades";
 import CharadesService from "./services/charadesService";
 import SetService from "./services/setService";
-import User from "./domain/User/User";
+import User from "./domain/User/UserLogic";
 import UserService from "./services/userService";
 import { UserStore } from "./types/UserStore";
 import Skin from "./domain/entities/Skin";
