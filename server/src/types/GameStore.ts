@@ -1,5 +1,5 @@
 import { CharadesData } from "../domain/entities/Charades";
-import { Connect4Data } from "../domain/entities/Connect4";
+import { Connect4Data } from "../domain/Connect4/Connect4Frame";
 import { SetData } from "../domain/entities/Set";
 import { yatzyData } from "../domain/entities/Yatzy";
 

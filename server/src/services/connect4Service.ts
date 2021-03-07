@@ -1,6 +1,6 @@
 import GamesStore, { Game } from "../types/GameStore";
 import Token from '../domain/entities/Token'
-import Connect4 from "../domain/entities/Connect4";
+import Connect4 from "../domain/Connect4/Connect4Frame";
 import { UserStore } from "../types/UserStore";
 import { UserType } from "../domain/User/UserLogic";
 
