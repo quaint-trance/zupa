@@ -14,6 +14,15 @@ export default class User extends UserFrame{
         this.gameSettings.connect4.skin = skinId;
     }
 
+    hasSkin(skinId: string){
+        const result = this.gameSettings.connect4.unlocked.find(el=>el===skinId);
+        return result ? true : false;
+    }
+
+    unlockSkin(skinId: string){
+        this.gameSettings.connect4.unlocked.push(skinId)
+    }
+
 }
 
 export type UserType = User;

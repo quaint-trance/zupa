@@ -16,10 +16,7 @@ router.post('/create', async (req, res)=>{
 
 router.post('/login', async (req, res)=>{
     try{
-
-        console.log(req.body);
         const result = await application.userService.getToken(req.body.password, req.body.email, req.body.name);
-        console.log(result);
         if(!result) return res.status(400).send();
         res.status(200).send({token: result.getToken(), payload: result.getPayload()});
     }catch(err){
@@ -30,7 +27,6 @@ router.post('/login', async (req, res)=>{
 
 router.get('/profile', async (req, res)=>{
     try{
-
         const name = req.query.name;
         if(!name || typeof name !== 'string') return;
         const result = await application.userService.getUser(name);
@@ -45,7 +41,6 @@ router.get('/profile', async (req, res)=>{
 
 router.post('/save', async (req, res)=>{
     try{
-
         const result = await application.userService.updateUser(req.body.token, {
             description: req.body.description,
             music: req.body.music,
@@ -58,9 +53,8 @@ router.post('/save', async (req, res)=>{
     }
 });
 
-/*router.get('/skin', async (req, res)=>{
+router.get('/skin', async (req, res)=>{
     try{
-
         const id = req.query.id;
         if(typeof id !== 'string') return res.status(400).send({value: ''});
         const result = await application.skinService.getOne(id);
@@ -71,20 +65,17 @@ router.post('/save', async (req, res)=>{
         console.error(err);
         res.status(500).send();
     }
-});*/
+});
     
-/*router.post('/setSkin', async (req, res)=>{
+router.post('/setSkin', async (req, res)=>{
     try{
-        
-        console.log(req.body);
-        const result = await domain.skinService.setSkin(req.body.token, req.body.skinId);
-        console.log(result);
+        const result = await application.skinService.setSkin(req.body.token, req.body.skinId);
         if(result === null) res.status(400).send();
         else res.status(200).send();    
     }catch(err){
         console.error(err);
         res.status(500).send();
     }
-});*/
+});
 
 export default router;

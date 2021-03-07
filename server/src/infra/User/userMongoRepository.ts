@@ -32,7 +32,8 @@ export default class userStore implements UserStore{
         return User.hydrate(userData);
     }
 
-    async save(data: UserData){
+    async save(user: User){
+        const data = user.getAll();
         try{
             await UserModel.updateOne({name: data.name}, {...data });
             return true;

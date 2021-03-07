@@ -21,7 +21,7 @@ export default class UserService{
         const hashedPassword = await bcrypt.hash(password, salt);
 
         const user = User.create(name, email, hashedPassword);
-        return await this.userRepo.save(user.getAll());
+        return await this.userRepo.save(user);
     }
 
     async updateUser(token: string, data: any){
@@ -36,7 +36,7 @@ export default class UserService{
             user[prop] = data[prop];
         });
 
-        this.userRepo.save(user.getAll());
+        this.userRepo.save(user);
         return true;
     }
 
