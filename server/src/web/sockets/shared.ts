@@ -1,7 +1,7 @@
 import io from 'socket.io'
 import { socketWithAuth } from '.';
 import { domain } from '../../index'
-import gamesStore from '../../infrastructure/gamesStore';
+import gamesStore from '../../infra/gamesStore';
 
 export const chatMessage =  async(socket: socketWithAuth, data: any)=>{
     let gameId: string | undefined;

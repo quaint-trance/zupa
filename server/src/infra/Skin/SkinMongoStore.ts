@@ -1,18 +1,18 @@
-import { SkinData } from "../../domain/entities/Skin";
-import { UserData } from "../../domain/User/UserLogic";
+import Skin from "../../domain/Skin";
 import { SkinStore } from "../../types/SkinStore";
-import Skin from './models/Skin'
+import SkinModel from '../mongodb/models/Skin'
+import { SkinData } from '../../domain/Skin'
 
 export default class skinStore implements SkinStore{
     
-    store: UserData[]
+    store: Skin[];
 
     constructor(){
         this.store = [];
     }
     
-    async create(data: SkinData){
-        const skin= new Skin({
+    async create(data: Skin){
+        const skin= new SkinModel({
             ...data
         });
 
@@ -26,7 +26,7 @@ export default class skinStore implements SkinStore{
     }
 
     async findById(id: string){
-        const result = await Skin.findOne({id});
+        const result = await SkinModel.findOne({id});
         if(!result) return null;
         let user = {
             id: result.id,
@@ -37,7 +37,7 @@ export default class skinStore implements SkinStore{
 
     async save(data: SkinData){
         try{
-            await Skin.updateOne({id: data.id}, {...data });
+            await SkinModel.updateOne({id: data.id}, {...data });
             return true;
         }catch(err){
             console.log(err);
@@ -46,7 +46,7 @@ export default class skinStore implements SkinStore{
     }
 
     async getAll(){
-        const result = await Skin.find();
+        const result = await SkinModel.find();
         return result;
     }
 

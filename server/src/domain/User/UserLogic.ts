@@ -1,5 +1,4 @@
 import { v4 } from 'uuid'
-import { SkinType } from '../entities/Skin';
 import { UserData, matchHistory } from './UserTypes'
 import UserFrame from './UserFrame'
 

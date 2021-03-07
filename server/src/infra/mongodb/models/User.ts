@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { matchHistory, UserData } from '../../../domain/User/UserLogic';
+import { matchHistory, UserData } from '../../../domain/User/UserTypes';
 
 export interface IUser extends mongoose.Document{
     name: string,
@@ -9,8 +9,8 @@ export interface IUser extends mongoose.Document{
     history: matchHistory[],
     music: string,
     gameSettings:{
-        connect4?:{
-            skin?: string,
+        connect4:{
+            skin: string,
             unlocked: string[],
         }
     }

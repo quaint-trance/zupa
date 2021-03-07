@@ -1,8 +1,8 @@
-import UserData from "../domain/User/UserLogic"
+import User from "../domain/User"
+import { UserData } from "../domain/User/UserTypes"
 
 export interface UserStore{
-    findByName: (name: string) => Promise<UserData | null>,
-    findByEmail: (name: string) => Promise<UserData | null>,
-    save: (data: UserData) => Promise<boolean>,
-    create: (data: UserData) => Promise<boolean>,
+    findByName: (name: string) => Promise<User | null>,
+    findByEmail: (name: string) => Promise<User | null>,
+    save: (data: UserData ) => Promise<boolean>,
 }

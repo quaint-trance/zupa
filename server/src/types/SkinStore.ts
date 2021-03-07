@@ -1,4 +1,4 @@
-import { SkinData } from "../domain/entities/Skin";
+import { SkinData } from "../domain/Skin";
 
 export interface SkinStore{
     findById: (name: string) => Promise<SkinData| null>,

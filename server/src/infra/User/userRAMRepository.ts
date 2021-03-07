@@ -1,5 +1,6 @@
-import User, { UserData } from "../domain/User/UserLogic";
-import { UserStore } from "../types/UserStore";
+import User  from "../../domain/User";
+import { UserData }  from "../../domain/User/UserTypes";
+import { UserStore } from "../../types/UserStore";
 
 export default class userStore implements UserStore{
     
@@ -17,12 +18,12 @@ export default class userStore implements UserStore{
 
     async findByEmail(email: string){
         const result = this.store.find(e=>e.email === email);
-        return result ? result : null;
+        return result ? User.hydrate(result) : null;
     }
 
     async findByName(name: string){
         const result = this.store.find(e=> e.name === name);
-        return result ? result : null;
+        return result ? User.hydrate(result) : null;
     }
 
     async save(data: UserData){

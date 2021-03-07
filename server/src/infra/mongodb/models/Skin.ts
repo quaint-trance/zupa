@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { SkinData } from '../../../domain/entities/Skin';
+import { SkinData } from '../../../domain/Skin';
 
 export interface ISkin extends mongoose.Document{
     id: string,

@@ -1,12 +1,11 @@
 import express from 'express';
-import { domain } from '../..'
+import { application } from '../../index'
 
 const router = express.Router();
 
 router.post('/create', async (req, res)=>{
     try{
-
-        const result = await domain.userService.createUser(req.body.name, req.body.email, req.body.password);
+        const result = await application.userService.createUser(req.body.name, req.body.email, req.body.password);
         if(!result) return res.status(400).send();
         res.status(200).send();
     }catch(err){
@@ -19,7 +18,7 @@ router.post('/login', async (req, res)=>{
     try{
 
         console.log(req.body);
-        const result = await domain.userService.getToken(req.body.password, req.body.email, req.body.name);
+        const result = await application.userService.getToken(req.body.password, req.body.email, req.body.name);
         console.log(result);
         if(!result) return res.status(400).send();
         res.status(200).send({token: result.getToken(), payload: result.getPayload()});
@@ -34,7 +33,7 @@ router.get('/profile', async (req, res)=>{
 
         const name = req.query.name;
         if(!name || typeof name !== 'string') return;
-        const result = await domain.userService.getUser(name);
+        const result = await application.userService.getUser(name);
         if(!result) return res.status(400).send();
         res.status(200).send(result);
     }catch(err){
@@ -47,7 +46,7 @@ router.get('/profile', async (req, res)=>{
 router.post('/save', async (req, res)=>{
     try{
 
-        const result = await domain.userService.updateUser(req.body.token, {
+        const result = await application.userService.updateUser(req.body.token, {
             description: req.body.description,
             music: req.body.music,
         });
@@ -59,12 +58,12 @@ router.post('/save', async (req, res)=>{
     }
 });
 
-router.get('/skin', async (req, res)=>{
+/*router.get('/skin', async (req, res)=>{
     try{
 
         const id = req.query.id;
         if(typeof id !== 'string') return res.status(400).send({value: ''});
-        const result = await domain.skinService.getOne(id);
+        const result = await application.skinService.getOne(id);
         if(!result) return res.status(400).send({value: ''});
         res.status(200).send({value: result});
 
@@ -72,9 +71,9 @@ router.get('/skin', async (req, res)=>{
         console.error(err);
         res.status(500).send();
     }
-});
+});*/
     
-router.post('/setSkin', async (req, res)=>{
+/*router.post('/setSkin', async (req, res)=>{
     try{
         
         console.log(req.body);
@@ -86,6 +85,6 @@ router.post('/setSkin', async (req, res)=>{
         console.error(err);
         res.status(500).send();
     }
-});
+});*/
 
 export default router;

@@ -19,7 +19,7 @@ export default class UserFrame{
         this.gameSettings = data.gameSettings;
     }
 
-    getAll():UserData{
+    public getAll():UserData{
         return {
             email: this.email,
             password: this.password,
@@ -28,6 +28,24 @@ export default class UserFrame{
             history: this.history,
             music: this.music,
             gameSettings: this.gameSettings,
+        }
+    }
+
+    public getHash(){
+        return this.password;
+    }
+
+    public getName(){
+        return this.name;
+    }
+
+    public getPublicInfo(){
+        return {
+            name: this.name,
+            description: this.description,
+            history: this.history,
+            music: this.music,
+            gameSettings: this.gameSettings
         }
     }
 

@@ -1,5 +1,5 @@
 import { v4 } from 'uuid';
-import { SkinData } from '../Skin';
+import { SkinData } from '.';
 import SkinLogic from './SkinLogic'
 
 export default class SkinFactory extends SkinLogic{
