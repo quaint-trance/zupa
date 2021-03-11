@@ -31,13 +31,13 @@ export default()=>{
         console.log('connected to db')
     });
 
-    //io.on('connection', socketHandler);
+    io.on('connection', socketHandler);
     app.use(express.json());
     app.use(cors());
 
     //app.use('/games', gameRoute);
     //app.use('/yatzy', yatzyRoute);
-    //app.use('/connect4', connect4Route);
+    app.use('/connect4', connect4Route);
     //app.use('/charades', charadesRoute);
     //app.use('/set', setRoute);
     app.use('/user', userRoute);

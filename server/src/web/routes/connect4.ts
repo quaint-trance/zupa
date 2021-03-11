@@ -1,5 +1,5 @@
 import express from 'express';
-import { domain } from '../../'
+import { application } from '../../'
 
 const router = express.Router();
 
@@ -17,7 +17,7 @@ router.post('/create', async (req, res)=>{
         
         let connectToWin;
         if(req.body.connectToWin) connectToWin = parseInt(req.body.connectToWin);
-        const result = await domain.connect4Service.createGame(
+        const result = await application.connect4Service.createGame(
             req.body.playerName,
             size,
             connectToWin,
@@ -34,8 +34,7 @@ router.post('/create', async (req, res)=>{
 
 router.post('/join', async (req, res)=>{
     try{
-
-        const result = await domain.connect4Service.joinPlayer(req.body.gameId, req.body.playerName, req.body.userToken);
+        const result = await application.connect4Service.joinPlayer(req.body.gameId, req.body.playerName, req.body.userToken);
         if(!result) return res.status(400).send();
         res.status(200).send(result);
     }catch(err){

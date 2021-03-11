@@ -69,6 +69,10 @@ export default class Connect4Logic extends Connect4Frame{
         this.nextTurn();
         return index;
     }
+
+    public hasStarted(){
+        return this.turn >= 0 ? true : false;
+    }
     
     private nextTurn(plus = 1){
         if(checkWinnerConnect4(this.fields, this.connectToWin)) return this.win();

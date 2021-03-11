@@ -64,7 +64,7 @@ export default class UserService{
         return user.getPublicInfo();
     }
 
-    async addHistory(type: Game['t'], payload: any, gameData: Game){
+    async addHistory(){ //TODO
         
     }
 

@@ -19,15 +19,19 @@ export default (socket: socketWithAuth)=>{
     socket.on('command', (data, callback)=> command(socket, data, callback));
     socket.on('chat message', (data)=> chatMessage(socket, data));
     
-    socket.on('throw dice', (data)=> throwDice(socket, data));
-    socket.on('choose row', (data)=> chooseRow(socket, data));
+    //yatzy
+    //socket.on('throw dice', (data)=> throwDice(socket, data));
+    //socket.on('choose row', (data)=> chooseRow(socket, data));
     
+    //connect4
     socket.on('choose column', (data)=> chooseColumn(socket, data));
     
-    socket.on('guess', (data)=> guess(socket, data));
-    socket.on('add path', (data)=> addPath(socket, data));
-    socket.on('get charade', (data)=> getCharade(socket, data));
-    socket.on('clear canvas', ()=> clearCanvas(socket));
+    //charades
+    //socket.on('guess', (data)=> guess(socket, data));
+    //socket.on('add path', (data)=> addPath(socket, data));
+    //socket.on('get charade', (data)=> getCharade(socket, data));
+    //socket.on('clear canvas', ()=> clearCanvas(socket));
 
-    socket.on('choose set', (data)=>chooseSet(socket, data));
+    //set
+    //socket.on('choose set', (data)=>chooseSet(socket, data));
 }

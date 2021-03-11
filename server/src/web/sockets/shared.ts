@@ -1,12 +1,12 @@
 import io from 'socket.io'
 import { socketWithAuth } from '.';
-import { domain } from '../../index'
+import { application } from '../../index'
 import gamesStore from '../../infra/gamesStore';
 
 export const chatMessage =  async(socket: socketWithAuth, data: any)=>{
     let gameId: string | undefined;
     try{
-        gameId = domain.entities.Token.hydrate(socket.handshake.auth.token).getPayload().gameId;
+        gameId = application.entities.Token.hydrate(socket.handshake.auth.token).getPayload().gameId;
     }
     catch{
         gameId = data.gameId;
@@ -21,49 +21,51 @@ export const chatMessage =  async(socket: socketWithAuth, data: any)=>{
 export const command =  async(socket: socketWithAuth, data: {content: string}, callback: any)=>{
     try{
         const token = socket.handshake.auth.token;
-        const gameId = domain.entities.Token.hydrate(socket.handshake.auth.token).getPayload().gameId;
-        const game = await domain.gameStoreService.getGame(gameId);
+        const gameId = application.entities.Token.hydrate(socket.handshake.auth.token).getPayload().gameId;
+        const game = await application.connect4Service.getGame(gameId);
         if(!game) throw new Error();
-        if( game.t === 'connect4'){
-            if(data.content === '/start') domain.connect4Service.start(token);
-            else if(data.content === '/reset') domain.connect4Service.reset(token);
+        
+        if( true ){
+            if(data.content === '/start') application.connect4Service.start(token);
+            else if(data.content === '/reset') application.connect4Service.reset(token);
             else if(data.content === '/new'){
-                await domain.connect4Service.reset(token);
-                await domain.connect4Service.start(token)
+                await application.connect4Service.reset(token);
+                await application.connect4Service.start(token)
             }
-            else if(data.content === '/scoreboard') callback({name: 'scoreboard', payload: await domain.connect4Service.getScoreboard(gameId)});
-            else if(data.content === '/players') callback({name:'players', payload: game.players});
+            else if(data.content === '/scoreboard') callback({name: 'scoreboard', payload: await application.connect4Service.getScoreboard(gameId)});
+            else if(data.content === '/players') callback({name:'players', payload: game.getAll().players});
             else if(data.content.includes('/kick')){
                 let id = data.content.replace('/kick ', '');
-                domain.connect4Service.kickPlayer(token, id);
+                application.connect4Service.kickPlayer(token, id);
             }
             else callback({name: 'unknown'});
         }
-        if( game.t === 'yatzy' ){
+        
+        /*if( game.t === 'yatzy' ){
             console.log(`"${data.content}"`)
-            if(data.content === '/start') domain.yatzyService.start(token);
-            else if(data.content === '/reset') domain.yatzyService.restart(token);
+            if(data.content === '/start') application.yatzyService.start(token);
+            else if(data.content === '/reset') application.yatzyService.restart(token);
             else if(data.content === '/new'){
-                await domain.yatzyService.restart(token);
-                await domain.yatzyService.start(token);
+                await application.yatzyService.restart(token);
+                await application.yatzyService.start(token);
             }
-        }
-        if( game.t === 'charades'){
-            if(data.content === '/start') domain.charadesService.start(token);
-            else if(data.content === '/reset') domain.charadesService.reset(token);
-            else if(data.content === '/new') domain.charadesService.reset(token);
-            else if(data.content === '/delete') domain.gameStoreService.deleteGame(gameId);
-            else if(data.content === '/scoreboard') callback({name: 'scoreboard', payload: await domain.charadesService.getScoreboard(gameId)});
+        }*/
+        /*if( game.t === 'charades'){
+            if(data.content === '/start') application.charadesService.start(token);
+            else if(data.content === '/reset') application.charadesService.reset(token);
+            else if(data.content === '/new') application.charadesService.reset(token);
+            else if(data.content === '/delete') application.gameStoreService.deleteGame(gameId);
+            else if(data.content === '/scoreboard') callback({name: 'scoreboard', payload: await application.charadesService.getScoreboard(gameId)});
             else if(data.content === '/players') callback({name:'players', payload: game.players});
             else if(data.content.includes('/kick')){
                 let id = data.content.replace('/kick ', '');
-                domain.charadesService.kickPlayer(token, id);
+                application.charadesService.kickPlayer(token, id);
             }
             else callback({name: 'unknown'});
-        }   
-        if( game.t === 'set' ){
-            if(data.content === '/start') domain.setService.start(token);
-        }
+        }*/
+        /*if( game.t === 'set' ){
+            if(data.content === '/start') application.setService.start(token);
+        }*/
     }
     catch(err){
         console.error(err);
