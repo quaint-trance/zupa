@@ -6,5 +6,5 @@ export interface eventType{
 }
 
 export default interface EventEmitter{
-    emit: (events: eventType[], gameId: string, type: Game) => void,
+    emit: (events: eventType, to: string) => void,
 }

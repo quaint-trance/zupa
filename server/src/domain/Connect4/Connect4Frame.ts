@@ -40,6 +40,10 @@ export default class Connect4{
             .sort((a, b)=> b.score - a.score);
     }
 
+    getEvents(){
+        return this.eventStack;
+    }
+
     getData(){
         return {
             id: this.id,
