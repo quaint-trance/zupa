@@ -1,5 +1,5 @@
 import { eventType } from '../../types/EventEmitter';
-import { Player, yatzyData } from './YatzyTypes'
+import { Player, YatzyData } from './YatzyTypes'
 
 export default class YatzyFrame{
     protected id: string;
@@ -9,7 +9,7 @@ export default class YatzyFrame{
     protected dice: number[];
     protected eventStack: eventType[];
 
-    protected constructor(data: Omit<yatzyData, 'eventStack'>){
+    protected constructor(data: Omit<YatzyData, 'eventStack'>){
         this.id = data.id;
         this.players = data.players;
         this.turn = data.turn;

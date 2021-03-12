@@ -2,7 +2,7 @@ import { v4 } from 'uuid'
 import calcScore from '../../utils/calcScoreYatzy';
 import random from '../../utils/random';
 import YatzyFrame from './YatzyFrame';
-import { Player, yatzyData } from './YatzyTypes'
+import { Player, YatzyData } from './YatzyTypes'
 
 export default class YatzyLogic extends YatzyFrame{
     

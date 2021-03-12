@@ -7,7 +7,7 @@ export interface Player{
     usedRows: number[],
 }
 
-export interface yatzyData{
+export interface YatzyData{
     id: string;
     players: Player[];
     turn: number;

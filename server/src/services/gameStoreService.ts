@@ -1,4 +1,4 @@
-import GamesStore from "../types/GameStore";
+import GamesStore from "../types/Connect4Repo";
 
 export default class GameStoreService{
     gamesStore: GamesStore;

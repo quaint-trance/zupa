@@ -1,9 +1,9 @@
-import Connect4 from "../../domain/Connect4";
-import { Connect4Data } from "../../domain/Connect4/Connect4Types";
-import GamesStore from "../../types/Connect4Repo";
+import Yatzy from "../../domain/Yatzy";
+import { YatzyData } from "../../domain/Yatzy/YatzyTypes";
+import GamesStore from "../../types/YatzyRepo";
 
 export default class implements GamesStore{
-    store: Connect4Data[];
+    store: YatzyData[];
 
     constructor(){
         this.store = [];
@@ -12,14 +12,14 @@ export default class implements GamesStore{
     async findById(id: string){
         const gameData = this.store.find(game => game.id === id);
         if(!gameData) return null;
-        return Connect4.hydrate(gameData);
+        return Yatzy.hydrate(gameData);
     }
 
-    private async push(game: Connect4){
+    private async push(game: Yatzy){
         this.store.push(game.getAll());
     }
 
-    async save(game: Connect4){
+    async save(game: Yatzy){
         const gameIndex = this.store.findIndex(storedGame => storedGame.id === game.getId());
         if(gameIndex < 0) return this.push(game).then(_=>true);
         this.store[gameIndex] = game.getAll();
@@ -27,7 +27,7 @@ export default class implements GamesStore{
     }
 
     async findMany(t?: string){
-        return this.store.map(el=>Connect4.hydrate(el));
+        return this.store.map(el=>Yatzy.hydrate(el));
     }
 
     async delete(gameId: string){

@@ -3,7 +3,7 @@ import { eventType } from '../../types/EventEmitter';
 import calcScore from '../../utils/calcScoreYatzy';
 import random from '../../utils/random';
 import YatzyLogic from './YatzyLogic';
-import { Player, yatzyData } from './YatzyTypes'
+import { Player, YatzyData } from './YatzyTypes'
 
 export default class YatzyFactory extends YatzyLogic{
     id: string;
@@ -23,7 +23,7 @@ export default class YatzyFactory extends YatzyLogic{
         });
     }
 
-    static hydrate(data: yatzyData){
+    static hydrate(data: YatzyData){
         return new YatzyFactory({
             ...data
         });

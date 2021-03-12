@@ -1,5 +1,5 @@
 import Yatzy from "../domain/entities/Yatzy";
-import GamesStore, { Game } from "../types/GameStore";
+import GamesStore, { Game } from "../types/Connect4Repo";
 import Token from '../domain/entities/Token'
 
 export default class YatzyService{

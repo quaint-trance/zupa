@@ -1,4 +1,4 @@
-import { Game } from "./GameStore";
+import { Game } from "./Connect4Repo";
 
 export interface eventType{
     name: string;

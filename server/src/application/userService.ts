@@ -1,7 +1,7 @@
 import Token from "../domain/entities/Token";
 import { UserStore as UserRepo } from "../types/UserStore";
 import bcrypt from 'bcryptjs'
-import { Game } from "../types/GameStore";
+import { Game } from "../types/Connect4Repo";
 
 import User from '../domain/User';
 import PasswordSerive from "../domain/PasswordSerivce";

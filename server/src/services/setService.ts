@@ -1,4 +1,4 @@
-import GamesStore from "../types/GameStore";
+import GamesStore from "../types/Connect4Repo";
 import Token from '../domain/entities/Token'
 import Set, { Card } from "../domain/entities/Set";
 
