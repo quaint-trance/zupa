@@ -27,10 +27,10 @@ export default (socket: socketWithAuth)=>{
     socket.on('choose column', (data)=> chooseColumn(socket, data));
     
     //charades
-    //socket.on('guess', (data)=> guess(socket, data));
-    //socket.on('add path', (data)=> addPath(socket, data));
-    //socket.on('get charade', (data)=> getCharade(socket, data));
-    //socket.on('clear canvas', ()=> clearCanvas(socket));
+    socket.on('guess', (data)=> guess(socket, data));
+    socket.on('add path', (data)=> addPath(socket, data));
+    socket.on('get charade', (data)=> getCharade(socket, data));
+    socket.on('clear canvas', ()=> clearCanvas(socket));
 
     //set
     //socket.on('choose set', (data)=>chooseSet(socket, data));

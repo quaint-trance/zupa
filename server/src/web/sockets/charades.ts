@@ -1,23 +1,20 @@
 import { socketWithAuth } from '.'
-import { domain } from '../../index'
+import { application } from '../../index'
 
 export const guess = (socket: socketWithAuth, data: any) => {
-    console.log('4', data);
-    domain.charadesService.guess(socket.handshake.auth.token, data);
+    application.charadesService.guess(socket.handshake.auth.token, data);
 }
 
 export const addPath = (socket: socketWithAuth, data: any) => {
-    domain.charadesService.addPath(socket.handshake.auth.token, data);
+    application.charadesService.addPath(socket.handshake.auth.token, data);
 }
 
 export const getCharade = async (socket: socketWithAuth, callback: any)=>{
-    const result = await domain.charadesService.getCharade(socket.handshake.auth.token);
+    const result = await application.charadesService.getCharade(socket.handshake.auth.token);
     if(!result) return;
     callback(result);
 }
 
 export const clearCanvas = async (socket: socketWithAuth)=>{
-    console.log('clear canvas');
-    const result = await domain.charadesService.clearCanvas(socket.handshake.auth.token);
-
+    application.charadesService.clearCanvas(socket.handshake.auth.token);
 }

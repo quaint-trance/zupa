@@ -38,7 +38,7 @@ export default()=>{
     app.use('/games', gameRoute);
     app.use('/yatzy', yatzyRoute);
     app.use('/connect4', connect4Route);
-    //app.use('/charades', charadesRoute);
+    app.use('/charades', charadesRoute);
     //app.use('/set', setRoute);
     app.use('/user', userRoute);
     
