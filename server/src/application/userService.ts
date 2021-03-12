@@ -10,8 +10,8 @@ export default class UserService{
    
     userRepo: UserRepo;
 
-    constructor(userRepo: UserRepo){
-        this.userRepo = userRepo
+    constructor(infra: {userRepo: UserRepo}){
+        this.userRepo = infra.userRepo
     }
     
     async createUser(name: string, email: string, password: string){

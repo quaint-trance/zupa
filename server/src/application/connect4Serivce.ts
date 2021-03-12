@@ -8,16 +8,16 @@ import EventEmitter from '../types/EventEmitter';
 
 export default class Connect4Service{
 
-    gamesStore: GamesStore;
-    userStore: UserStore;
+    gameRepo: GamesStore;
+    userRepo: UserStore;
     userSkinService: UserSkinService;
     eventEmitter: EventEmitter;
 
-    constructor(gamesStore: GamesStore, userStore: UserStore, skinStore: SkinStore, eventEmitter: EventEmitter){
-        this.gamesStore = gamesStore;
-        this.userStore = userStore;
-        this.eventEmitter = eventEmitter;
-        this.userSkinService = new UserSkinService(skinStore);
+    constructor(infra: {connect4Repo: GamesStore, userRepo: UserStore, skinRepo: SkinStore, eventEmitter: EventEmitter}){
+        this.gameRepo = infra.connect4Repo;
+        this.userRepo = infra.userRepo;
+        this.eventEmitter = infra.eventEmitter;
+        this.userSkinService = new UserSkinService(infra.skinRepo);
     }
     
     async hydrateFromToken(token: string):Promise<[null | Connect4, null | string]>{
@@ -25,7 +25,7 @@ export default class Connect4Service{
         const payload = Token.hydrate(token)?.getPayload();
         if(!payload?.gameId || !payload?.playerId) return [null, null];
 
-        const game = await this.gamesStore.findById(payload.gameId);
+        const game = await this.gameRepo.findById(payload.gameId);
         if( !game ) return [null, null];
         return [game, payload.playerId];
     }
@@ -37,11 +37,11 @@ export default class Connect4Service{
     }
 
     async joinPlayer(gameId: string, playerName: string, userToken?: string){
-        const game = await this.gamesStore.findById(gameId);
+        const game = await this.gameRepo.findById(gameId);
         if( !game || !playerName) return null;
         
         const userName = userToken && Token.hydrate(userToken).payload.name;
-        const user = await this.userStore.findByName(userName);
+        const user = await this.userRepo.findByName(userName);
         const skinValue = user && await this.userSkinService.getSkinValue(user);
 
         const player = game.joinPlayer(playerName, userName, skinValue || undefined);
@@ -71,7 +71,6 @@ export default class Connect4Service{
     }
 
     async chooseColumn(token: string, row: number){
-        console.log('column');
         const [ game, playerId ] = await this.hydrateFromToken(token);
         if( !game || !playerId ) return null;
         if( game.getCurrentPlayer()?.id !== playerId ) return;
@@ -91,13 +90,13 @@ export default class Connect4Service{
     }
 
     async getScoreboard(gameId: string){
-        const game = await this.gamesStore.findById(gameId);
+        const game = await this.gameRepo.findById(gameId);
         if( !game ) return null;
         return game.getScoreboard();
     }
 
     async getGame(gameId: string){
-        return await this.gamesStore.findById(gameId);
+        return await this.gameRepo.findById(gameId);
     }
 
     private async save(game: Connect4){
@@ -105,7 +104,7 @@ export default class Connect4Service{
         events.map(event=>{
             this.eventEmitter.emit(event, game.getId());
         });
-        return await this.gamesStore.save(game);
+        return await this.gameRepo.save(game);
     }
     
 };

@@ -10,9 +10,9 @@ export default class SkinSerivce{
     private skinRepo: SkinRepo;
     private userRepo: UserRepo;
 
-    constructor(skinRepo: SkinRepo, userRepo: UserRepo){
-        this.skinRepo = skinRepo;
-        this.userRepo = userRepo;
+    constructor(infra: {skinRepo: SkinRepo, userRepo: UserRepo}){
+        this.skinRepo = infra.skinRepo;
+        this.userRepo = infra.userRepo;
     }
 
     async getAll(){

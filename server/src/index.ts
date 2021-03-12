@@ -24,8 +24,8 @@ const infra = {
 }
 
 export const application = {
-    userService: new UserService(infra.userRepo),
-    skinService: new SkinSerivce(infra.skinRepo, infra.userRepo),
-    connect4Service: new Connect4Service(infra.connect4Repo, infra.userRepo, infra.skinRepo, infra.eventEmitter),
+    userService: new UserService(infra),
+    skinService: new SkinSerivce(infra),
+    connect4Service: new Connect4Service(infra),
     entities:{ Token }
 };
