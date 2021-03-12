@@ -12,4 +12,8 @@ export default class GameStore{
         return this.gameStore.getAll();
     }
 
+    getById(id: string){
+        return this.gameStore.getById(id);
+    }
+
 }

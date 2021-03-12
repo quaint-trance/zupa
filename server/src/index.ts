@@ -14,6 +14,7 @@ import Connect4Repo from './infra/Connect4/Connect4RamRepo'
 import EventEmitter from './infra/EventEmitter/socketio'
 import GameStore from './infra/GameStore';
 import YatzyRepo from './infra/Yatzy/YatzyRamRepo';
+import YatzyService from './application/yatzyService';
 
 dotenv.config({path: resolve(__dirname, "../.env")});
 
@@ -31,6 +32,7 @@ export const application = {
     userService: new UserService(infra),
     skinService: new SkinSerivce(infra),
     connect4Service: new Connect4Service(infra),
+    yatzyService: new YatzyService(infra),
     gameStoreService: new GameStoreService( {gameStore: new GameStore(infra)}),
     entities:{ Token }
 };

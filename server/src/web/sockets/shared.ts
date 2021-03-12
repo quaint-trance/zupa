@@ -19,12 +19,14 @@ export const chatMessage =  async(socket: socketWithAuth, data: any)=>{
 
 export const command =  async(socket: socketWithAuth, data: {content: string}, callback: any)=>{
     try{
+        console.log('command ', data.content);
         const token = socket.handshake.auth.token;
         const gameId = application.entities.Token.hydrate(socket.handshake.auth.token).getPayload().gameId;
-        const game = await application.connect4Service.getGame(gameId);
+        const game = await application.gameStoreService.getById(gameId);
         if(!game) throw new Error();
+        console.log('game found', game.t);
         
-        if( true ){
+        if( game.t === 'connect4' ){
             if(data.content === '/start') application.connect4Service.start(token);
             else if(data.content === '/reset') application.connect4Service.reset(token);
             else if(data.content === '/new'){
@@ -40,15 +42,16 @@ export const command =  async(socket: socketWithAuth, data: {content: string}, c
             else callback({name: 'unknown'});
         }
         
-        /*if( game.t === 'yatzy' ){
-            console.log(`"${data.content}"`)
+        if( game.t === 'yatzy' ){
+            console.log('yatzy command')
             if(data.content === '/start') application.yatzyService.start(token);
             else if(data.content === '/reset') application.yatzyService.restart(token);
             else if(data.content === '/new'){
                 await application.yatzyService.restart(token);
-                await application.yatzyService.start(token);
+                application.yatzyService.start(token);
             }
-        }*/
+        }
+
         /*if( game.t === 'charades'){
             if(data.content === '/start') application.charadesService.start(token);
             else if(data.content === '/reset') application.charadesService.reset(token);

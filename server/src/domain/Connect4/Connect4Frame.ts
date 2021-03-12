@@ -10,6 +10,7 @@ export default class Connect4{
     protected eventStack: Connect4Data['eventStack'];
     protected size: Connect4Data['size'];
     protected connectToWin: Connect4Data['connectToWin'];
+    public t: 'connect4';
 
     protected constructor(data: Omit<Connect4Data, 'eventStack'>){
         this.id = data.id;
@@ -19,6 +20,7 @@ export default class Connect4{
         this.eventStack = [];
         this.size = data.size;
         this.connectToWin = data.connectToWin;
+        this.t = 'connect4';
     }
 
     getId(){

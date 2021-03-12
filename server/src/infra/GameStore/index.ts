@@ -27,4 +27,14 @@ export default class GameStore implements GamesStore{
         return [...r1, ...r2];
     }
 
+    public async getById(id: string){
+        const r1 = await this.connect4Repo.findById(id);
+        if(r1) return r1;
+
+        const r2 = await this.yatzyRepo.findById(id);
+        if(r2) return r2;
+
+        return null;
+    }
+
 }

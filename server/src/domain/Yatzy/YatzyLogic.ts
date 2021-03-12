@@ -61,9 +61,10 @@ export default class YatzyLogic extends YatzyFrame{
     }
 
     start(){
-        if(this.turn >= 0) return;
+        if(this.turn >= 0) return false;
         this.turn = 0;
         this.eventStack.push({name:'start'});
+        return true;
     }
     
     reset(){

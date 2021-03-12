@@ -8,6 +8,7 @@ export default class YatzyFrame{
     protected throwCount: number;
     protected dice: number[];
     protected eventStack: eventType[];
+    public t: 'yatzy';
 
     protected constructor(data: Omit<YatzyData, 'eventStack'>){
         this.id = data.id;
@@ -16,6 +17,7 @@ export default class YatzyFrame{
         this.throwCount = data.throwCount;
         this.dice = data.dice;
         this.eventStack = [];
+        this.t = 'yatzy';
     }
 
     public getPlayers(){
@@ -49,7 +51,7 @@ export default class YatzyFrame{
         }
     }
 
-    public getEventStack(){
+    public getEvents(){
         return this.eventStack;
     }
 
@@ -57,6 +59,12 @@ export default class YatzyFrame{
         return this.players
             .map(p=>({score: p.score, name: p.name}))
             .sort((a, b)=> b.score - a.score);
+    }
+
+    public isTurn(playerId: string){
+        const currentPlayerId = this.getCurrentPlayer()?.id;
+        if(!currentPlayerId) return false;
+        return currentPlayerId === playerId;
     }
 
 }

@@ -20,8 +20,8 @@ export default (socket: socketWithAuth)=>{
     socket.on('chat message', (data)=> chatMessage(socket, data));
     
     //yatzy
-    //socket.on('throw dice', (data)=> throwDice(socket, data));
-    //socket.on('choose row', (data)=> chooseRow(socket, data));
+    socket.on('throw dice', (data)=> throwDice(socket, data));
+    socket.on('choose row', (data)=> chooseRow(socket, data));
     
     //connect4
     socket.on('choose column', (data)=> chooseColumn(socket, data));

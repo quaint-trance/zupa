@@ -36,7 +36,7 @@ export default()=>{
     app.use(cors());
 
     app.use('/games', gameRoute);
-    //app.use('/yatzy', yatzyRoute);
+    app.use('/yatzy', yatzyRoute);
     app.use('/connect4', connect4Route);
     //app.use('/charades', charadesRoute);
     //app.use('/set', setRoute);

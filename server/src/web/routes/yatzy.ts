@@ -1,11 +1,11 @@
 import express from 'express';
-import { domain } from '../../'
+import { application } from '../../'
 
 const router = express.Router();
 
 router.post('/create', async (req, res)=>{
     try{
-        const result = await domain.yatzyService.createGame(req.body.playerName);
+        const result = await application.yatzyService.createGame(req.body.playerName);
         if(!result) return res.status(400).send();
         res.status(200).send(result);
     }catch(err){
@@ -16,7 +16,7 @@ router.post('/create', async (req, res)=>{
 
 router.post('/join', async (req, res)=>{
     try{
-        const result = await domain.yatzyService.joinPlayer(req.body.gameId, req.body.playerName);
+        const result = await application.yatzyService.joinPlayer(req.body.gameId, req.body.playerName);
         if(!result) return res.status(400).send();
         res.status(200).send(result);
     }catch(err){
