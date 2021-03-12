@@ -1,4 +1,3 @@
-import io from 'socket.io'
 import { socketWithAuth } from '.';
 import { application } from '../../index'
 
@@ -19,12 +18,10 @@ export const chatMessage =  async(socket: socketWithAuth, data: any)=>{
 
 export const command =  async(socket: socketWithAuth, data: {content: string}, callback: any)=>{
     try{
-        console.log('command ', data.content);
         const token = socket.handshake.auth.token;
         const gameId = application.entities.Token.hydrate(socket.handshake.auth.token).getPayload().gameId;
         const game = await application.gameStoreService.getById(gameId);
         if(!game) throw new Error();
-        console.log('game found', game.t);
         
         if( game.t === 'connect4' ){
             if(data.content === '/start') application.connect4Service.start(token);
@@ -43,7 +40,6 @@ export const command =  async(socket: socketWithAuth, data: {content: string}, c
         }
         
         if( game.t === 'yatzy' ){
-            console.log('yatzy command')
             if(data.content === '/start') application.yatzyService.start(token);
             else if(data.content === '/reset') application.yatzyService.restart(token);
             else if(data.content === '/new'){

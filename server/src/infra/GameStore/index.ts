@@ -26,7 +26,7 @@ export default class GameStore implements GamesStore{
             players: el.getPlayers().map(p=>({id:p.id, name:p.name})),
             t: 'yatzy',
         }));
-        const r3 = (await this.yatzyRepo.findMany()).map(el=>({
+        const r3 = (await this.charadesRepo.findMany()).map(el=>({
             id: el.getId(),
             players: el.getPlayers().map(p=>({id:p.id, name:p.name})),
             t: 'charades',

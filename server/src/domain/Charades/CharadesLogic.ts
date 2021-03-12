@@ -11,6 +11,7 @@ export default class CharadesLogic extends CharadesFrame{
     }
     
     guess(charade: string, playerId: string){
+        if(!this.players.some(p=>p.id===playerId)) return;
         if( charade.toLowerCase() === this.charade.toLowerCase() ){
             this.correct(playerId);
             return true;
