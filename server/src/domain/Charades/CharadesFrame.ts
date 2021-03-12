@@ -65,5 +65,9 @@ export default class CharadesFrame{
     public getEvents(){
         return this.eventStack;
     }
+
+    public getDrawing(){
+        return this.drawing;
+    }
     
 }

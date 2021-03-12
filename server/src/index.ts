@@ -8,6 +8,7 @@ import YatzyService from './application/yatzyService';
 import UserService from './application/userService';
 import SkinSerivce from './application/skinService';
 import GameStoreService from './application/gameStore';
+import CharadesService from './application/charadesService';
 
 import UserRepo from './infra/User/userMongoRepository'
 import SkinRepo from './infra/Skin/SkinMongoStore'
@@ -35,6 +36,7 @@ export const application = {
     skinService: new SkinSerivce(infra),
     connect4Service: new Connect4Service(infra),
     yatzyService: new YatzyService(infra),
+    charadesService: new CharadesService(infra),
     gameStoreService: new GameStoreService( {gameStore: new GameStore(infra)}),
     entities:{ Token }
 };
