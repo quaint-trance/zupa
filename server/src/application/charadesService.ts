@@ -1,15 +1,16 @@
-import CharadesRepo, { Game } from "../types/CharadesRepo";
+import CharadesRepo from "../types/CharadesRepo";
 import Token from '../domain/entities/Token'
 import Charades from "../domain/Charades";
 import { Chunk } from "../domain/Charades/CharadesTypes";
 import EventEmitter from '../types/EventEmitter';
+import { domainEventsService } from '../index'
 
 export default class CharadesService{
     
     gameStore: CharadesRepo;
     eventEmitter: EventEmitter;
-    
-    constructor(infra: {charadesRepo: CharadesRepo, eventEmitter: EventEmitter}){
+
+    constructor(infra: {charadesRepo: CharadesRepo, eventEmitter: EventEmitter }){
         this.gameStore = infra.charadesRepo;
         this.eventEmitter = infra.eventEmitter;
     }
@@ -121,6 +122,26 @@ export default class CharadesService{
     private async save(game: Charades){
         const events = game.getEvents();
         events.map(event=>{
+
+            if( event.name === 'next turn' || event.name === 'start'){
+                let sum = 0;
+                game.getAll().timeouts.forEach((timeout, index, arr)=>{
+                    sum+=timeout;
+
+                    if( index === arr.length-1 ){
+                        domainEventsService.newTimeout(application=>{
+                            application.charadesService.endOfTime(game.getId(), game.getRountId(), 0)
+                        }, 1000*sum)
+                    }
+                    else{
+                        domainEventsService.newTimeout(app=>{
+                            app.charadesService.endOfTime(game.getId(), game.getRountId(), index+1);
+                        }, 1000*sum);
+                    }
+
+                });
+            }
+
             this.eventEmitter.emit(event, game.getId());
         });
         return await this.gameStore.save(game);

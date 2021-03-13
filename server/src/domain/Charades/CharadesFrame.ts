@@ -69,5 +69,9 @@ export default class CharadesFrame{
     public getDrawing(){
         return this.drawing;
     }
+
+    public getRountId(){
+        return this.roundId;
+    }
     
 }

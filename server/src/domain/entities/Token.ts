@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken'
 
+const secret = process.env.secret || 'secret';
+
 export default class Token{
     token: string;
     payload: any;
@@ -10,12 +12,12 @@ export default class Token{
     }
 
     static create(payload: any){
-        const token = jwt.sign(payload, 'secret');
+        const token = jwt.sign(payload, secret);
         return new Token(token, payload);
     }
 
     static hydrate(token: string){
-        const payload = jwt.verify(token, 'secret');
+        const payload = jwt.verify(token, secret);
         return new Token(token, payload);
     }
 

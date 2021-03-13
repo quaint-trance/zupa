@@ -29,7 +29,6 @@ export default class CharadesLogic extends CharadesFrame{
     }
     
     nextTurn(){
-        console.log('nowa runda')
         this.drawing = (this.drawing+1)%this.players.length;
         this.roundId = v4();
         this.eventStack.push({name:'next turn', payload: this.drawing});

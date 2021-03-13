@@ -38,5 +38,20 @@ export const application = {
     yatzyService: new YatzyService(infra),
     charadesService: new CharadesService(infra),
     gameStoreService: new GameStoreService( {gameStore: new GameStore(infra)}),
-    entities:{ Token }
+    entities:{ Token },
 };
+export type applicationType = typeof application;
+
+
+class DomainEventsService{
+    private app: applicationType;
+    constructor(app: applicationType){
+        this.app = app;
+    }
+
+    newTimeout(callback:(app: applicationType)=>void, time: number){
+        setTimeout(()=>callback(this.app), time);
+    }
+
+}
+export const domainEventsService = new DomainEventsService(application);
