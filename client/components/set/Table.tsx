@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
-import { Player } from '../../../server/src/entities/Set'
-import { Card as CardType } from '../../../server/src/entities/Set';
+import { Player } from '../../../server/src/domain/Set/SetTypes'
+import { Card as CardType } from '../../../server/src/domain/Set/SetTypes';
 import Card from './Card';
 import { useState, useEffect } from 'react'
 

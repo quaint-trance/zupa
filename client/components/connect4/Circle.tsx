@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { useTransition, animated } from 'react-spring'
-import { Player } from '../../../server/src/entities/Connect4';
+import { Player } from '../../../server/src/domain/Connect4/Connect4Types';
 
 interface props{
    playerNumber: undefined | number;

@@ -1,5 +1,5 @@
 import { useMutation } from 'react-query'
-import { Game }  from "../../server/src/types/GameStore"
+import Game  from "../../server/src/types/GameStore"
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import ENDPOINT from '../ENDPOINT'

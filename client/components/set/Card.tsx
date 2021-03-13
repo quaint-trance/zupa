@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Card as CardType } from '../../../server/src/entities/Set'
+import { Card as CardType } from '../../../server/src//domain/Set/SetTypes'
 import Shape0 from './Shape0'
 import Shape1 from './Shape1'
 import Shape2 from './Shape2'

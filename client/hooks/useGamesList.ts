@@ -1,9 +1,9 @@
 import { useQuery } from 'react-query'
-import { Game }  from "../../server/src/types/GameStore"
+import { gameInfo }  from "../../server/src/types/GameStore"
 import ENDPOINT from '../ENDPOINT';
 
 export default ()=>{
-    const { data }: {data: Game[] | undefined} = useQuery('gamesList', ()=>
+    const { data }: {data: gameInfo[] | undefined} = useQuery('gamesList', ()=>
         fetch(ENDPOINT+'/games', {
             method: "GET",
             headers: {

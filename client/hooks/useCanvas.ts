@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react'
 import { io } from 'socket.io-client'
-import { Chunk } from '../../server/src/entities/Charades';
+import { Chunk } from '../../server/src/domain/Charades/CharadesTypes';
 import useEventListener from './useEventListener';
 
 export type typeStyle = {

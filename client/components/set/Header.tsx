@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Player } from '../../../server/src/entities/Connect4'
+import { Player } from '../../../server/src/domain/Set/SetTypes'
 
 interface props{
     players: Player[];

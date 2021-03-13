@@ -1,7 +1,7 @@
 import React from 'react'
 import Head from 'next/head'
 import styled from '@emotion/styled'
-import { Player } from '../../../server/src/entities/Yatzy'
+import { Player } from '../../../server/src/domain/Yatzy/YatzyTypes'
 import Dice from './Die'
 
 interface props{

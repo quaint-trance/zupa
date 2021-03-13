@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
-import { Player } from '../../server/src/entities/Set'
+import { Player } from '../../server/src/domain/Set/SetTypes'
 import { io, Socket }  from 'socket.io-client'
 import ENDPOINT from '../ENDPOINT'
 import useChat from './useChat'
-import { Card } from '../../server/src/entities/Set'
+import { Card } from '../../server/src/domain/Set/SetTypes'
 
 
 export default (gameId: string)=>{

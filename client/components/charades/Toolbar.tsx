@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Player } from '../../../server/src/entities/Yatzy'
+import { Player } from '../../../server/src/domain/Charades/CharadesTypes'
 import useCanvas, { typeStyle } from '../../hooks/useCanvas'
 import { FaEraser, FaRegTrashAlt } from 'react-icons/fa'
 import { TiDelete } from 'react-icons/ti'
