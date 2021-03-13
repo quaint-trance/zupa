@@ -20,11 +20,11 @@ const [userName, setUserName] = useState('');
     const [usMusic, setUsMusic] = useState('');
     const [usDesc, setUsDesc] = useState('');
 
-    const [skins, setSkins] = useState<string[]>([]);
+    const [skins, setSkins] = useState<{id: string, value: string}[]>([]);
 
     useEffect(()=>{
         if(!data) return;
-        const loaded:Promise<string>[] = data?.gameSettings?.connect4?.unlocked.map(skinId=> loadSkin(skinId));
+        const loaded:Promise<{id: string, value: string}>[] = data?.gameSettings?.connect4?.unlocked.map(skinId=> loadSkin(skinId));
         Promise.all(loaded).then(loaded=>{
             setSkins(loaded);
             console.log(loaded);
@@ -65,7 +65,7 @@ const [userName, setUserName] = useState('');
                      <div className="skinBox">
 
                     {data?.gameSettings?.connect4?.unlocked?.map((skinId, skinIndex)=>(
-                        <Skin onClick={()=>handleClick(skinIndex)} bg={skins&&skins[skinIndex]} selected={data?.gameSettings?.connect4.skin === skinId ? true : false}/>
+                        <Skin onClick={()=>handleClick(skinIndex)} bg={skins&&skins[skinIndex]?.value} selected={data?.gameSettings?.connect4.skin === skinId ? true : false}/>
                     ))}
 
                 </div>
