@@ -8,7 +8,7 @@ import gameRoute from './web/routes/games'
 import yatzyRoute from './web/routes/yatzy'
 import connect4Route from './web/routes/connect4'
 import charadesRoute from './web/routes/charades'
-import setRoute from './web/routes/set'
+//import setRoute from './web/routes/set'
 import userRoute from './web/routes/user'
 import mongoose from 'mongoose'
 

@@ -26,7 +26,8 @@ export default class userStore implements UserStore{
         return result ? User.hydrate(result) : null;
     }
 
-    async save(data: UserData){
+    async save(user: User){
+        const data = user.getAll(); 
         const index = this.store.findIndex(e=> e.name === data.name);
         if(index === -1) return false;
         this.store[index] = data;

@@ -1,6 +1,6 @@
 import { socketWithAuth } from '.'
-import { domain } from '../../index'
+import { application } from '../../index'
 
 export const chooseSet = (socket: socketWithAuth, data: any) => {
-    domain.setService.chooseSet(socket.handshake.auth.token, data);
+    //domain.setService.chooseSet(socket.handshake.auth.token, data);
 }
