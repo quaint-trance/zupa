@@ -8,6 +8,7 @@ import { useRouter } from 'next/router'
 import SettingsSidenav from '../../components/SettingsSidenav'
 import AnimatedPage from '../../components/AnimatedPage'
 import { motion } from 'framer-motion';
+import { GiLaserTurret } from 'react-icons/gi'
 
 interface props{
 
@@ -71,7 +72,7 @@ const Profile:React.FC<props> = () =>{
             <Head>
                 <title>Zupa - user profile</title>
             </Head>
-                <SettingsSidenav/>
+            <SettingsSidenav />
             <Content >
                 <div className="imageBox"></div>
     

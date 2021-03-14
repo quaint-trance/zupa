@@ -8,14 +8,14 @@ import { useRouter } from 'next/router'
 function App({ Component, pageProps }: AppProps) {
     const router = useRouter();
     return(
-        <html lang="en">
+        <html lang="en" >
             <Head>
                 <link rel="icon" href="/zupa.png" type = "image/x-icon" /> 
                 <link rel="manifest" href="/manifest.json" />
             </Head>
             <QueryClientProvider client={new QueryClient()}>
                 <AnimatePresence exitBeforeEnter>
-                    <Component {...pageProps} key={router.route}/>
+                    <Component {...pageProps} />
                 </AnimatePresence>
             </QueryClientProvider>
         </html>

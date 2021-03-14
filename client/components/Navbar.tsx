@@ -37,7 +37,6 @@ const Navbar:React.FC<props> = ({fixed=false}) =>{
 
     if(!userName) return(
         <>
-        <Space />
         <Container fixed={fixed}>
             <div className="menu nlogged">
                 <animated.button onClick={handleClick} style={animatedArrow}><MdKeyboardArrowDown/></animated.button>
@@ -55,6 +54,7 @@ const Navbar:React.FC<props> = ({fixed=false}) =>{
                 </animated.ul>
             </div>
        </Container>
+       <Space />
        </>
     )
 
@@ -69,7 +69,6 @@ const Navbar:React.FC<props> = ({fixed=false}) =>{
 
     return(
         <>
-        {fixed&&<Space/>}
         <Container fixed={fixed}>
             <Link href={`/profile?userId=${userName}`}><div className="name">{userName}</div></Link>
 
@@ -95,6 +94,7 @@ const Navbar:React.FC<props> = ({fixed=false}) =>{
             </div>
 
        </Container>
+       <Space />
        </>
     )
 }
@@ -102,6 +102,7 @@ const Navbar:React.FC<props> = ({fixed=false}) =>{
 const Container = styled.nav<{fixed:boolean}>`
     ${props=>props.fixed && `
         position: fixed;
+        top: 0;
     `}
 
     display: flex;

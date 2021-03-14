@@ -55,11 +55,11 @@ const [userName, setUserName] = useState('');
     }
 
     return(
-        <Container>
+        <Container >
             <Head>
                 <title>Zupa - user profile</title>
             </Head>
-            <SettingsSidenav/>
+            <SettingsSidenav />
             <Content>
                     <h1>Connect4</h1>
                      <div className="skinBox">

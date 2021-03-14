@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import Link from 'next/link'
 import { useState } from 'react'
 import { animated, config, useSpring } from 'react-spring'
+import { motion } from 'framer-motion'
 
 type props = {
     link: string,

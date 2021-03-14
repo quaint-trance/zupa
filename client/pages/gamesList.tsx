@@ -3,7 +3,6 @@ import Head from 'next/head'
 import styled from '@emotion/styled'
 import useGamesList from '../hooks/useGamesList'
 import Link from 'next/link'
-import Die3D from '../components/yatzy/Die3D'
 import Navbar from '../components/Navbar'
 import { motion } from 'framer-motion';
 
@@ -11,17 +10,29 @@ interface props{
 
 }
 
+const animate = {
+    initial:{
+        opacity: 0,
+    },
+    animate:{
+        opacity: 1,
+    },
+    exit:{
+        opacity: 0,
+    }
+}
+
 const GamesList:React.FC<props> = () =>{
 
     const { data } = useGamesList();
 
     return(
-        <div>
+    <Background>
+        <Container {...animate} >
+            <Navbar fixed={true}/>
             <Head>
                 <title>Zupa - game list</title>
             </Head>
-            <Navbar />
-            <Container>
                 <h1>Game List</h1>
                 <ul>
                     <li>
@@ -39,13 +50,16 @@ const GamesList:React.FC<props> = () =>{
                         </Link>
                     )}
                 </ul>
-            </Container>
-        </div>
+        </Container>
+    </Background>
     )
 }
 
-const Container = styled.div`
+const Background = styled.div`
     background-color: #0f1316;
+`
+
+const Container = styled(motion.div)`
     min-height: 100vh;
     color: white;
     padding-top: 20px;
@@ -76,6 +90,7 @@ const Container = styled.div`
             }
             &:first-of-type{
                 font-weight: 600;
+                cursor: auto;
             }
 
             & > span{

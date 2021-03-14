@@ -3,15 +3,28 @@ import styled from '@emotion/styled'
 import Link from 'next/link'
 import Navbar from '../components/Navbar'
 import GameIcon from '../components/GameIcon'
-import AnimatedPage from '../components/AnimatedPage'
+import { motion } from 'framer-motion'
+import { useRouter } from 'next/router'
+
+const animate = {
+  initial: {
+    opacity: 0,
+  },
+  animate:{
+    opacity: 1,
+  },
+  exit:{
+    opacity: 0
+  }
+}
+
 
 export default function Home() {
 
   return (
-    <Container>
+<Background>
+    <Container {...animate} key={3} >
       <Navbar fixed={true} />
-      <AnimatedPage>
-
       <Head>
         <title>Zupa</title>
         <link rel="icon" href="/favicon.ico" />
@@ -41,13 +54,16 @@ export default function Home() {
       <footer>
         
       </footer>
-      </AnimatedPage>
     </Container>
+</Background>
   )
 }
 
-const Container = styled.div`
+const Background = styled.div`
   background-color: #0f1316;
+`
+
+const Container = styled(motion.div)`
   display: flex;
   flex-direction: column;
 `
