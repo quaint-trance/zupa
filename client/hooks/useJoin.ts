@@ -1,12 +1,13 @@
 import { useMutation } from 'react-query'
 import Game  from "../../server/src/types/GameStore"
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import ENDPOINT from '../ENDPOINT'
 
 export default (gameType: string, gameId: string)=>{
     
     const router = useRouter();
+    const [loading, setLoading] = useState(true);
 
     const handleSuccess = (data: {token: string, name: string, gameId: string, settings: any}) =>{
         localStorage.setItem(`token-${data.gameId}`, data.token);
@@ -44,10 +45,10 @@ export default (gameType: string, gameId: string)=>{
     })
 
     useEffect(()=>{
-        if(
-            localStorage.getItem(`token-${gameId}`)
-            && localStorage.getItem(`name-${gameId}`)
-        ) router.push(`/games/${gameType}?gameId=${gameId}`);
+        const token = localStorage.getItem(`token-${gameId}`);
+        const name = localStorage.getItem(`name-${gameId}`);
+        if( token && name ) router.push(`/games/${gameType}?gameId=${gameId}`);
+        else setLoading(false);
     }, [])
 
 
@@ -55,6 +56,7 @@ export default (gameType: string, gameId: string)=>{
         data,
         mutate: (data)=> mutate(data),
         isLoading,
-        isError
+        isError,
+        loading
     }
 }

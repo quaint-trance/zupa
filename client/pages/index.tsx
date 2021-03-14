@@ -5,6 +5,8 @@ import Navbar from '../components/Navbar'
 import GameIcon from '../components/GameIcon'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
+import {useTrail, animated} from 'react-spring'
+import { useEffect, useState } from 'react'
 
 const animate = {
   initial: {
@@ -18,8 +20,35 @@ const animate = {
   }
 }
 
+const games = [
+  {
+    img: '/dice.svg',
+    link:'/games/yatzy/create',
+    header:'Yatzy'
+  },{
+    img:'/connect4.svg',
+    link:'/games/connect4/create',
+    header:'Connect4'
+  },{
+    img:'/charades.svg',
+    link:'/games/charades/create', 
+    header:'Charades' 
+  }
+]
+
 
 export default function Home() {
+
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    setLoaded(true);
+  }, [])
+
+  const trail = useTrail(games.length, {
+    opacity: loaded ? 1 : 0,
+    transform: `translate(0, ${loaded ? 0 : 20}px)` 
+  })
 
   return (
 <Background>
@@ -41,14 +70,14 @@ export default function Home() {
           </section>
 
         <div>
-  
-          <GameIcon img='/dice.svg' link='/games/yatzy/create' header='Yatzy'/>
-          <GameIcon img='/connect4.svg' link='/games/connect4/create' header='Connect4'/>
-          <GameIcon img='/charades.svg' link='/games/charades/create'  header='Charades' />
+
+          {trail.map((props, index) => 
+            <GameIcon img={games[index].img} link={games[index].link} header={games[index].header} style={props} key={games[index].header}/>
+          )}
          
         </div>
         
-        <div><Link href='/gamesList'>show list</Link></div>
+        {<animated.div style={trail[Math.floor(games.length/2)]} ><Link href='/gamesList'>show list</Link></animated.div>}
       </Main>
 
       <footer>

@@ -12,7 +12,7 @@ interface props{
 const Join:React.FC<props> = () =>{
 
     const router = useRouter();
-    const { data, isError, isLoading, mutate } = useJoin(
+    const { data, isError, isLoading, mutate, loading } = useJoin(
         'connect4',
         typeof router.query.gameId==='object' ? router.query.gameId[0] : router.query.gameId || '',
     );
@@ -30,6 +30,17 @@ const Join:React.FC<props> = () =>{
             playerName
         });
     }
+
+    if(loading)return(
+         <div>
+            <Head>
+                <title>Zupa - join</title>
+            </Head>
+            <Container>
+               E
+            </Container>
+        </div>
+    )
 
     return(
         <div>

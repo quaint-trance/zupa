@@ -30,6 +30,7 @@ const Container = styled.div`
 `
 
 const Canv = styled.canvas`
+background-color: rgb(14, 14, 14);
     border: solid 1px white;
     display: block;
     cursor: crosshair;

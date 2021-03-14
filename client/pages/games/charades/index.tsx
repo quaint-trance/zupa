@@ -35,7 +35,7 @@ const Charades:React.FC<props> = () =>{
 }
 
 const Container = styled.div`
-    background-color:rgb(14, 14, 14);;
+    background-color: #0f1316;
     min-height: 100vh;
     color: white;
     display: grid;

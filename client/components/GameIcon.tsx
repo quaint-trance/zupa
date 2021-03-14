@@ -8,9 +8,10 @@ type props = {
     link: string,
     img: string,
     header: string,
+    style?: any,
 }
 
-const GameIcon:React.FC<props> = ({ link, img, header }) =>{
+const GameIcon:React.FC<props> = ({ link, img, header, style }) =>{
 
     const [hover, setHover] = useState(false);
 
@@ -23,7 +24,7 @@ const GameIcon:React.FC<props> = ({ link, img, header }) =>{
     return(
         <Link href={link}>
             <Container
-                style={animatedHover}
+                style={{...animatedHover, ...style}}
                 onMouseEnter={()=>setHover(true)}
                 onMouseLeave={()=>setHover(false)}
             >
