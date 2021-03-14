@@ -3,18 +3,21 @@ import styled from '@emotion/styled'
 import Link from 'next/link'
 import Navbar from '../components/Navbar'
 import GameIcon from '../components/GameIcon'
+import AnimatedPage from '../components/AnimatedPage'
 
 export default function Home() {
 
   return (
     <Container>
+      <Navbar fixed={true} />
+      <AnimatedPage>
+
       <Head>
         <title>Zupa</title>
         <link rel="icon" href="/favicon.ico" />
         <meta name="description" content="zupa online games connect4 yatzy charades kalambury kości multiplayer"></meta>
       </Head>
-      <Navbar fixed={true} />
-      <Main>
+      <Main >
         <img src="/zupa.svg" id="zupa-bg" alt="background" />
 
           <section id="zupa">
@@ -26,9 +29,9 @@ export default function Home() {
 
         <div>
   
-          <GameIcon img='/dice.svg' link='/games/yatzy/create' />
-          <GameIcon img='/connect4.svg' link='/games/connect4/create' />
-          <GameIcon img='/charades.svg' link='/games/charades/create' />
+          <GameIcon img='/dice.svg' link='/games/yatzy/create' header='Yatzy'/>
+          <GameIcon img='/connect4.svg' link='/games/connect4/create' header='Connect4'/>
+          <GameIcon img='/charades.svg' link='/games/charades/create'  header='Charades' />
          
         </div>
         
@@ -38,17 +41,18 @@ export default function Home() {
       <footer>
         
       </footer>
+      </AnimatedPage>
     </Container>
   )
 }
 
 const Container = styled.div`
+  background-color: #0f1316;
   display: flex;
   flex-direction: column;
-  `
+`
 
 const Main = styled.main`
-  background-color: #0f1316;
   min-height: 100vh;
   display: flex;
   flex-direction: column;

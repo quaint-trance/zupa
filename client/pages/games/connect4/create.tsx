@@ -3,6 +3,7 @@ import Head from 'next/head'
 import styled from '@emotion/styled'
 import useCreate from '../../../hooks/useCreate'
 import { maxHeaderSize } from 'http'
+import AnimatedPage from '../../../components/AnimatedPage'
 
 interface props{
 
@@ -42,12 +43,13 @@ const Create:React.FC<props> = () =>{
     };
 
     return(
-        <div>
+        <Container>
             <Head>
                 <title>Zupa - create connect4</title>
                 <meta name="description" content="zupa connect4"></meta>
             </Head>
-            <Container>
+            <AnimatedPage>
+            <Content>
                 <form>
                     <h2>Create connect4 game</h2>
                     
@@ -73,13 +75,17 @@ const Create:React.FC<props> = () =>{
                     {!isError && !isLoading && <button onClick={handleClick}>create</button>}
                     {error && <span>{error}</span>}
                 </form>
-            </Container>
-        </div>
+            </Content>
+        </AnimatedPage>
+        </Container>
     )
 }
 
 const Container = styled.div`
     background-color: #0f1316;
+`
+
+const Content = styled.div`
     min-height: 100vh;
     color: white;
     display: flex;

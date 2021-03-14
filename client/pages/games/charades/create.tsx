@@ -3,6 +3,7 @@ import Head from 'next/head'
 import styled from '@emotion/styled'
 import useCreate from '../../../hooks/useCreate'
 import { maxHeaderSize } from 'http'
+import AnimatedPage from '../../../components/AnimatedPage'
 
 interface props{
 
@@ -37,12 +38,12 @@ const Create:React.FC<props> = () =>{
     }
 
     return(
-        <div>
+        <Container>
             <Head>
                 <title>Zupa - create charades</title>
                 <meta name="description" content="zupa online charades kalambury"></meta>
             </Head>
-            <Container>
+            <AnimatedPage>
                 <form>
                     <h2>Create charades game</h2>
                     
@@ -70,8 +71,8 @@ const Create:React.FC<props> = () =>{
                     {!isError && !isLoading && <button onClick={handleClick}>create</button>}
                     {error && <span>{error}</span>}
                 </form>
-            </Container>
-        </div>
+            </AnimatedPage>
+        </Container>
     )
 }
 
@@ -83,8 +84,11 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    & > form{
-        border: 2px solid white;
+
+    .content{
+
+        & > form{
+            border: 2px solid white;
         border-radius: 20px;
         padding: 30px;
         display: grid;
@@ -96,7 +100,7 @@ const Container = styled.div`
             grid-column: 1 / 5;
             text-align: center;
         }
-
+        
         & input{
             font-size: 25px;
             background-color: rgba(255, 0, 0, 0);
@@ -105,25 +109,25 @@ const Container = styled.div`
             color: white;
             padding: 5px;
         }
-
+        
         & > input{
             grid-column: 1 /5;
         }
-
+        
         & > div{
             display: flex;
             flex-direction: column;
-
+            
             & > label{   
                 color: #5d5d5d;
             }
-
+            
             & > input{
                 font-size: 20px;
                 max-width: 100px;
             }
         }
-
+        
         & > button{
             width: 100%;
             color: white;
@@ -135,13 +139,14 @@ const Container = styled.div`
             grid-column: 1 / 5;
             cursor: pointer;
         }
-
+        
         & > span:last-of-type{
             text-align: center;
             grid-column: 1 / 5;
         }
     }
-`
-
+}
+    `
+    
 
 export default Create;

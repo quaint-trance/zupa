@@ -5,6 +5,7 @@ import useGamesList from '../hooks/useGamesList'
 import Link from 'next/link'
 import Die3D from '../components/yatzy/Die3D'
 import Navbar from '../components/Navbar'
+import { motion } from 'framer-motion';
 
 interface props{
 

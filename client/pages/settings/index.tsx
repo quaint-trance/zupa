@@ -6,6 +6,8 @@ import { decode } from 'jsonwebtoken'
 import useSettings from '../../hooks/useSettings'
 import { useRouter } from 'next/router'
 import SettingsSidenav from '../../components/SettingsSidenav'
+import AnimatedPage from '../../components/AnimatedPage'
+import { motion } from 'framer-motion';
 
 interface props{
 
@@ -60,13 +62,18 @@ const Profile:React.FC<props> = () =>{
     }
 
     return(
-        <Container>
+    <Background>
+        <Container
+            exit={{transform: 'translate(0vw)', opacity: 0}} 
+            animate={{transform: 'translate(0vw)', opacity: 1}} 
+            initial={{transform: 'translate(20vw)', opacity: 0}}
+        >
             <Head>
                 <title>Zupa - user profile</title>
             </Head>
-            <SettingsSidenav/>
-            <Content>
-                    <div className="imageBox"></div>
+                <SettingsSidenav/>
+            <Content >
+                <div className="imageBox"></div>
     
                     <h1>{data?.name || 'Loading...'}</h1>
                     <span className="logout" onClick={handleLogout}>logout</span>
@@ -78,7 +85,7 @@ const Profile:React.FC<props> = () =>{
                         placeholder="Description" 
                         value={usDesc? usDesc : data?.description} 
                         onChange={handleChange}
-                    />
+                        />
                     <label htmlFor="">Music</label>
                     <input
                         name="music"
@@ -86,18 +93,22 @@ const Profile:React.FC<props> = () =>{
                         placeholder="Music YT video ID" 
                         value={usMusic? usMusic : data?.music} 
                         onChange={handleChange}
-                    />
+                        />
                     <button onClick={handleClick} disabled={isLoading}>{!isLoading ? "Save" : "Loading"}</button>
                     {isSuccess && !(usDesc || usMusic) && <div>saved</div>}
                     {isError && <div>error</div>}
                     {!isLoading && (usDesc || usMusic) && <div>click <i>save</i> to keep changes</div>}
             </Content>
         </Container>
+    </Background>
     )
 }
 
-const Container = styled.div`
+const Background = styled.div`
     background-color: #1b2025;
+`
+
+const Container = styled(motion.div)`
     min-height: 100vh;
     color: white;
     display: flex;
