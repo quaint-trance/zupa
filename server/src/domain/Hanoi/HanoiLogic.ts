@@ -19,6 +19,8 @@ export default class HanoiLogic extends HanoiFrame{
         }
         else this.rods[to].push(element);
 
+        this.eventStack.push({name: 'disc moved', payload: this.rods})
+
         if(this.testWin()) this.win();
     }
     

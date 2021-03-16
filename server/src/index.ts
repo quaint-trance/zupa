@@ -9,6 +9,7 @@ import UserService from './application/userService';
 import SkinSerivce from './application/skinService';
 import GameStoreService from './application/gameStore';
 import CharadesService from './application/charadesService';
+import HanoiService from './application/hanoiService';
 
 import UserRepo from './infra/User/userMongoRepository'
 import SkinRepo from './infra/Skin/SkinMongoStore'
@@ -17,6 +18,7 @@ import GameStore from './infra/GameStore';
 import Connect4Repo from './infra/Connect4/Connect4RamRepo'
 import CharadesRepo from './infra/Charades/CharadesRamRepo';
 import YatzyRepo from './infra/Yatzy/YatzyRamRepo';
+import HanoiRepo from './infra/Hanoi/HanoiRamRepo';
 
 dotenv.config({path: resolve(__dirname, "../.env")});
 
@@ -29,6 +31,7 @@ const infra = {
     yatzyRepo: new YatzyRepo(),
     eventEmitter: new EventEmitter(io),
     charadesRepo: new CharadesRepo(),
+    hanoiRepo: new HanoiRepo(),
 }
 
 export const application = {
@@ -37,6 +40,7 @@ export const application = {
     connect4Service: new Connect4Service(infra),
     yatzyService: new YatzyService(infra),
     charadesService: new CharadesService(infra),
+    hanoiService: new HanoiService(infra),
     gameStoreService: new GameStoreService( {gameStore: new GameStore(infra)}),
     entities:{ Token },
 };

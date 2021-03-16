@@ -5,6 +5,7 @@ import { chatMessage, command } from './shared'
 import { chooseColumn } from './connect4'
 import { guess, addPath, getCharade, clearCanvas } from './charades'
 import { chooseSet } from './set'
+import { move } from './hanoi'
 
 export type socketWithAuth = io.Socket & {
     handshake:{
@@ -31,6 +32,9 @@ export default (socket: socketWithAuth)=>{
     socket.on('add path', (data)=> addPath(socket, data));
     socket.on('get charade', (data)=> getCharade(socket, data));
     socket.on('clear canvas', ()=> clearCanvas(socket));
+
+    //hanoi
+    socket.on('move', (data)=>move(socket, data));
 
     //set
     //socket.on('choose set', (data)=>chooseSet(socket, data));
