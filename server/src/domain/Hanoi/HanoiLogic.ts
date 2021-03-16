@@ -52,6 +52,7 @@ export default class HanoiLogic extends HanoiFrame{
         const time = Date.now() - this.startTime.getTime();
 
         this.eventStack.push({name: 'win', payload: time});
+        this.nextTurn();
     }
 
     protected testWin(){
@@ -64,5 +65,12 @@ export default class HanoiLogic extends HanoiFrame{
         })
 
         return b0 && b1 && b2;
+    }
+
+    public nextTurn(){
+        this.startTime = null;
+        this.turn ++;
+        this.reset();
+        this.eventStack.push({name: 'next turn', payload: this.turn});
     }
 }

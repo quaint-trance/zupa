@@ -8,6 +8,7 @@ export default class Hanoi {
     protected startTime: HanoiData['startTime'];
     protected turn: HanoiData['turn'];
     protected eventStack: HanoiData['eventStack'];
+    public t = 'hanoi';
     
     protected constructor(data: Omit<HanoiData, 'eventStack'>){
         this.id = data.id;
@@ -33,6 +34,10 @@ export default class Hanoi {
 
     public getEvents(){
         return this.eventStack;
+    }
+
+    public getCurrentPlayer():Player|undefined{
+        return this.players[this.turn];
     }
 
     public getAll():HanoiData{
