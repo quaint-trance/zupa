@@ -43,3 +43,28 @@ describe('Hanoi entity', ()=>{
 
 
 });
+
+async function solve(){
+
+    async function wait(n){
+        return new Promise(resolve=>{
+            setTimeout(resolve, n);
+        });
+    }
+    
+    const mv = [1,3,1,2,3,2,1,3,2,1,2,3,1,3,1,2,3,2,3,1,2,1,3,2,1,3,1,2,3,2,1,3,2,1,2,3,1,3,2,1,3,2,3,1,2,1,2,3,1,3,1,2,3,2,1,3,2,1,2,3]
+
+    const el = [
+        document.getElementById('c0'),
+        document.getElementById('c1'),
+        document.getElementById('c2'),
+    ]
+    
+    for(let i = 0; i < mv.length; i+=2){
+        el[mv[i]-1].click();
+        el[mv[i+1]-1].click();
+        await wait(2000);
+    }
+
+    
+}

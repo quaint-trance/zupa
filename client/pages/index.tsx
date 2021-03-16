@@ -32,6 +32,10 @@ const games = [
     img:'/charades.svg',
     link:'/games/charades/create', 
     header:'Charades' 
+  },{
+    img:'/hanoi.svg',
+    link: '/games/hanoi/create',
+    header: 'Hanoi'
   }
 ]
 

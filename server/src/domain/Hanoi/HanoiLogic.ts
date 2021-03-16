@@ -73,6 +73,6 @@ export default class HanoiLogic extends HanoiFrame{
         this.startTime = null;
         this.turn ++;
         this.reset();
-        this.eventStack.push({name: 'next turn', payload: this.turn});
+        this.eventStack.push({name: 'next turn', payload: {turn: this.turn, rods: this.rods}});
     }
 }
