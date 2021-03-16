@@ -20,11 +20,30 @@ export default class userStore implements UserStore{
 
     async save(user: User){
         const data = user.getAll();
+        const isInDb = await UserModel.findOne({name: data.name});
+        if(!isInDb) return this.create(user);
         try{
             await UserModel.updateOne({name: data.name}, {...data });
             return true;
         }catch(err){
             console.log(err);
+            return false;
+        }
+    }
+
+    private async create(user: User){
+        const data = user.getAll();
+
+        const dbUser = new UserModel({
+            ...data,
+        });
+
+        try{
+            await dbUser.save();
+            return true;
+        }
+        catch(err){
+            console.error(err);
             return false;
         }
     }
