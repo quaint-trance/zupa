@@ -15,9 +15,9 @@ export default function FourOhFour() {
 }
 
 const Container = styled.div`
-    background-color: #0f1316;
+    background: ${props=>props.theme.background};
     min-height: 100vh;
-    color: white;
+    color: ${props=>props.theme.text};
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -25,6 +25,6 @@ const Container = styled.div`
     padding-bottom: 15vh;
 
     & > a{
-        border-bottom: 1px solid white;
+        border-bottom: 1px solid ${props=>props.theme.text};
     }
 `

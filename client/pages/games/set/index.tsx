@@ -31,9 +31,9 @@ const Set:React.FC<props> = () =>{
 }
 
 const Container = styled.div`
-    background-color:rgb(14, 14, 14);;
+    background:${props=>props.theme.background};
     min-height: 100vh;
-    color: white;
+    color: ${props=>props.theme.text};
     display: grid;
 
     grid-template: 50px 1fr / 1fr 3fr;

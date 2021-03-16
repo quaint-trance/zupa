@@ -17,7 +17,7 @@ const SettingsSidenav:React.FC = () =>{
     
     return(
         <Container>
-            <Link href='/?s=true'>
+            <Link href='/'>
                 <li className="back">
                     <MdHome className="icon"/> go back home <MdHome className="icon"/>
                 </li>

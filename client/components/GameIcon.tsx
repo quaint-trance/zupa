@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import Link from 'next/link'
-import { useState } from 'react'
+import { CSSProperties, useState } from 'react'
 import { animated, config, useSpring } from 'react-spring'
 import { motion } from 'framer-motion'
 
@@ -8,7 +8,7 @@ type props = {
     link: string,
     img: string,
     header: string,
-    style?: any,
+    style?: CSSProperties,
 }
 
 const GameIcon:React.FC<props> = ({ link, img, header, style }) =>{
@@ -16,34 +16,35 @@ const GameIcon:React.FC<props> = ({ link, img, header, style }) =>{
     const [hover, setHover] = useState(false);
 
     const animatedHover = useSpring({
-        transform: hover ? 'scale(1.2)' : 'scale(1)',
+        transform: hover ? 'scale(1.1)' : 'scale(1)',
         zIndex: hover ? 4 : 2,
-        config: config.gentle
     });
 
     return(
-        <Link href={link}>
+    <animated.div style={style}>
+        <Link href={link} >
             <Container
-                style={{...animatedHover, ...style}}
+                style={animatedHover}
                 onMouseEnter={()=>setHover(true)}
                 onMouseLeave={()=>setHover(false)}
-            >
+                >
                 <h2>{header}</h2>
                 <div>
                     <img src={img} alt='icon' />
                 </div>
             </Container>
         </Link>
+    </animated.div>
     )
 }
 
 const Container = styled(animated.div)`
       z-index: 2;
       margin: 20px;
-      border: solid 2px white;
+      border: solid 2px ${props=> props.theme.text};
       border-radius: 20px;
       cursor: pointer;
-      color: white;
+      color: ${props=> props.theme.text};
       width: 200px;
       height: 200px;
       display: grid;

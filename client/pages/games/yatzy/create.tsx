@@ -45,9 +45,9 @@ const GamesList:React.FC<props> = () =>{
 }
 
 const Container = styled.div`
-    background-color: #0f1316;
+    background: ${props=>props.theme.background};
     min-height: 100vh;
-    color: white;
+    color: ${props=>props.theme.text};
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -55,7 +55,7 @@ const Container = styled.div`
     .content{
 
         & > form{
-            border: 2px solid white;
+            border: 2px solid ${props=>props.theme.text};
             border-radius: 20px;
             padding: 30px;
             display: grid;
@@ -72,8 +72,8 @@ const Container = styled.div`
                 font-size: 25px;
                 background-color: rgba(255, 0, 0, 0);
                 border: none;
-                border-bottom: 1px solid white;
-                color: white;
+                border-bottom: 1px solid ${props=>props.theme.text};
+                color: ${props=>props.theme.text};
                 padding: 5px;
             }
             
@@ -97,12 +97,12 @@ const Container = styled.div`
         
         & > button{
             width: 100%;
-            color: white;
+            color: ${props=>props.theme.text};
             background-color: rgba(255, 0, 0, 0);
             font-size: 20px;
             font-weight: 800;
             padding: 5px;
-            border: 2px solid white;
+            border: 2px solid ${props=>props.theme.text};
             grid-column: 1 / 4;
             cursor: pointer;
         }

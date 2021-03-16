@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import styled from '@emotion/styled'
 import useGamesList from '../hooks/useGamesList'
 import Link from 'next/link'
 import Navbar from '../components/Navbar'
 import { motion } from 'framer-motion';
+import {useTransition, animated} from 'react-spring'
 
 interface props{
 
@@ -25,6 +26,26 @@ const animate = {
 const GamesList:React.FC<props> = () =>{
 
     const { data } = useGamesList();
+    const [loaded, setLoaded] = useState(false);
+
+    useEffect(()=>{
+        if(!data) return;
+        setLoaded(true);
+    },[data]);
+
+    useEffect(()=>{
+        if(!loaded)setLoaded(true);
+    }, [loaded])
+    
+    const transitions = useTransition(data, item => item.id, {
+        from: { transform: 'translate(100px)', opacity: 0 },
+        enter: { transform: 'translate(0px)', opacity: 1 },
+        leave: { transform: 'translate(100px)', opacity: 0 },
+        trail: 100,
+        config:{
+            delay: 0,
+        }
+    })
 
     return(
     <Background>
@@ -40,14 +61,14 @@ const GamesList:React.FC<props> = () =>{
                         <span>game ID</span>
                         <span>players in game</span>
                     </li>
-                    {data?.map(game=>
-                        <Link href={`/games/${game.t}/join?gameId=${game.id}`} key={game.id}>
-                        <li>
-                            <span>{game.t}</span>
-                            <span>{game.id}</span>
-                            <span>{game.players.length}</span>
-                        </li>
-                        </Link>
+                    {transitions.map(({ item, props, key }) =>
+                     <Link href={`/games/${item.t}/join?gameId=${item.id}`} key={key}>
+                        <animated.li style={props}>
+                            <span>{item.t}</span>
+                            <span>{item.id}</span>
+                            <span>{item.players.length}</span>
+                        </animated.li>
+                     </Link>
                     )}
                 </ul>
         </Container>
@@ -56,22 +77,23 @@ const GamesList:React.FC<props> = () =>{
 }
 
 const Background = styled.div`
-    background-color: #0f1316;
+    background: ${props=>props.theme.background};
 `
 
 const Container = styled(motion.div)`
     min-height: 100vh;
-    color: white;
+    color: ${props=>props.theme.text};
     padding-top: 20px;
+    padding-bottom: 50px;
     perspective: 200px;
+    overflow-x: hidden;
 
     & > h1{
         margin: 50px 10px;
         padding: 0;
-        font-weight: 400;
+        font-weight: 300;
         font-size: 50px;
         text-align: center;
-        text-decoration: underline;
     }
 
     & > ul{
@@ -83,14 +105,16 @@ const Container = styled(motion.div)`
             display: grid;
             grid-template-columns: 1fr 3fr 1fr;
             padding: 20px 20px;
-            border-bottom: 1px dashed rgba(255, 255, 255, 0.548);
             cursor: pointer;
-            &:not(:first-of-type):hover{
-                background-color: rgba(255, 255, 255, 0.096);
+            &:not(:first-of-type){
+                &:hover{
+                    background: ${props=>props.theme.hover};
+                }
             }
             &:first-of-type{
                 font-weight: 600;
                 cursor: auto;
+                font-size: 30px;
             }
 
             & > span{

@@ -44,71 +44,72 @@ const Join:React.FC<props> = () =>{
 }
 
 const Container = styled.div`
-background-color: #0f1316;
-min-height: 100vh;
-color: white;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-& > form{
-    border: 2px solid white;
-    border-radius: 20px;
-    padding: 30px;
-    display: grid;
-    grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
-    grid-gap: 10px;
-    
-    & > h2{
-        margin: 0 0 20px 0;
-        grid-column: 1 / 4;
-        text-align: center;
-    }
+    background: ${props=>props.theme.background};
+    min-height: 100vh;
+    color: ${props=>props.theme.text};
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-    & input{
-        font-size: 25px;
-        background-color: rgba(255, 0, 0, 0);
-        border: none;
-        border-bottom: 1px solid white;
-        color: white;
-        padding: 5px;
-    }
+    & > form{
+        border: 2px solid ${props=>props.theme.text};
+        border-radius: 20px;
+        padding: 30px;
+        display: grid;
+        grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
+        grid-gap: 10px;
+        
+        & > h2{
+            margin: 0 0 20px 0;
+            grid-column: 1 / 4;
+            text-align: center;
+        }
 
-    & > input{
-        grid-column: 1 /4;
-    }
-
-    & > div{
-        display: flex;
-        flex-direction: column;
-
-        & > label{   
-            color: #5d5d5d;
+        & input{
+            font-size: 25px;
+            background-color: rgba(255, 0, 0, 0);
+            border: none;
+            border-bottom: 1px solid ${props=>props.theme.text};
+            color: ${props=>props.theme.text};
+            padding: 5px;
         }
 
         & > input{
+            grid-column: 1 /4;
+        }
+
+        & > div{
+            display: flex;
+            flex-direction: column;
+
+            & > label{   
+                color: #5d5d5d;
+            }
+
+            & > input{
+                font-size: 20px;
+                max-width: 100px;
+            }
+        }
+
+        & > button{
+            width: 100%;
+            color: ${props=>props.theme.text};
+            background: rgb(255, 0, 0);
             font-size: 20px;
-            max-width: 100px;
+            font-weight: 800;
+            padding: 5px;
+            border: 2px solid ${props=>props.theme.text};
+            grid-column: 1 / 4;
+            cursor: pointer;
+        }
+
+        & > span:last-of-type{
+            text-align: center;
+            grid-column: 1 / 4;
         }
     }
-
-    & > button{
-        width: 100%;
-        color: white;
-        background-color: rgba(255, 0, 0, 0);
-        font-size: 20px;
-        font-weight: 800;
-        padding: 5px;
-        border: 2px solid white;
-        grid-column: 1 / 4;
-        cursor: pointer;
-    }
-
-    & > span:last-of-type{
-        text-align: center;
-        grid-column: 1 / 4;
-    }
-}
 `
 
 export default Join;

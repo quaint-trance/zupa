@@ -8,9 +8,10 @@ import { MdPerson, MdSettings, MdKeyboardArrowDown, MdHelp } from 'react-icons/m
 
 interface props{
     fixed?: boolean;
+    space?: boolean;
 }
 
-const Navbar:React.FC<props> = ({fixed=false}) =>{
+const Navbar:React.FC<props> = ({fixed=false, space=true}) =>{
     const listRef = useRef<HTMLElement | null>(null);
 
     const [userName, setUserName] = useState('');
@@ -27,7 +28,8 @@ const Navbar:React.FC<props> = ({fixed=false}) =>{
     const animatedProps = useSpring({
         height: show ? userName ? '150px' : '100px' : '0px', 
         pointerEvents: show ? 'all' : 'none',
-        borderColor: show ? 'white' : '#1b2025',
+        borderColor: show ? '#22282e' : 'black' ,
+        opacity: show ? 1 : 0,
     });
 
     const animatedArrow = useSpring({
@@ -54,7 +56,7 @@ const Navbar:React.FC<props> = ({fixed=false}) =>{
                 </animated.ul>
             </div>
        </Container>
-       <Space />
+       {space&&<Space />}
        </>
     )
 
@@ -94,7 +96,7 @@ const Navbar:React.FC<props> = ({fixed=false}) =>{
             </div>
 
        </Container>
-       <Space />
+       {space&&<Space />}
        </>
     )
 }
@@ -112,7 +114,8 @@ const Container = styled.nav<{fixed:boolean}>`
     padding: 20px;
     font-size: 25px;
     font-weight: 300;
-    background-color: #1b2025;
+    background: #1b2025;
+    background: ${props=>props.theme.secondary};
     z-index: 50;
 
     & > .name{
@@ -146,18 +149,18 @@ const Container = styled.nav<{fixed:boolean}>`
         & > ul{
             margin: 0;
             padding: 0;
-            top: 100%;
+            top: calc(100% + 10px);
             right: 0px;
             overflow: hidden;
 
             position: absolute;
             flex-direction: column;
-            border: 1px solid white;
+            border: 1px solid rgba(255, 255, 255, 0);
             border-radius: 5px;
             padding: 5px;
             font-size: 20px;
             font-weight: 500;
-            background-color: #1b2025;
+            background-color: #22282e;
 
             & > li{
                 margin: 0;
@@ -170,7 +173,7 @@ const Container = styled.nav<{fixed:boolean}>`
                 display: grid;
                 grid-template: 1fr / auto 1fr;
                 
-                background-color: #1b2025;
+                /*background-color: #1b2025;*/
                 transition: all .5s;
                 cursor: pointer;
                 white-space: nowrap;

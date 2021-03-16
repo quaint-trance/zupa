@@ -33,11 +33,7 @@ const Dice3D:React.FC<props> = ({score, onClick, selected, throwRefresh}) =>{
     const props = useSpring({
         transform: `rotateX(${deg.x + ([9].includes(score)? -15 : 15)}deg) rotateY(${deg.y + ([3, 6].includes(score)? 15 : -15)}deg) rotateZ(${deg.z + + ([6].includes(score)? 15 : 0)}deg)`,
         left: `${horizontalPosCalc(horizontalPos)}%`,
-        config: {
-            tension: 280,
-            friction: 180,
-            mass: 1
-        }
+        config: config.default 
     })
 
     const handleClick = () =>{

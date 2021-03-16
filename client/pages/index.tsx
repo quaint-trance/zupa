@@ -4,7 +4,6 @@ import Link from 'next/link'
 import Navbar from '../components/Navbar'
 import GameIcon from '../components/GameIcon'
 import { motion } from 'framer-motion'
-import { useRouter } from 'next/router'
 import {useTrail, animated} from 'react-spring'
 import { useEffect, useState } from 'react'
 
@@ -53,27 +52,22 @@ export default function Home() {
   return (
 <Background>
     <Container {...animate} key={3} >
-      <Navbar fixed={true} />
+      <Navbar fixed={true} space={false}/>
       <Head>
         <title>Zupa</title>
         <link rel="icon" href="/favicon.ico" />
         <meta name="description" content="zupa online games connect4 yatzy charades kalambury kości multiplayer"></meta>
       </Head>
       <Main >
-        <img src="/zupa.svg" id="zupa-bg" alt="background" />
-
           <section id="zupa">
-            <h2>Zupa</h2>
-            <div>
-              <img src='/zupa.svg' alt='' />
-            </div>
+            <h1>Zupa</h1>
           </section>
 
         <div>
 
           {trail.map((props, index) => 
             <GameIcon img={games[index].img} link={games[index].link} header={games[index].header} style={props} key={games[index].header}/>
-          )}
+            )}
          
         </div>
         
@@ -89,7 +83,8 @@ export default function Home() {
 }
 
 const Background = styled.div`
-  background-color: #0f1316;
+  background: ${props=> props.theme.background};
+  ;
 `
 
 const Container = styled(motion.div)`
@@ -104,19 +99,14 @@ const Main = styled.main`
   justify-content: center;
   align-items: center;
 
-  #zupa-bg{
-    position: absolute;
-    z-index: 1;
-    width: 50%;
-    opacity: .15;
-    pointer-events: none;
-    display: none;
-  }
-
   #zupa{
     cursor: default;
     pointer-events: none;
-    display: none;
+    color: ${props=> props.theme.text};
+    font-size: 30px;
+    h1{
+      font-weight: 300;
+    }
   }
 
   & > div:first-of-type{
@@ -132,6 +122,6 @@ const Main = styled.main`
     margin: 10px;
     font-size: 20px;
     font-weight: 800;
-    color: white;
+    color: ${props=> props.theme.text};
   }
 `

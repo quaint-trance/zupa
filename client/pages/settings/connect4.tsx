@@ -7,6 +7,7 @@ import useSettings from '../../hooks/useSettings'
 import Link from 'next/link'
 import SettingsSidenav from '../../components/SettingsSidenav'
 import ENDPOINT from '../../ENDPOINT'
+import { motion } from 'framer-motion'
 
 interface props{
 
@@ -55,12 +56,17 @@ const [userName, setUserName] = useState('');
     }
 
     return(
-        <Container >
+    <Background>
+        <Container>
             <Head>
                 <title>Zupa - user profile</title>
             </Head>
             <SettingsSidenav />
-            <Content>
+            <Content
+                exit={{opacity: 0}} 
+                animate={{opacity: 1}} 
+                initial={{opacity: 0}}
+            >
                     <h1>Connect4</h1>
                      <div className="skinBox">
 
@@ -72,6 +78,7 @@ const [userName, setUserName] = useState('');
 
             </Content>
         </Container>
+    </Background>
     )
 }
 
@@ -79,7 +86,7 @@ const Skin = styled.div<{bg:string, selected: boolean}>`
     background: ${props=>props.bg};
     background-position: center;
     background-size: 200px 200px;
-    border: white 8px solid;
+    border: ${props=>props.theme.text} 8px solid;
     border-radius: 10px;
     width: 200px;
     height: 200px;
@@ -90,29 +97,31 @@ const Skin = styled.div<{bg:string, selected: boolean}>`
         border-color: green;
     `}
 `
+const Background = styled.div`
+    background: ${props=>props.theme.secondary};
+`
 
 const Container = styled.div`
-    background-color: #1b2025;
     min-height: 100vh;
-    color: white;
+    color: ${props=>props.theme.text};
     display: flex;
 
     & button{
         width: 100%;
-        color: white;
+        color: ${props=>props.theme.text};
         background-color: rgba(255, 0, 0, 0);
         font-size: 20px;
         font-weight: 800;
         padding: 5px;
-        border: 2px solid white;
+        border: 2px solid ${props=>props.theme.text};
         grid-column: 1 / 4;
         cursor: pointer;
     }
 
 `
 
-const Content = styled.div`
-    background-color: #15191d;
+const Content = styled(motion.div)`
+    background: ${props=>props.theme.background};
     flex: 1;
     padding: 0 100px;
     padding-top: 5vh;
@@ -129,7 +138,7 @@ const Content = styled.div`
 
 
     nav{
-        border-left: 1px solid white;
+        border-left: 1px solid ${props=>props.theme.text};
         padding: 20px;
          & > div{
             font-size: 25px;
@@ -155,8 +164,8 @@ const Content = styled.div`
         margin: 10px;
         background-color: transparent;
         border: none;
-        color: white;
-        border-bottom: 1px solid white;
+        color: ${props=>props.theme.text};
+        border-bottom: 1px solid ${props=>props.theme.text};
         font-size: 20px;
         padding: 10px;
         width: 500px;
@@ -166,8 +175,8 @@ const Content = styled.div`
         margin: 10px;
         background-color: transparent;
         border: none;
-        color: white;
-        border-bottom: 1px solid white;
+        color: ${props=>props.theme.text};
+        border-bottom: 1px solid ${props=>props.theme.text};
         font-size: 20px;
         padding: 10px;
         width: 500px;
@@ -182,8 +191,8 @@ const Content = styled.div`
         margin: 10px;
         background-color: transparent;
         border: none;
-        color: white;
-        border: 1px solid white;
+        color: ${props=>props.theme.text};
+        border: 1px solid ${props=>props.theme.text};
         font-size: 20px;
         padding: 10px;
         width: 200px;

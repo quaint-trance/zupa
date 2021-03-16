@@ -52,15 +52,15 @@ const Login:React.FC<props> = () =>{
 }
 
 const Container = styled.div`
-    background-color: #0f1316;
+    background: ${props=>props.theme.background};
     min-height: 100vh;
-    color: white;
+    color: ${props=>props.theme.text};
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     & > form{
-        border: 2px solid white;
+        border: 2px solid ${props=>props.theme.text};
         border-radius: 20px;
         padding: 30px;
         display: grid;

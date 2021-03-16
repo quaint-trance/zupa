@@ -4,11 +4,14 @@ import { QueryClientProvider, QueryClient } from 'react-query'
 import Head from 'next/head'
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router'
+import { ThemeProvider } from '@emotion/react';
+import { light, dark } from '../theme/theme'
+
 
 function App({ Component, pageProps }: AppProps) {
-    const router = useRouter();
     return(
         <html lang="en" >
+        <ThemeProvider theme={ dark }>
             <Head>
                 <link rel="icon" href="/zupa.png" type = "image/x-icon" /> 
                 <link rel="manifest" href="/manifest.json" />
@@ -18,6 +21,7 @@ function App({ Component, pageProps }: AppProps) {
                     <Component {...pageProps} />
                 </AnimatePresence>
             </QueryClientProvider>
+        </ThemeProvider>
         </html>
   ) 
 }

@@ -64,16 +64,16 @@ const Profile:React.FC<props> = () =>{
 
     return(
     <Background>
-        <Container
-            exit={{transform: 'translate(0vw)', opacity: 0}} 
-            animate={{transform: 'translate(0vw)', opacity: 1}} 
-            initial={{transform: 'translate(20vw)', opacity: 0}}
-        >
+        <Container>
             <Head>
                 <title>Zupa - user profile</title>
             </Head>
             <SettingsSidenav />
-            <Content >
+            <Content
+                exit={{opacity: 0}} 
+                animate={{opacity: 1}} 
+                initial={{opacity: 0}}
+            >
                 <div className="imageBox"></div>
     
                     <h1>{data?.name || 'Loading...'}</h1>
@@ -106,30 +106,30 @@ const Profile:React.FC<props> = () =>{
 }
 
 const Background = styled.div`
-    background-color: #1b2025;
+    background: ${props=>props.theme.secondary};
 `
 
-const Container = styled(motion.div)`
+const Container = styled.div`
     min-height: 100vh;
-    color: white;
+    color: ${props=>props.theme.text};
     display: flex;
 
     & button{
         width: 100%;
-        color: white;
+        color: ${props=>props.theme.text};
         background-color: rgba(255, 0, 0, 0);
         font-size: 20px;
         font-weight: 800;
         padding: 5px;
-        border: 2px solid white;
+        border: 2px solid ${props=>props.theme.text};
         grid-column: 1 / 4;
         cursor: pointer;
     }
 
 `
 
-const Content = styled.div`
-    background-color: #15191d;
+const Content = styled(motion.div)`
+    background: ${props=>props.theme.background};
     flex: 1;
     padding: 0 100px;
     padding-top: 5vh;
@@ -139,7 +139,7 @@ const Content = styled.div`
     flex-direction: column;
 
     nav{
-        border-left: 1px solid white;
+        border-left: 1px solid ${props=>props.theme.text};
         padding: 20px;
          & > div{
             font-size: 25px;
@@ -171,8 +171,8 @@ const Content = styled.div`
         margin: 10px;
         background-color: transparent;
         border: none;
-        color: white;
-        border-bottom: 1px solid white;
+        color: ${props=>props.theme.text};
+        border-bottom: 1px solid ${props=>props.theme.text};
         font-size: 20px;
         padding: 10px;
         width: 500px;
@@ -182,8 +182,8 @@ const Content = styled.div`
         margin: 10px;
         background-color: transparent;
         border: none;
-        color: white;
-        border-bottom: 1px solid white;
+        color: ${props=>props.theme.text};
+        border-bottom: 1px solid ${props=>props.theme.text};
         font-size: 20px;
         padding: 10px;
         width: 500px;
@@ -198,8 +198,8 @@ const Content = styled.div`
         margin: 10px;
         background-color: transparent;
         border: none;
-        color: white;
-        border: 1px solid white;
+        color: ${props=>props.theme.text};
+        border: 1px solid ${props=>props.theme.text};
         font-size: 20px;
         padding: 10px;
         width: 200px;
