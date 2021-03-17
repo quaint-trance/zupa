@@ -4,7 +4,7 @@ import ContestFrame from "./ContestFrame";
 export default class ContestLogic extends ContestFrame{
     
     public newScore(userId: string, value: number){
-        if(this.scoreboard.some(r=>r.id===userId)) this.scoreBeaten(userId, value);
+        if(this.scoreboard.some(r=>r.userId===userId)) this.scoreBeaten(userId, value);
         else this.scoreAchieved(userId, value);
     }
 

@@ -3,15 +3,18 @@ import Token from '../domain/entities/Token'
 import Hanoi from "../domain/Hanoi";
 import EventEmitter from '../types/EventEmitter';
 import { domainEventsService } from '../index'
+import { UserStore } from "../types/UserStore";
 
 export default class HanoiService{
     
     gameStore: HanoiRepo;
     eventEmitter: EventEmitter;
+    userRepo: UserStore;
 
-    constructor(infra: {hanoiRepo: HanoiRepo, eventEmitter: EventEmitter }){
+    constructor(infra: {hanoiRepo: HanoiRepo, eventEmitter: EventEmitter, userRepo: UserStore }){
         this.gameStore = infra.hanoiRepo;
         this.eventEmitter = infra.eventEmitter;
+        this.userRepo = infra.userRepo;
     }
     
     async move(token: string, from: number, to: number){
@@ -32,17 +35,20 @@ export default class HanoiService{
         return result;
     }
 
-    async createGame(playerName: string){
+    async createGame(playerName: string, userToken?: string){
         const result = Hanoi.create();
         await this.save( result );
-        return this.joinPlayer(result.getId(), playerName);
+        return this.joinPlayer(result.getId(), playerName, userToken);
     }
 
-    async joinPlayer(gameId: string, playerName: string){
+    async joinPlayer(gameId: string, playerName: string, userToken?: string){
         const game = await this.gameStore.findById(gameId);
         if( !game ) return null;
+
+        const userName = userToken && Token.hydrate(userToken).payload.name;
+        const user = await this.userRepo.findByName(userName);
         
-        const player = game.joinPlayer(playerName);
+        const player = game.joinPlayer(playerName, user?.getName() );
         this.save( game );
         const token = Token.create({ gameId, playerId: player.id }).getToken();
         return {...player, token, gameId};
@@ -76,6 +82,19 @@ export default class HanoiService{
     private async save(game: Hanoi){
         const events = game.getEvents();
         events.map(event=>{
+
+            if(event.name === 'best'){
+                domainEventsService.newTimeout(async app=>{
+                    const contests = await app.contestService.getIdsByGame('hanoi');
+                    contests.map(el=>{
+                        const id = el.getId();
+                        console.log(event.name, id, event.payload);
+                        app.contestService.newScore(id, event.payload.userId, event.payload.value);
+                    });
+                    
+                }, 0);
+            }
+
             this.eventEmitter.emit(event, game.getId());
         });
         return await this.gameStore.save(game);

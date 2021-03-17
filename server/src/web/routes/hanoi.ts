@@ -8,6 +8,7 @@ router.post('/create', async (req, res)=>{
 
         const result = await application.hanoiService.createGame(
             req.body.playerName,
+            req.body.userToken,
         );
             
         if(!result) return res.status(400).send();
@@ -21,7 +22,7 @@ router.post('/create', async (req, res)=>{
 
 router.post('/join', async (req, res)=>{
     try{
-        const result = await application.hanoiService.joinPlayer(req.body.gameId, req.body.playerName);
+        const result = await application.hanoiService.joinPlayer(req.body.gameId, req.body.playerName, req.body.userToken);
         if(!result) return res.status(400).send();
         res.status(200).send(result);
     }catch(err){

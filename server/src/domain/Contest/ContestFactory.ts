@@ -4,13 +4,13 @@ import { v4 } from 'uuid'
 
 export default class ContestFactory extends ContestLogic{
 
-    static create(data: ContestData){
+    static hydrate(data: ContestData){
         return new ContestFactory({
             ...data,
         })
     }
 
-    static hydrate(data:{game: string, description: string, ends: Date, higherBetter:boolean}){
+    static create(data:{game: string, description: string, ends: Date, higherBetter:boolean}){
         return new ContestFactory({
             id: v4(),
             description: data.description,

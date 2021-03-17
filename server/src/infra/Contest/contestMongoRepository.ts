@@ -22,7 +22,43 @@ export default class contestStore implements ContestStore{
     async findById(id: string){
         const contestData = await ContestModel.findOne({id});
         if(!contestData) return null;
-        return Contest.hydrate(contestData);
+        return Contest.hydrate({
+            id: contestData.id,
+            ended: contestData.ended,
+            ends: new Date(contestData.ends),
+            scoreboard: contestData.scoreboard,
+            game: contestData.game,
+            description: contestData.description,
+            higherBetter: contestData.higherBetter,
+        });
+    }
+
+    async findByGame(game: string){
+        const contestData = await ContestModel.find({game});
+        console.log('3312', contestData);
+        if(!contestData) return null;
+        return contestData.map(el=>Contest.hydrate({
+            id: el.id,
+            ended: el.ended,
+            ends: new Date(el.ends),
+            scoreboard: el.scoreboard,
+            game: el.game,
+            description: el.description,
+            higherBetter: el.higherBetter,
+        }));
+    }
+
+    async findAll(){
+        const result = await ContestModel.find({});
+        return result.map(el=>Contest.hydrate({
+            id: el.id,
+            ended: el.ended,
+            ends: new Date(el.ends),
+            scoreboard: el.scoreboard,
+            game: el.game,
+            description: el.description,
+            higherBetter: el.higherBetter,
+        }));;
     }
 
 

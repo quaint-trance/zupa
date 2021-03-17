@@ -42,4 +42,4 @@ const contestSchema = new mongoose.Schema({
         higherBetter: Boolean,
 });
 
-export default mongoose.model<IContest>('U', contestSchema);
+export default mongoose.model<IContest>('Contest', contestSchema);

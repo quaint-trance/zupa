@@ -38,11 +38,12 @@ export default class HanoiLogic extends HanoiFrame{
         
     }
     
-    public joinPlayer(name: string){
+    public joinPlayer(name: string, userId?: string){
         const newPlayer:Player = {
             id: v4(),
             name,
             score: NaN,
+            userId
         };
         
         this.players.push(newPlayer);
@@ -66,6 +67,7 @@ export default class HanoiLogic extends HanoiFrame{
         }
         if( !this.players[this.turn].score || time < this.players[this.turn].score){
             this.players[this.turn].score = time;
+            if(this.players[this.turn]?.userId)this.eventStack.push({name: 'best', payload: {userId: this.players[this.turn].userId, value: time}})
         }
         
         this.nextTurn();
