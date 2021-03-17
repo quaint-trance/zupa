@@ -2,7 +2,7 @@ import { Socket }  from 'socket.io-client'
 import { useState, useEffect } from 'react'
 
 export default (socketRef: React.MutableRefObject<Socket | undefined>, gameId: string)=>{
-    const [messages, setMessages] = useState<{author: string, content: string}[]>([]);
+    const [messages, setMessages] = useState<({type: string, content: JSX.Element}|{author: string, content: string})[]>([]);
 
     useEffect(()=>{
         if(!socketRef.current) return;
@@ -15,8 +15,17 @@ export default (socketRef: React.MutableRefObject<Socket | undefined>, gameId: s
 
     }, [socketRef.current]);
 
-    const pushSystemInfo = (content: string) =>{
-        setMessages(o=>[...o, {content, author: '$system$'}]);
+    const deleteMessage = (type: string) =>{
+        setMessages(o=>o.filter(el=>{
+            if('author' in el) return true;
+            return el.type !== type
+        }))
+    }
+
+    const pushSystemInfo = (content: string | {content: JSX.Element, type: string}) =>{
+        if(typeof content === 'string')
+            setMessages(o=>[...o, {content, author: '$system$'}]);
+        else setMessages(o=>[...o, content])
     }
 
     const sendMessage = (content: string) =>{
@@ -34,7 +43,8 @@ export default (socketRef: React.MutableRefObject<Socket | undefined>, gameId: s
                     pushSystemInfo(back.payload.map((p, i)=>(`\n<b>${p.name}\n</b>${p.id}\n`)).join(''));
                 }
                 else if(back.name === 'scoreboard'){
-                    pushSystemInfo(back.payload.map((p, i)=>(`${i+1}. ${p.name} ${p.score}\n`)).join(''));
+                    console.log(back.payload);
+                    pushSystemInfo(back?.payload?.map((p, i)=>(`${i+1}. ${p.name} ${p.score}\n`)).join(''));
                 }
                 else pushSystemInfo(back.name);
             });
@@ -50,6 +60,7 @@ export default (socketRef: React.MutableRefObject<Socket | undefined>, gameId: s
         messages,
         pushSystemInfo,
         sendMessage,
+        deleteMessage,
     }
 }
 

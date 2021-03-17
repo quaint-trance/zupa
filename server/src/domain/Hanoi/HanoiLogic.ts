@@ -7,8 +7,11 @@ import HanoiFrame from './HanoiFrame';
 export default class HanoiLogic extends HanoiFrame{
     
     public move(from: number, to: number){
-        if(!this.startTime) this.startTime = new Date();
-
+        if(!this.startTime){
+            this.startTime = new Date();
+            this.eventStack.push({name:'time start', payload: this.startTime})
+        }
+        
         if( from < 0 || from > 2 || to < 0 || to > 2 ) return null;
         const element =  this.rods[from].pop();
         
@@ -18,60 +21,67 @@ export default class HanoiLogic extends HanoiFrame{
             return null;
         }
         else this.rods[to].push(element);
-
+        
         this.eventStack.push({name: 'disc moved', payload: this.rods})
-
+        
         if(this.testWin()) this.win();
     }
     
     public reset(){
+        this.startTime = null;
+        this.eventStack.push({name:'time stop'});
         this.rods = [[5, 4, 3, 2, 1], [], []];
+        this.eventStack.push({name: 'reset', payload: this.rods});
     }
-
+    
     public startGame(){
-       
+        
     }
-
+    
     public joinPlayer(name: string){
         const newPlayer:Player = {
             id: v4(),
             name,
-            score: 0,
+            score: NaN,
         };
-
+        
         this.players.push(newPlayer);
         this.eventStack.push({name: 'new player', payload: newPlayer});
         return newPlayer;
     }
-
+    
     public kickPlayer(id: string, by: string){
         this.players = this.players.filter(player => player.id !== id);
         this.eventStack.push({name:'kick', payload: {kicked: id, by}});
     }
-
+    
     protected win(){
         if(!this.startTime) return;
         const time = Date.now() - this.startTime.getTime();
-
+        
         this.eventStack.push({name: 'win', payload: time});
+        
+        if( !this.bestTime ||  time < this.bestTime){
+            this.bestTime = time;
+        }
+        if( !this.players[this.turn].score || time < this.players[this.turn].score){
+            this.players[this.turn].score = time;
+        }
+        
         this.nextTurn();
     }
-
+    
     protected testWin(){
         const b0 = this.rods[0].length === 0;
         const b1 = this.rods[1].length === 0;
-
-        let b2 = true;
-        this.rods[2].forEach((el, index, arr)=>{
-            if(arr[index+1] && arr[index+1] > el ) b2 = false;
-        })
-
-        return b0 && b1 && b2;
+        
+        return b0 && b1;
     }
-
+    
     public nextTurn(){
         this.startTime = null;
-        this.turn ++;
+        this.eventStack.push({name:'time stop'});
+        this.turn = (this.turn+1)%this.players.length;
         this.reset();
         this.eventStack.push({name: 'next turn', payload: {turn: this.turn, rods: this.rods}});
     }

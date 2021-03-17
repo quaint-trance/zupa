@@ -8,7 +8,7 @@ export default class Hanoi {
     protected startTime: HanoiData['startTime'];
     protected turn: HanoiData['turn'];
     protected eventStack: HanoiData['eventStack'];
-    public t = 'hanoi';
+    public t:'hanoi' = 'hanoi';
     
     protected constructor(data: Omit<HanoiData, 'eventStack'>){
         this.id = data.id;
@@ -29,7 +29,9 @@ export default class Hanoi {
     }
 
     public getScoreboard(){
-        return this.bestTime;
+        return this.players
+            .map(p=>({score: p.score/1000, name: p.name}))
+            .sort((a, b)=> b.score - a.score);
     }
 
     public getEvents(){

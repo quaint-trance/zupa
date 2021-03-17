@@ -3,6 +3,7 @@ import { Player } from '../../server/src/domain/Hanoi/HanoiTypes'
 import { io, Socket }  from 'socket.io-client'
 import ENDPOINT from '../ENDPOINT'
 import useChat from './useChat'
+import Timer from '../components/Hanoi/Timer'
 
 export default (gameId: string)=>{
     const [players, setPlayers] = useState<Player[]>([]);
@@ -11,7 +12,7 @@ export default (gameId: string)=>{
     const [rods, setRods] = useState<[number[], number[], number[]]>([[0],[0],[0]]);
     const [from, setFrom] = useState<number|null>(null);
     
-    const { messages, sendMessage, pushSystemInfo } = useChat(socketRef, gameId);
+    const { messages, sendMessage, pushSystemInfo, deleteMessage } = useChat(socketRef, gameId);
 
     useEffect(() => {
         if(!gameId) return;
@@ -28,41 +29,6 @@ export default (gameId: string)=>{
             setTurn(data.turn);
             setRods(data.rods);
         });
-
-        socket.on('new player', (data)=>{
-            setPlayers(o => [...o, data]);
-            pushSystemInfo(`${data.name} joined`)
-        });
-        socket.on('next turn', ({turn, rods})=>{
-            setTurn(turn);
-            setRods(rods);
-            pushSystemInfo(`now solving: ${players[turn].name}`)
-        });
-        socket.on('start', ()=>{
-            pushSystemInfo('start');
-        });
-        socket.on('kick', ({kicked, by}:{kicked: string, by: string})=>{
-            setPlayers(o=>{
-                const byPlayer = o.find(p=> p.id == by);
-                const kickedPlayer = o.find(p=> p.id == kicked);
-                pushSystemInfo(`${kickedPlayer?.name} was kicked by ${byPlayer?.name}`);
-                return [...o.filter(p=> p.id !== kicked)];
-            })
-        });
-        socket.on('reset', (data)=>{
-            if(!data) return;
-            setPlayers(data.players);
-            setTurn(data.turn);
-            setRods(data.rods);
-            pushSystemInfo('reset');
-        });
-        socket.on('disc moved', (data)=>{
-            setRods(data);
-        });
-        socket.on('win', (time)=>{
-            pushSystemInfo(`time: ${time/1000}s`);
-        });
-
         return () => {
             socket.close();
         }
@@ -70,9 +36,58 @@ export default (gameId: string)=>{
     }, [gameId]);
 
     useEffect(()=>{
-        console.log('rods')
-        console.log(rods);
-    }, [rods]);
+        socketRef.current?.on('next turn', ({turn})=>{
+            console.log(turn)
+            setTurn(turn);
+            players.length>1 && pushSystemInfo(`now solving: ${players[turn]?.name}`)
+        });
+        socketRef.current?.on('kick', ({kicked, by}:{kicked: string, by: string})=>{
+            setPlayers(o=>{
+                const byPlayer = o.find(p=> p.id == by);
+                const kickedPlayer = o.find(p=> p.id == kicked);
+                pushSystemInfo(`${kickedPlayer?.name} was kicked by ${byPlayer?.name}`);
+                return [...o.filter(p=> p.id !== kicked)];
+            })
+        });
+        socketRef.current?.on('new player', (data)=>{
+            setPlayers(o => [...o, data]);
+            pushSystemInfo(`${data.name} joined`)
+        });
+        socketRef.current?.on('start', ()=>{
+            pushSystemInfo('start');
+        });
+        
+        socketRef.current?.on('reset', (data)=>{
+            if(!data) return;
+            setRods(data);
+        });
+        socketRef.current?.on('disc moved', (data)=>{
+            setRods(data);
+        });
+        socketRef.current?.on('win', (time)=>{
+            pushSystemInfo(`${players[turn]?.name} time: ${time/1000}s`);
+        });
+
+        socketRef.current?.on('time start', date=>{
+            const comp = <Timer start={Date.now()} refToStop={()=>{}} />;
+            pushSystemInfo( {content: comp, type:'timer' })
+        });
+        socketRef.current?.on('time stop', ()=>{
+            deleteMessage('timer')
+        });
+
+        return ()=>{
+            socketRef.current?.off('next turn');
+            socketRef.current?.off('kick');
+            socketRef.current?.off('new player');
+            socketRef.current?.off('start');
+            socketRef.current?.off('reset');
+            socketRef.current?.off('disc moved');
+            socketRef.current?.off('win');
+            socketRef.current?.off('time start');
+            socketRef.current?.off('time stop');
+        }
+    }, [socketRef.current, players, turn]);
 
     const move = (from: number, to: number) =>{
         if(!socketRef.current) return;

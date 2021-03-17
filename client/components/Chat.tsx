@@ -5,7 +5,7 @@ import { RiSettings5Fill } from 'react-icons/ri'
 import ReactHtmlParser from 'react-html-parser'
 
 interface props{
-    messages: {author: string, content: string}[],
+    messages: ({content: JSX.Element, type: string }| {author: string, content: string})[],
     sendMessage: (content: string)=> any;
     Settings?: React.FC<any>;
 }
@@ -36,16 +36,25 @@ const Chat:React.FC<props> = ({messages, sendMessage, Settings}) =>{
         <Container>
             {Settings && <Settings display={displaySettings} setDisplay={setDisplaySettings} sendMessage={sendMessage}/> }
                 <div ref={divRef}>
-                    {messages.map((m, i, arr)=>
-                    <>
-                        {!['$me$','$system$'].includes(m.author) && 
-                            arr[i-1]?.author !== m.author &&
-                        <span>{m.author}</span>}
-                        <Message key={i+m.author} author={m.author}>
-                            {ReactHtmlParser(m.content)}
-                        </Message>    
-                    </>
-                    )}
+                    {messages.map((m, i, arr)=>{
+                        if(! ('author' in m ) ) return(
+                            <Message key={i} author={'$system$'} >
+                                {m.content}
+                            </Message>
+                        )
+                        const prev = arr[i-1];
+                        const needAuthorLabel = prev && 'author' in prev && prev.author !== m.author;
+                        return(
+                            <>
+                                {!['$me$','$system$'].includes(m.author) && needAuthorLabel &&
+                                <span>{m.author}</span>}
+
+                                <Message key={i+m.author} author={m.author}>
+                                    {ReactHtmlParser(m.content)}
+                                </Message>
+                            </>
+                        )
+                    })}
                 </div>
                 <form>
                     <div><input type="text" ref={inputRef} placeholder="Ee"/></div>

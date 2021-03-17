@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { Player } from '../../../server/src/domain/Hanoi/HanoiTypes'
+import Timer from './Timer'
 
 interface props{
     players: Player[];

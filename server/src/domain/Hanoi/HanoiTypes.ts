@@ -3,7 +3,7 @@ import { eventType } from '../../types/EventEmitter';
 export interface Player{
     id: string;
     name: string;
-    score: 0;
+    score: number;
 }
 
 

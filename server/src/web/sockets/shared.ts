@@ -64,6 +64,17 @@ export const command =  async(socket: socketWithAuth, data: {content: string}, c
         /*if( game.t === 'set' ){
             if(data.content === '/start') application.setService.start(token);
         }*/
+        if( game.t === 'hanoi' ){
+            console.log('e', data.content)
+            if(data.content === '/reset') application.hanoiService.reset(token);
+            else if(data.content === '/scoreboard') callback({name: 'scoreboard', payload: await application.hanoiService.getScoreboard(gameId)});
+            else if(data.content === '/players') callback({name:'players', payload: game.getAll().players});
+            else if(data.content.includes('/kick')){
+                let id = data.content.replace('/kick ', '');
+                application.hanoiService.kickPlayer(token, id);
+            }
+            else callback({name: 'unknown'});
+        }
     }
     catch(err){
         console.error(err);
