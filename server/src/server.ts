@@ -11,6 +11,7 @@ import charadesRoute from './web/routes/charades'
 import hanoiRoute from './web/routes/hanoi'
 //import setRoute from './web/routes/set'
 import userRoute from './web/routes/user'
+import contestRoute from './web/routes/contest'
 import mongoose from 'mongoose'
 
 export default()=>{
@@ -43,6 +44,7 @@ export default()=>{
     app.use('/hanoi', hanoiRoute);
     //app.use('/set', setRoute);
     app.use('/user', userRoute);
+    app.use('/contest', contestRoute);
     
 
     return { io }

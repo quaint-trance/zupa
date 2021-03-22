@@ -47,7 +47,7 @@ export default class ContestFrame{
             ends: this.ends,
             game: this.game,
             higherBetter: this.higherBetter,
-            scoreboard: this.scoreboard,
+            scoreboard: this.getScoreboard()
         }
     }
 

@@ -80,8 +80,10 @@ export default class HanoiService{
     }
 
     private async save(game: Hanoi){
+        this.gameStore.save(game);
         const events = game.getEvents();
         events.map(event=>{
+            this.eventEmitter.emit(event, game.getId());
 
             if(event.name === 'best'){
                 domainEventsService.newTimeout(async app=>{
@@ -95,9 +97,7 @@ export default class HanoiService{
                 }, 0);
             }
 
-            this.eventEmitter.emit(event, game.getId());
         });
-        return await this.gameStore.save(game);
     }
 
 };
