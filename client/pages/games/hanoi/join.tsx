@@ -13,7 +13,7 @@ interface props{
 const Join:React.FC<props> = () =>{
 
     const router = useRouter();
-    const { data, isError, isLoading, mutate, loading } = useJoin(
+    const { data, isError, isLoading, mutate, loading, asViewer } = useJoin(
         'hanoi',
         typeof router.query.gameId==='object' ? router.query.gameId[0] : router.query.gameId || '',
     );
@@ -54,9 +54,10 @@ const Join:React.FC<props> = () =>{
                     
                     <input value={playerName} type="text" placeholder="Your Name" onChange={(e)=>setPlayerName(e.target.value)} />
                     
+                    <button onClick={handleClick}>join</button>
                     {isLoading && <div>loading</div>}
                     {isError && <div>error</div>}
-                    {!isError && !isLoading && <button onClick={handleClick}>join</button>}
+                    {!isLoading && <div onClick={asViewer} className="viewer">or join as a viewer</div>}
                 </form>
             </Container>
         </div>
@@ -128,6 +129,15 @@ const Container = styled.div`
             text-align: center;
             grid-column: 1 / 4;
         }
+    }
+
+    .viewer{
+        grid-column: 1 /4;
+        text-align: right;
+        font-weight: 300;
+        font-size: 18px;
+        font-style: italic;
+        cursor: pointer;
     }
 `
 

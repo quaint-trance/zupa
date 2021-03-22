@@ -26,7 +26,7 @@ const Navbar:React.FC<props> = ({fixed=false, space=true}) =>{
     }, [])
 
     const animatedProps = useSpring({
-        height: show ? userName ? '150px' : '100px' : '0px', 
+        height: show ? userName ? '150px' : '150px' : '0px', 
         pointerEvents: show ? 'all' : 'none',
         borderColor: show ? '#22282e' : 'black' ,
         opacity: show ? 1 : 0,
@@ -53,12 +53,12 @@ const Navbar:React.FC<props> = ({fixed=false, space=true}) =>{
                             <div>Sign Up</div>
                         </li>
                     </Link>
-                </animated.ul>
                     <Link href={`/about`}>
                         <li>
                             <i><MdHelp/></i><div>About</div>
                         </li>
                     </Link>
+                </animated.ul>
             </div>
        </Container>
        {space&&<Space />}

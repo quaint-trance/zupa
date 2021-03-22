@@ -15,6 +15,10 @@ export default (gameType: string, gameId: string)=>{
         localStorage.setItem(`name`, data.name);
         router.push(`/games/${gameType}?gameId=${data.gameId}`);
     }
+    
+    function asViewer(){
+        router.push(`/games/${gameType}?gameId=${gameId}`);
+    }
 
     const  {data, mutate, isLoading, isError } = useMutation( (props:{playerName: string})=>
         fetch(ENDPOINT+`/${gameType}/join`, {
@@ -57,6 +61,7 @@ export default (gameType: string, gameId: string)=>{
         mutate: (data)=> mutate(data),
         isLoading,
         isError,
-        loading
+        loading,
+        asViewer,
     }
 }

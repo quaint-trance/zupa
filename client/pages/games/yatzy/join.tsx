@@ -13,7 +13,7 @@ interface props{
 const Join:React.FC<props> = () =>{
 
     const router = useRouter();
-    const { data, isError, isLoading, mutate, loading } = useJoin('yatzy', typeof router.query.gameId==='object' ? router.query.gameId[0] : router.query.gameId || '')
+    const { data, isError, isLoading, mutate, loading, asViewer } = useJoin('yatzy', typeof router.query.gameId==='object' ? router.query.gameId[0] : router.query.gameId || '')
     const [ playerName, setPlayerName ] = useState('');
 
     const handleClick = (e) =>{
@@ -46,9 +46,10 @@ const Join:React.FC<props> = () =>{
                 <form>
                     <h2>Join yatzy game</h2>
                     <input value={playerName} onChange={(e)=>setPlayerName(e.target.value)} type="text" placeholder="Your Name"/>
+                    <button onClick={handleClick}>join</button>
                     {isLoading && <div>loading</div>}
                     {isError && <div>error</div>}
-                    {!isError && !isLoading && <button onClick={handleClick}>join</button>}
+                    {!isLoading && <div onClick={asViewer} className="viewer">or join as a viewer</div>}
                 </form>
             </Container>
         </div>
@@ -108,7 +109,7 @@ const Container = styled.div`
         & > button{
             width: 100%;
             color: ${props=>props.theme.text};
-            background: rgb(255, 0, 0);
+            background: transparent;
             font-size: 20px;
             font-weight: 800;
             padding: 5px;
@@ -121,6 +122,15 @@ const Container = styled.div`
             text-align: center;
             grid-column: 1 / 4;
         }
+    }
+    
+    .viewer{
+        grid-column: 1 /4;
+        text-align: right;
+        font-weight: 300;
+        font-size: 18px;
+        font-style: italic;
+        cursor: pointer;
     }
 `
 

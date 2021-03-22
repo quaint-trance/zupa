@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { animated, useTrail } from 'react-spring'
 
 type props = {
-
 }
 
 const colors = [
