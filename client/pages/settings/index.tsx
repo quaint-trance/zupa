@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer } from 'react'
+import { useState, useEffect, useReducer, useContext } from 'react'
 import Head from 'next/head'
 import styled from '@emotion/styled'
 import useProfile from '../../hooks/useProfile'
@@ -6,12 +6,10 @@ import { decode } from 'jsonwebtoken'
 import useSettings from '../../hooks/useSettings'
 import { useRouter } from 'next/router'
 import SettingsSidenav from '../../components/SettingsSidenav'
-import AnimatedPage from '../../components/AnimatedPage'
 import { motion } from 'framer-motion';
-import { GiLaserTurret } from 'react-icons/gi'
+import { GlobalContext } from '../_app'
 
 interface props{
-
 }
 
 const Profile:React.FC<props> = () =>{
@@ -23,6 +21,8 @@ const Profile:React.FC<props> = () =>{
     const [usDesc, setUsDesc] = useState('');
 
     const router = useRouter();
+
+    const {theme, changeTheme} = useContext(GlobalContext);
     
    function handleSave(){
        setUsMusic('');
@@ -66,7 +66,7 @@ const Profile:React.FC<props> = () =>{
     <Background>
         <Container>
             <Head>
-                <title>Zupa - user profile</title>
+                <title>Zupa - settings</title>
             </Head>
             <SettingsSidenav />
             <Content
@@ -94,7 +94,13 @@ const Profile:React.FC<props> = () =>{
                         placeholder="Music YT video ID" 
                         value={usMusic? usMusic : data?.music} 
                         onChange={handleChange}
-                        />
+                    />
+                    <div>
+                        <label>theme: {theme}</label>
+                        <button
+                            onClick={()=>changeTheme(theme==='dark'?'light':'dark')}
+                        >change</button>
+                    </div>
                     <button onClick={handleClick} disabled={isLoading}>{!isLoading ? "Save" : "Loading"}</button>
                     {isSuccess && !(usDesc || usMusic) && <div>saved</div>}
                     {isError && <div>error</div>}

@@ -4,6 +4,7 @@ import styled from '@emotion/styled'
 
 import { useRouter } from 'next/router'
 import useJoin from '../../../hooks/useJoin'
+import Loading from '../../../components/Loading'
 
 interface props{
 
@@ -34,10 +35,10 @@ const Join:React.FC<props> = () =>{
     if(loading)return(
          <div>
             <Head>
-                <title>Zupa - join</title>
+                <title>Zupa - join hanoi</title>
             </Head>
             <Container>
-               E
+               <Loading />
             </Container>
         </div>
     )
@@ -49,7 +50,7 @@ const Join:React.FC<props> = () =>{
             </Head>
             <Container>
                 <form>
-                    <h2>Join connect4 game</h2>
+                    <h2>Join hanoi game</h2>
                     
                     <input value={playerName} type="text" placeholder="Your Name" onChange={(e)=>setPlayerName(e.target.value)} />
                     

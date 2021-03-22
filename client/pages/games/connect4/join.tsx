@@ -4,6 +4,7 @@ import styled from '@emotion/styled'
 
 import { useRouter } from 'next/router'
 import useJoin from '../../../hooks/useJoin'
+import Loading from '../../../components/Loading'
 
 interface props{
 
@@ -37,7 +38,7 @@ const Join:React.FC<props> = () =>{
                 <title>Zupa - join</title>
             </Head>
             <Container>
-               E
+               <Loading />
             </Container>
         </div>
     )
@@ -45,7 +46,7 @@ const Join:React.FC<props> = () =>{
     return(
         <div>
             <Head>
-                <title>Zupa - join</title>
+                <title>Zupa - join connect4</title>
             </Head>
             <Container>
                 <form>

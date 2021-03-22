@@ -4,6 +4,7 @@ import styled from '@emotion/styled'
 
 import { useRouter } from 'next/router'
 import useJoin from '../../../hooks/useJoin'
+import Loading from '../../../components/Loading'
 
 interface props{
 
@@ -12,7 +13,7 @@ interface props{
 const Join:React.FC<props> = () =>{
 
     const router = useRouter();
-    const { data, isError, isLoading, mutate } = useJoin(
+    const { data, isError, isLoading, mutate, loading } = useJoin(
         'charades',
         typeof router.query.gameId==='object' ? router.query.gameId[0] : router.query.gameId || '',
     );
@@ -31,10 +32,21 @@ const Join:React.FC<props> = () =>{
         });
     }
 
+    if(loading)return(
+         <div>
+            <Head>
+                <title>Zupa - join</title>
+            </Head>
+            <Container>
+               <Loading />
+            </Container>
+        </div>
+    )
+
     return(
         <div>
             <Head>
-                <title>Zupa - join</title>
+                <title>Zupa - join charades</title>
             </Head>
             <Container>
                 <form>

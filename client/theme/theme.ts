@@ -18,3 +18,4 @@ export const dark: ThemeType = {
 
 const theme = dark; 
 export default theme;
+

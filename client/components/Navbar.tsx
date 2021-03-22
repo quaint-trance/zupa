@@ -54,6 +54,11 @@ const Navbar:React.FC<props> = ({fixed=false, space=true}) =>{
                         </li>
                     </Link>
                 </animated.ul>
+                    <Link href={`/about`}>
+                        <li>
+                            <i><MdHelp/></i><div>About</div>
+                        </li>
+                    </Link>
             </div>
        </Container>
        {space&&<Space />}

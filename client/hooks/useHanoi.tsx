@@ -70,7 +70,9 @@ export default (gameId: string)=>{
 
         socketRef.current?.on('time start', date=>{
             const comp = <Timer start={Date.now()} refToStop={()=>{}} />;
-            pushSystemInfo( {content: comp, type:'timer' })
+            pushSystemInfo( {content: comp, type:'timer' });
+            pushSystemInfo( {content: <div onClick={()=>sendMessage('/reset')}>*reset*</div>, type:'timer' });
+
         });
         socketRef.current?.on('time stop', ()=>{
             deleteMessage('timer')

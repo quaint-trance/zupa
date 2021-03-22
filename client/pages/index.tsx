@@ -5,7 +5,7 @@ import Navbar from '../components/Navbar'
 import GameIcon from '../components/GameIcon'
 import { motion } from 'framer-motion'
 import {useTrail, animated} from 'react-spring'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 const animate = {
   initial: {
@@ -51,7 +51,7 @@ export default function Home() {
   const trail = useTrail(games.length, {
     opacity: loaded ? 1 : 0,
     transform: `translate(0, ${loaded ? 0 : 20}px)` 
-  })
+  });
 
   return (
 <Background>

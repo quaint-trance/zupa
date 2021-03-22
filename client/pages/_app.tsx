@@ -6,12 +6,19 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router'
 import { ThemeProvider } from '@emotion/react';
 import { light, dark } from '../theme/theme'
+import { createContext } from 'react';
+import useGlobalContext, { defaultValues } from '../hooks/useGlobalContext';
 
+export const GlobalContext = createContext(defaultValues);
 
 function App({ Component, pageProps }: AppProps) {
+
+    const gs = useGlobalContext();
+
     return(
         <html lang="en" >
-        <ThemeProvider theme={ dark }>
+        <GlobalContext.Provider value={gs}>
+        <ThemeProvider theme={ gs.theme === 'dark' ? dark : light }>
             <Head>
                 <link rel="icon" href="/zupa.png" type = "image/x-icon" /> 
                 <link rel="manifest" href="/manifest.json" />
@@ -22,6 +29,7 @@ function App({ Component, pageProps }: AppProps) {
                 </AnimatePresence>
             </QueryClientProvider>
         </ThemeProvider>
+        </GlobalContext.Provider>
         </html>
   ) 
 }

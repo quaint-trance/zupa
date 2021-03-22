@@ -35,13 +35,13 @@ const Create:React.FC<props> = () =>{
     return(
         <Container>
             <Head>
-                <title>Zupa - create connect4</title>
+                <title>Zupa - create hanoi</title>
                 <meta name="description" content="zupa connect4"></meta>
             </Head>
             <AnimatedPage>
             <Content>
                 <form>
-                    <h2>Create connect4 game</h2>
+                    <h2>Create hanoi game</h2>
                     
                     <input value={playerName} type="text" placeholder="Your Name" onChange={(e)=>setPlayerName(e.target.value)} />
                     

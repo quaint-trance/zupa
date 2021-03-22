@@ -59,7 +59,7 @@ const [userName, setUserName] = useState('');
     <Background>
         <Container>
             <Head>
-                <title>Zupa - user profile</title>
+                <title>Zupa - settings connect4</title>
             </Head>
             <SettingsSidenav />
             <Content

@@ -7,9 +7,9 @@ type props = {
 }
 
 const colors = [
-    `#3252d1`,
-    `#182c80`,
-    `#1230a8`,
+    `#2645bd`,
+    `#a9baff`,
+    `#3f63f0`,
 ]
 
 const Loading: React.FC<props> = () =>{
@@ -22,7 +22,10 @@ const Loading: React.FC<props> = () =>{
     const trail = useTrail(colors.length, {
         transform: `translate(-50%, -50%) rotate(${loading?'0deg' : '360deg'})`,
         config:{
-            clamp: true,
+            mass: 5,
+            friction: 24,
+            tension: 70,
+            velocity: 20,
         },
 
     });
