@@ -9,6 +9,7 @@ Platforma cały czas się rozwija a nowe gry są stale dodawane. Obecny stan:
 * Yatzy
 * Connect4
 * Kalambury
+* Hanoi
 * Set (brak testów)
 
 ## Stack
